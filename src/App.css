@@ -27,3 +27,36 @@
 .btn-solid:hover {
     background: var(--secondary);
 }
+
+.navLink {
+    padding: 0.625rem;
+    
+    border-radius: 10px;
+    margin-bottom: 0.4rem;
+
+    border: 1px solid transparent;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--text);
+
+    transition: border 0.5s;
+    transition: color 0.3s;
+}
+
+.navLink:hover {
+    background: transparent;
+    
+    border: 1px solid var(--secondary);
+
+    color: var(--secondary);
+}
+
+.dashboardContainer {
+    display: flex;
+
+    width: 100vw;
+    height: 100vh;
+}
