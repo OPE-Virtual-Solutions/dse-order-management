@@ -1,0 +1,11 @@
+:root {
+    --primary: #FFE28B;
+    --secondary: #FFBF00;
+    --subtext: #656565;
+    --text: #1B1B1B;
+    --divider: #D3D3D3;
+}
+
+* {
+    font-family: "Inter";
+}

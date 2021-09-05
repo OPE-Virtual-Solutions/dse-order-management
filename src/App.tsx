@@ -1,12 +1,17 @@
+import { ThemeProvider } from '@material-ui/core';
 import './App.css';
+
+import { materialTheme } from './config/materialUiTheme';
 
 import { Routes } from './routes';
 
 function App() {
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <ThemeProvider theme={materialTheme}>
+      <div className="App">
+        <Routes />
+      </div>
+    </ThemeProvider>
   );
 }
 
