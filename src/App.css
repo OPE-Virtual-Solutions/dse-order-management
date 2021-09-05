@@ -9,3 +9,21 @@
 * {
     font-family: "Inter";
 }
+
+.btn-solid {
+    border: 0;
+    border-radius: 5px;
+
+    padding: 0rem 1.2rem;
+
+    background: var(--primary);
+    font-weight: 500;
+
+    min-height: 50px;
+
+    transition: background 0.5s;
+}
+
+.btn-solid:hover {
+    background: var(--secondary);
+}
