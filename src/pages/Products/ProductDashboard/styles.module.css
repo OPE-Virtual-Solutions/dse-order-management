@@ -1,0 +1,76 @@
+
+.productDashboardContainer > header {
+    height: 17vh;
+}
+
+.productDashboardContainer > header > div {
+    padding: 1.1rem;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+}
+
+.productDashboardContainer > header > div > div {
+    display: flex;
+}
+
+.productDashboardContainer > header > div h4 {
+    font-weight: 700;
+}
+
+.productListContainer {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    /* justify-content: center; */
+
+    padding: 3rem 0rem;
+
+    height: 83vh;
+
+    overflow-y: scroll;
+}
+
+.tagsContainer {
+    background: #FFF;
+    border-bottom: 1px solid var(--divider);
+}
+
+.tableHeaderContainer {
+    display: flex;
+    justify-content: space-between;
+
+    width: 80%;
+}
+
+.tableCardContainer {
+    display: flex;
+    /* justify-content: space-between; */
+
+    width: 83%;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    margin: 0.2rem 0rem;
+
+    padding: 1rem;
+
+    cursor: pointer;
+}
+
+.tableHeaderContainer span {
+    color: #656565;
+    text-transform: uppercase;
+
+    font-weight: 600;
+    font-size: 0.756rem;
+}
+
+.tableHeaderContainer span, .tableCardContainer span {
+    width: 100%;
+}
