@@ -1,0 +1,32 @@
+.button, .buttonOutline {
+    padding: 0.4rem 1.2rem;
+
+    font-weight: 500;
+    font-size: 0.8rem;
+
+    transition: background 0.5s;
+
+    text-transform: uppercase;;
+}
+
+.button {
+    border: 0;
+    border-radius: 5px;
+
+    background: var(--primary);
+}
+
+.buttonOutline {
+    border: 1px solid var(--primary);
+    border-radius: 5px;
+
+    background: transparent;
+}
+
+.button:hover, .buttonOutline:hover {
+    background: var(--secondary);
+}
+
+.button svg, .buttonOutline svg {
+    margin-right: 0.8rem;
+}
