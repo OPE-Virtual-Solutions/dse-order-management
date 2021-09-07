@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@material-ui/core';
 import './App.css';
 
-import { materialTheme } from './config/materialUiTheme';
+import { materialTheme } from './utils/materialUiTheme';
 
 import { Routes } from './routes';
 
