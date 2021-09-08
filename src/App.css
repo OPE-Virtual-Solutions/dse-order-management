@@ -60,3 +60,19 @@
     width: 100vw;
     height: 100vh;
 }
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+  
+::-webkit-scrollbar-track {
+    background: var(--divider);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary);
+}
