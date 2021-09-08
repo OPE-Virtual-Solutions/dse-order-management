@@ -4,14 +4,14 @@ import styles from "./styles.module.css";
 
 type Props = {
     text: string;
-    icon: ReactNode;
+    icon?: ReactNode;
     type?: "button" | "submit";
     outline?: boolean;
     className?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-function IconButton({
+function Button({
     text,
     icon,
     type = "button",
@@ -32,4 +32,4 @@ function IconButton({
     )
 }
 
-export { IconButton };
+export { Button };
