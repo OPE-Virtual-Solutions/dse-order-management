@@ -26,13 +26,12 @@
     flex-direction: column;
 
     align-items: center;
-    /* justify-content: center; */
 
     padding: 3rem 0rem;
 
     height: 83vh;
 
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .tagsContainer {
@@ -61,6 +60,12 @@
     padding: 1rem;
 
     cursor: pointer;
+
+    transition: background 0.2s;
+}
+
+.tableCardContainer:hover {
+    background: #F1f1f1;
 }
 
 .tableHeaderContainer span {

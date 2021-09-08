@@ -13,21 +13,50 @@ import {
     Tab,
     InputAdornment,
     TextField,
+    Dialog,
 } from "@material-ui/core";
 
-import { SideMenu } from "components/SideMenu";
-import { IconButton } from "components/forms/IconButton";
+import { Button } from "components/forms/Button";
 
 import { categories, products } from "./data";
 import { Dashboard } from "templates/Dashboard";
+import { ProductModal } from "../ProductModal";
+
+import { IProduct } from "models";
+import { ProductTable } from "../ProductTable";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
 
     const [selectedCategory, setSelectedCategory] = useState(0);
 
+    const [openModal, setOpenModal] = useState<boolean>(false);
+
+    const [selectedProduct, setSelectedProduct] = useState<IProduct>({
+        id: 0, nome: "", preco: 0, categoria: 0, quantidade: 0, ingredientes: []
+    });
+
     function handleTabChange(event: any, category: number) {
         setSelectedCategory(category);
+    }
+
+    function handleModalOpen(modalType: "edit" | "create") {
+        if (modalType === "create") {
+            setSelectedProduct({
+                id: 0, 
+                nome: "", 
+                preco: 0, 
+                categoria: 0, 
+                quantidade: 0, 
+                ingredientes: []
+            });
+        }
+
+        setOpenModal(true);
+    }
+
+    function handleModalClose() {
+        setOpenModal(false);
     }
 
     return (
@@ -53,8 +82,18 @@ function ProductDashboard() {
                                 }}
                             />
 
-                            <IconButton outline icon={<FaPlus size={14} />} text="Adicionar" className="me-1" />
-                            <IconButton icon={<FaSlidersH size={14} />} text="Gerenciar Categorias" className="me-1" />
+                            <Button 
+                                onClick={() => { handleModalOpen("create") }} 
+                                outline 
+                                icon={<FaPlus size={14} />} 
+                                text="Adicionar" 
+                                className="me-1" 
+                            />
+                            <Button 
+                                icon={<FaSlidersH size={14} />} 
+                                text="Gerenciar Categorias" 
+                                className="me-1" 
+                            />
                         </div>                        
                     </div>
 
@@ -72,26 +111,20 @@ function ProductDashboard() {
                 </header>
 
                 <div className={ styles.productListContainer }>
-                    <div className={styles.tableHeaderContainer}>
-                        <span>Nome</span>
-                        <span>Categoria</span>
-                        <span>Preço</span>
-                        <span>Quantidade</span>
-                    </div>
-
-                    { products.map((product, key) => (
-                        <div key={key} className={styles.tableCardContainer}>
-                            <span>{ product.nome }</span>
-                            <span>{ product.categoria }</span>
-                            <span>
-                                <span className="fw-bold">R$</span>
-                                { product.preco }
-                            </span>
-                            <span>{ product.quantidade }</span>
-                        </div>
-                    ))}
+                    <ProductTable 
+                        headers={[
+                            "Nome",
+                            "Categoria",
+                            "Preço",
+                            "Quantidade"
+                        ]} 
+                        products={products} 
+                    />
                 </div>
-
+                
+                <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleModalClose}>
+                    <ProductModal product={selectedProduct} />
+                </Dialog>
             </div>
         </Dashboard>
     )

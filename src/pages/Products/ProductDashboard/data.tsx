@@ -1,17 +1,10 @@
-type Category = {
-    id: number;
-    name: string;
-}
+import { 
+    ICategory, 
+    IIngredient, 
+    IProduct 
+} from "models";
 
-type Product = {
-    id: number;
-    nome: string; 
-    preco: number;
-    categoria: number;
-    quantidade: number;
-}
-
-const categories: Category[] = [
+const categories: ICategory[] = [
     {
         id: 1,
         name: "Lanches"
@@ -26,13 +19,20 @@ const categories: Category[] = [
     }
 ];
 
-const products: Product[] = [
+const products: IProduct[] = [
     {
         id: 1,
         nome: "X-Burger",
         preco: 9.99,
         categoria: 1,
-        quantidade: 10
+        quantidade: 10,
+        ingredientes: [
+            {
+                id: 2,
+                nome: "Hamburguer",
+                quantidade: 24
+            }
+        ]
     },
     {
         id: 2,
@@ -40,7 +40,72 @@ const products: Product[] = [
         preco: 10.00,
         categoria: 1,
         quantidade: 10,
+        ingredientes: [
+            {
+                id: 3,
+                nome: "Pão",
+                quantidade: 35
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+            {
+                id: 4,
+                nome: "Cebola",
+                quantidade: 56
+            },
+        ]
+    },
+];
+
+const ingredients: IIngredient[] = [
+    {
+        id: 1,
+        nome: "Salsicha",
+        quantidade: 12
+    },
+    {
+        id: 2,
+        nome: "Hamburguer",
+        quantidade: 24
+    },
+    {
+        id: 3,
+        nome: "Pão",
+        quantidade: 35
+    },
+    {
+        id: 4,
+        nome: "Cebola",
+        quantidade: 56
     }
 ]
 
-export { categories, products };
+export { categories, products, ingredients };
