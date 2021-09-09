@@ -1,9 +1,17 @@
 import styles from "./styles.module.css";
 
 import TextField from '@material-ui/core/TextField';
+import { useHistory } from "react-router";
 
 function Login() {
+    let history = useHistory();
     document.title = "DSE - Autenticação de Usuário"
+
+    function handleLoginSubmit(event: any) {
+        event.preventDefault();
+
+        history.push("/products");
+    };
 
     return (
         <div className={ styles.loginContainer }>
@@ -15,7 +23,7 @@ function Login() {
 
             <h6>Autenticação de Usuário</h6>
 
-            <form className={ styles.loginFormContainer }>
+            <form onSubmit={handleLoginSubmit} className={ styles.loginFormContainer }>
                 <div className="mb-3">
                     <TextField label="E-mail" fullWidth variant="outlined" />
                 </div>
