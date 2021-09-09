@@ -1,24 +1,54 @@
+import { useState } from "react";
 import styles from "./styles.module.css";
 
 import { Button } from "components/forms/Button";
 
-import { IProduct } from "models";
+import { 
+    IProduto, 
+    ICategoria, 
+    IIngrediente 
+} from "interfaces";
+
 import { ProductIngredientForm } from "../ProductIngredientForm";
 import { ProductForm } from "../ProductForm";
 
 type Props = {
-    product: IProduct;
+    product: IProduto;
 }
 
 function ProductModal({ product }: Props) {
+    const [category, setCategory] = useState<ICategoria>({ id: -1, nome: "", ativo: false })
+    const [ingredientList, setIngredientList] = useState<IIngrediente[]>([]);
+
+    function handleSubmit(event: any) {
+        event.preventDefault();
+
+        const newProduct = {
+            nome: event.target.inputNome.value,
+            preco: event.target.inputPreco.value,
+            category: category.id !== -1 ? category.id : product.id,
+            quantidade: event.target.inputQuantidade.value,
+            descricao: event.target.inputDescricao.value
+        };
+
+        console.log(newProduct);
+    }
+
     return (
-        <form className={ styles.productEditContainer }>
+        <form onSubmit={handleSubmit} className={ styles.productEditContainer }>
             <div className={ styles.productDetails }>
                 <div className={ styles.column }>
-                    <ProductForm product={product} />
+                    <ProductForm 
+                        product={product} 
+                        setCategory={setCategory}
+                    />
                 </div>
                 <div className={ styles.column }>
-                    <ProductIngredientForm product={product} />
+                    <ProductIngredientForm 
+                        ingredientList={ingredientList}
+                        setIngredientList={setIngredientList}
+                        product={product} 
+                    />
                 </div>
             </div>
 

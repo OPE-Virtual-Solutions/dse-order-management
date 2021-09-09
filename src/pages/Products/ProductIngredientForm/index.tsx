@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, SetStateAction, Dispatch } from "react";
 
 import styles from "./styles.module.css";
 
-import { IIngredient, IProduct } from "models";
+import { 
+    IIngrediente, 
+    IProduto 
+} from "interfaces";
 import { ingredients } from "../ProductDashboard/data";
 
 import { Autocomplete } from "@material-ui/lab";
@@ -11,25 +14,25 @@ import { TextField } from "@material-ui/core";
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 
 type Props = {
-    product?: IProduct;
+    product?: IProduto;
+    ingredientList: IIngrediente[];
+    setIngredientList: Dispatch<SetStateAction<IIngrediente[]>>;
 }
 
-function ProductIngredientForm({ product }: Props) {
-    const [ingredientList, setIngredientList] = useState<IIngredient[] | undefined>([]);
-    const [newIngredient, setNewIngredient] = useState<IIngredient>();
-
+function ProductIngredientForm({ product, ingredientList, setIngredientList }: Props) {
+    const [currentIngredient, setCurrentIngredient] = useState<IIngrediente>();
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        setIngredientList(product?.ingredientes);
+        if (product?.ingredientes) setIngredientList(product.ingredientes);
     }, []);
 
     function addNewIngredient() {
         setError("");
 
-        if (ingredientList !== undefined && newIngredient) {
-            if (ingredientList.indexOf(newIngredient) === -1) {
-                setIngredientList([...ingredientList, newIngredient]);
+        if (ingredientList !== undefined && currentIngredient) {
+            if (ingredientList.indexOf(currentIngredient) === -1) {
+                setIngredientList([...ingredientList, currentIngredient]);
             } else {
                 setError("O produto já possui esse ingrediente");
             }
@@ -55,10 +58,10 @@ function ProductIngredientForm({ product }: Props) {
                 <Autocomplete 
                     fullWidth
                     onChange={(event, ingredient) => {
-                        if (ingredient) setNewIngredient(ingredient);                 
+                        if (ingredient) setCurrentIngredient(ingredient);                 
                     }}
                     options={ingredients}
-                    getOptionLabel={(option: IIngredient) => option.nome}
+                    getOptionLabel={(option: IIngrediente) => option.nome}
                     renderInput={(params: any) => (
                         <TextField 
                             {...params}

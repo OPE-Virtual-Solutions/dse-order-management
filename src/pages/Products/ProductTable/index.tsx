@@ -1,31 +1,26 @@
 import { useState, MouseEventHandler } from "react";
 
-import { IProduct } from 'models'
+import { IProduto } from 'interfaces'
 
 import styles from "./styles.module.css";
 
 import { ProductModal } from "../ProductModal";
 import { Dialog } from "@material-ui/core";
 
+import { emptyProduct } from "interfaces/IProduto";
+
 type Props = {
     headers: string[];
-    products: IProduct[];
+    products: IProduto[];
     onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
 function ProductTable({ headers, products }: Props) {
-    const [selectedProduct, setSelectedProduct] = useState<IProduct>({
-        id: 0, 
-        nome: "", 
-        preco: 0, 
-        categoria: 0, 
-        quantidade: 0, 
-        ingredientes: []
-    });
+    const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
 
     const [open, setOpen] = useState<boolean>(false);
 
-    function openEditModal(product: IProduct) {
+    function openEditModal(product: IProduto) {
         setSelectedProduct(product);
         setOpen(true);
     }
@@ -49,7 +44,7 @@ function ProductTable({ headers, products }: Props) {
                     onClick={() => { openEditModal(product) }}
                 >
                     <span>{ product.nome }</span>
-                    <span>{ product.categoria }</span>
+                    <span>{ product.categoria.nome }</span>
                     <span>
                         <span className="fw-bold">R$</span>
                         { product.preco }

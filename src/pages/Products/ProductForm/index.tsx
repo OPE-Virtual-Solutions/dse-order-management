@@ -1,13 +1,17 @@
+import { Dispatch, SetStateAction } from "react";
 import styles from "./styles.module.css";
 
 import { InputAdornment, TextField } from "@material-ui/core";
-import { IProduct } from "models";
+import { ICategoria, IProduto } from "interfaces";
+import { categories } from "../ProductDashboard/data";
+import { Autocomplete } from "@material-ui/lab";
 
 type Props = {
-    product: IProduct;
+    product: IProduto;
+    setCategory: Dispatch<SetStateAction<ICategoria>>;
 }
 
-function ProductForm({ product }: Props) {
+function ProductForm({ product, setCategory }: Props) {
     return (
         <div className={ styles.productFormContainer }>
             { product.id === 0 && ( <h4>Adicionar produto</h4> )}
@@ -37,6 +41,26 @@ function ProductForm({ product }: Props) {
                             </InputAdornment>
                         )
                     }}
+                />
+            </div>
+            <div className="mb-3">
+                <Autocomplete 
+                    fullWidth
+                    onChange={(event, category) => {
+                        if (category) setCategory(category)   
+                    }}
+                    options={categories}
+                    defaultValue={product.categoria}
+                    getOptionLabel={(option: ICategoria) => option.nome}
+                    renderInput={(params: any) => (
+                        <TextField 
+                            {...params}
+
+                            variant="filled" 
+                            size="small" 
+                            label="Categoria" 
+                        />
+                    )}
                 />
             </div>
             <div className="mb-3">

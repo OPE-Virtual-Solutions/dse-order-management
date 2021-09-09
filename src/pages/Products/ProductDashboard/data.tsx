@@ -1,91 +1,33 @@
-import { 
-    ICategory, 
-    IIngredient, 
-    IProduct 
-} from "models";
+import {  
+    IIngrediente,
+    IProduto,
+    ICategoria
+} from "interfaces";
 
-const categories: ICategory[] = [
+const categories: ICategoria[] = [
     {
         id: 1,
-        name: "Lanches"
+        nome: "Lanches",
+        ativo: true,
     },
     {
         id: 2,
-        name: "Bebidas"
+        nome: "Bebidas",
+        ativo: true,
     },
     {
         id: 3,
-        name: "Porções"
+        nome: "Porções",
+        ativo: true,
+    },
+    {
+        id: 4,
+        nome: "Desabilitado",
+        ativo: false,
     }
 ];
 
-const products: IProduct[] = [
-    {
-        id: 1,
-        nome: "X-Burger",
-        preco: 9.99,
-        categoria: 1,
-        quantidade: 10,
-        ingredientes: [
-            {
-                id: 2,
-                nome: "Hamburguer",
-                quantidade: 24
-            }
-        ]
-    },
-    {
-        id: 2,
-        nome: "X-Salada",
-        preco: 10.00,
-        categoria: 1,
-        quantidade: 10,
-        ingredientes: [
-            {
-                id: 3,
-                nome: "Pão",
-                quantidade: 35
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-            {
-                id: 4,
-                nome: "Cebola",
-                quantidade: 56
-            },
-        ]
-    },
-];
-
-const ingredients: IIngredient[] = [
+const ingredients: IIngrediente[] = [
     {
         id: 1,
         nome: "Salsicha",
@@ -107,5 +49,35 @@ const ingredients: IIngredient[] = [
         quantidade: 56
     }
 ]
+
+const products: IProduto[] = [
+    {
+        id: 1,
+        nome: "X-Burger",
+        descricao: "Um belo hamburguer de pão",
+        preco: 9.99,
+        categoria: categories[0],
+        quantidade: 10,
+        ingredientes: [
+            ingredients[0],
+            ingredients[1]
+        ],
+        ativo: true,
+    },
+    {
+        id: 2,
+        nome: "X-Salada",
+        descricao: "Um belo hamburguer com saladinha",
+        preco: 10.00,
+        categoria: categories[0],
+        quantidade: 10,
+        ingredientes: [
+            ingredients[0],
+            ingredients[1],
+            ingredients[2]
+        ],
+        ativo: true,
+    },
+];
 
 export { categories, products, ingredients };
