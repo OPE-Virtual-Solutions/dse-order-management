@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { 
     FaPlus, 
@@ -18,14 +18,15 @@ import {
 
 import { Button } from "components/forms/Button";
 
-import { categories, products } from "./data";
 import { Dashboard } from "templates/Dashboard";
 import { ProductModal } from "../ProductModal";
 
-import { IProduto } from "interfaces";
+import { ICategoria, IProduto } from "interfaces";
 import { ProductTable } from "../ProductTable";
 
 import { emptyProduct } from "interfaces/IProduto";
+import { ProductService } from "services/ProductServices";
+import { ProductCategory } from "../ProductCategory";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
@@ -33,8 +34,14 @@ function ProductDashboard() {
     const [selectedCategory, setSelectedCategory] = useState(0);
 
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [openCategoryModal, setOpenCategoryModal] = useState<boolean>(false);
 
     const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
+
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const [categories, setCategories] = useState<ICategoria[]>([]);
+    const [products, setProducts] = useState<IProduto[]>([]);
 
     function handleTabChange(event: any, category: number) {
         setSelectedCategory(category);
@@ -52,6 +59,23 @@ function ProductDashboard() {
         setOpenModal(false);
     }
 
+    function manageCategoryModal() {
+        setOpenCategoryModal(!openCategoryModal);
+    }
+
+    async function retrieveAllData() {
+        await ProductService.getRelated().then((response) => {
+            setProducts(response.produtos);
+            setCategories(response.categorias);
+        }).finally(() => {
+            setLoading(false);
+        });
+    }
+
+    useEffect(() => {
+        retrieveAllData();
+    }, []);
+
     return (
         <Dashboard>
             <div className={ styles.productDashboardContainer }>
@@ -65,7 +89,7 @@ function ProductDashboard() {
                                 className="me-1" 
                                 label="Pesquisar produto" 
                                 size="small"
-                                variant="outlined"
+                                variant="filled"
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -83,6 +107,7 @@ function ProductDashboard() {
                                 className="me-1" 
                             />
                             <Button 
+                                onClick={ () => manageCategoryModal() }
                                 icon={<FaSlidersH size={14} />} 
                                 text="Gerenciar Categorias" 
                                 className="me-1" 
@@ -117,6 +142,10 @@ function ProductDashboard() {
                 
                 <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleModalClose}>
                     <ProductModal product={selectedProduct} />
+                </Dialog>
+
+                <Dialog fullWidth maxWidth="md" open={openCategoryModal} onClose={manageCategoryModal}>
+                    <ProductCategory categories={categories} />
                 </Dialog>
             </div>
         </Dashboard>
