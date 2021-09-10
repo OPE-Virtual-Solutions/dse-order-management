@@ -11,6 +11,7 @@ import {
 
 import { ProductIngredientForm } from "../ProductIngredientForm";
 import { ProductForm } from "../ProductForm";
+import { ProductService } from "services/ProductServices";
 
 type Props = {
     product: IProduto;
@@ -20,18 +21,19 @@ function ProductModal({ product }: Props) {
     const [category, setCategory] = useState<ICategoria>({ id: -1, nome: "", ativo: false })
     const [ingredientList, setIngredientList] = useState<IIngrediente[]>([]);
 
-    function handleSubmit(event: any) {
-        event.preventDefault();
-
+    async function handleSubmit(event: any) {
         const newProduct = {
             nome: event.target.inputNome.value,
             preco: event.target.inputPreco.value,
-            category: category.id !== -1 ? category.id : product.id,
+            ativo: false,
+            categoria: category.id !== -1 ? category.id : product.id,
             quantidade: event.target.inputQuantidade.value,
-            descricao: event.target.inputDescricao.value
+            descricao: event.target.inputDescricao.value,
         };
 
-        console.log(newProduct);
+        await ProductService.create(newProduct).then((response) => {
+            console.log(response);
+        });
     }
 
     return (
