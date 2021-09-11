@@ -4,6 +4,7 @@ import {
     FaShoppingBag, 
     FaPepperHot,
     FaHamburger,
+    FaThList
 } from "react-icons/fa";
 
 type NavRoute = {
@@ -26,13 +27,20 @@ const navlinkRoutes: NavRoute[] = [
     },
     {
         id: 2,
+        title: "Histórico de Pedidos",
+        path: "/orderHistory",
+        role: "",
+        icon: <FaThList size={iconSize} />
+    },
+    {
+        id: 3,
         title: "Gerenciamento de Produtos",
         path: "/products",
         role: "",
         icon: <FaHamburger size={iconSize} />
     },
     {
-        id: 3,
+        id: 4,
         title: "Gerenciamento de Ingredientes",
         path: "/ingredients",
         role: "",

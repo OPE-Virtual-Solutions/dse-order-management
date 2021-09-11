@@ -5,12 +5,14 @@ import {
 import { Login } from "pages/Login";
 
 import { OrderDashboard } from "pages/Orders/OrderDashboard";
+import { OrderHistory } from "pages/Orders/OrderHistory";
 import { ProductDashboard } from "pages/Products/ProductDashboard";
 import { IngredientDashboard } from "pages/Ingredients/IngredientDashboard";
 
 function Routes() {
     return (
         <BrowserRouter>
+            <Route component={ OrderHistory } path="/orderHistory" />
             <Route component={ OrderDashboard } path="/orders" />
             <Route component={ IngredientDashboard } path="/ingredients" />
             <Route component={ ProductDashboard } path="/products" />

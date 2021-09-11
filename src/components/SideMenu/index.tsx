@@ -3,12 +3,15 @@ import styles from "./styles.module.css";
 import { 
     FaPowerOff
 } from "react-icons/fa";
+import { useHistory } from "react-router";
 
 import { navlinkRoutes } from "./navroutes";
 
 import { NavLink } from "../NavLink";
 
 function SideMenu() {
+    let history = useHistory();
+
     return (
         <nav className={ styles.sidenavContainer }>
             <header>
@@ -24,7 +27,7 @@ function SideMenu() {
             </div>
 
             <footer>
-                <button className="navLink">
+                <button onClick={() => history.push("/")} className="navLink">
                     <FaPowerOff size={20} />
                 </button>
             </footer>
