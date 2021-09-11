@@ -1,0 +1,52 @@
+.tableContainer {
+    width: 60%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tableHeaderContainer {
+    display: flex;
+    /* justify-content: space-between; */
+
+    width: 80%;
+}
+
+.tableHeaderContainer span {
+    color: var(--subtext);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.756rem;
+}
+
+.tableRowContainer {
+    display: flex;
+
+    width: 83%;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    margin: 0.2rem 0rem; 
+
+    padding: 1rem;
+
+    cursor: pointer;
+
+    transition: background 0.2s;
+}
+
+.tableRowContainer:last-of-type {
+    margin-bottom: 5rem;
+}
+
+.tableRowContainer:hover {
+    background: #F1F1F1;
+}
+
+.tableHeaderContainer span,
+.tableRowContainer span {
+    width: 100%;
+}
