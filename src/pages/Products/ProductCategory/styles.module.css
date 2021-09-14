@@ -1,5 +1,7 @@
 .productCategoryContainer {
     display: flex;
+
+    min-height: 60vh;
 }
 
 .productCategoryContainer header {
@@ -53,6 +55,10 @@
 
 .categoryCard svg {
     cursor: pointer;
+}
+
+.categoryCard:hover {
+    background: #F1F1F1;
 }
 
 .categoryFormContainer {
