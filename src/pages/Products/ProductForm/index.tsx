@@ -3,15 +3,16 @@ import styles from "./styles.module.css";
 
 import { InputAdornment, TextField } from "@material-ui/core";
 import { ICategoria, IProduto } from "interfaces";
-import { categories } from "../ProductDashboard/data";
+
 import { Autocomplete } from "@material-ui/lab";
 
 type Props = {
     product: IProduto;
+    categories: ICategoria[];
     setCategory: Dispatch<SetStateAction<ICategoria>>;
 }
 
-function ProductForm({ product, setCategory }: Props) {
+function ProductForm({ product, categories, setCategory }: Props) {
     return (
         <div className={ styles.productFormContainer }>
             { product.id === 0 && ( <h4>Adicionar produto</h4> )}

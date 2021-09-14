@@ -136,12 +136,13 @@ function ProductDashboard() {
                             "Preço",
                             "Quantidade"
                         ]} 
+                        categories={categories}
                         products={products} 
                     />
                 </div>
                 
                 <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleModalClose}>
-                    <ProductModal product={selectedProduct} />
+                    <ProductModal categories={categories} product={selectedProduct} />
                 </Dialog>
 
                 <Dialog fullWidth maxWidth="md" open={openCategoryModal} onClose={manageCategoryModal}>

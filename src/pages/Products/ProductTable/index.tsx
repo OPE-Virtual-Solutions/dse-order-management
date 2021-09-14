@@ -1,6 +1,6 @@
 import { useState, MouseEventHandler } from "react";
 
-import { IProduto } from 'interfaces'
+import { ICategoria, IProduto } from 'interfaces'
 
 import styles from "./styles.module.css";
 
@@ -12,10 +12,11 @@ import { emptyProduct } from "interfaces/IProduto";
 type Props = {
     headers: string[];
     products: IProduto[];
+    categories: ICategoria[];
     onClick?: MouseEventHandler<HTMLDivElement>;
 };
 
-function ProductTable({ headers, products }: Props) {
+function ProductTable({ headers, categories, products }: Props) {
     const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
 
     const [open, setOpen] = useState<boolean>(false);
@@ -54,7 +55,7 @@ function ProductTable({ headers, products }: Props) {
             ))}
 
             <Dialog fullWidth maxWidth="md" open={open} onClose={closeEditModal}>
-                <ProductModal product={selectedProduct} />
+                <ProductModal categories={categories} product={selectedProduct} />
             </Dialog>
         </div>
     )
