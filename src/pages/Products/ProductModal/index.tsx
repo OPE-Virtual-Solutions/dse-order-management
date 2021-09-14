@@ -12,14 +12,28 @@ import {
 import { ProductIngredientForm } from "../ProductIngredientForm";
 import { ProductForm } from "../ProductForm";
 import { ProductService } from "services/ProductServices";
+import { ICreateProduto } from "interfaces/IProduto";
 
 type Props = {
     product: IProduto;
+    categories: ICategoria[];
 }
 
-function ProductModal({ product }: Props) {
+function ProductModal({ categories, product }: Props) {
     const [category, setCategory] = useState<ICategoria>({ id: -1, nome: "", ativo: false })
     const [ingredientList, setIngredientList] = useState<IIngrediente[]>([]);
+
+    async function createProduct(productObj: ICreateProduto, event: any) {
+        await ProductService.create(productObj).then((response) => {
+            if (response.status !== 200) window.location.reload();
+        });
+    }
+
+    async function updateProduct(productObj: ICreateProduto, event: any) {
+        await ProductService.update(product.id, productObj).then((response) => {
+            if (response.status !== 200) window.location.reload();
+        });
+    }
 
     async function handleSubmit(event: any) {
         const newProduct = {
@@ -31,9 +45,7 @@ function ProductModal({ product }: Props) {
             descricao: event.target.inputDescricao.value,
         };
 
-        await ProductService.create(newProduct).then((response) => {
-            console.log(response);
-        });
+        product.id ? updateProduct(newProduct, event) : createProduct(newProduct, event);
     }
 
     return (
@@ -42,6 +54,7 @@ function ProductModal({ product }: Props) {
                 <div className={ styles.column }>
                     <ProductForm 
                         product={product} 
+                        categories={categories}
                         setCategory={setCategory}
                     />
                 </div>
