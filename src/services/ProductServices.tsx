@@ -47,6 +47,12 @@ class Service {
             ingredientes: this.ingredientes
         }
     }
+
+    async update(id: number, produto: ICreateProduto) {
+        const response = await api.patch(ENDPOINT + `${id}/`, produto).catch((error) => { return error.response });
+        
+        return response;
+    }
 };
 
 export const ProductService = new Service();
