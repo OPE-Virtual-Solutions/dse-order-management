@@ -18,6 +18,7 @@ export interface IProduto {
 }
 
 export interface ICreateProduto {
+    id?: number;
     nome: string;
     preco: number;
     descricao: string;
