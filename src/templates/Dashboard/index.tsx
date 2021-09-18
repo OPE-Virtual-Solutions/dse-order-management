@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import styles from "./styles.module.css";
 
-import { SideMenu } from "components/SideMenu";
+import { SideMenu } from "components/navigation/SideMenu";
 
 type Props = {
     children: ReactNode;
