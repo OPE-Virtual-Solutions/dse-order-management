@@ -25,7 +25,7 @@ function OrderDashboard() {
     }
 
     return (
-        <Dashboard>
+        <Dashboard showCart={true}>
             <div className={styles.orderDashboardContainer}>
                 {isGridList && (
                     <div className={styles.productListContainer}>
