@@ -1,0 +1,49 @@
+.cardContainer {
+    padding: 1.1rem;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}
+
+.cardContainer main {
+    display: flex;
+}
+
+.cardContainer footer > form {
+    display: flex;
+    justify-content: space-between;
+
+    padding-top: 1rem;
+}
+
+.cardContainer footer > form > div {
+    width: 8.125rem;
+}
+
+.productInfoContainer { 
+    padding: 0rem 1rem;
+    width: 100%;
+
+    align-self: centerr;
+}
+
+.productInfoContainer h5 {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.productInfoContainer p {
+    font-weight: 300;
+    font-size: 0.91rem;
+    color: var(--subtext);
+}
+
+.placeholderPic {
+    min-width: 130px;
+    min-height: 130px;
+
+    background: #F1F1F1; 
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}
