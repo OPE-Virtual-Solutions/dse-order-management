@@ -10,7 +10,7 @@ function Login() {
     function handleLoginSubmit(event: any) {
         event.preventDefault();
 
-        history.push("/products");
+        history.push("/order-dashboard");
     };
 
     return (
