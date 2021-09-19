@@ -1,0 +1,35 @@
+.cardContainer {
+    width: 100%;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    padding: 1rem;
+
+    margin-bottom: 0.8rem;
+}
+
+.cardContainer h6, .cardContainer > span {
+    font-size: 1.039rem;
+}
+
+.cardContainer h6 {
+    text-transform: uppercase;
+    font-weight: 500;
+
+    margin: 0;
+}
+
+.cardContainer p {
+    color: var(--subtext);
+    font-weight: 300;
+    font-size: 0.88rem;
+    
+    margin-top: 0.8rem;
+}
+
+.cardContainer footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
