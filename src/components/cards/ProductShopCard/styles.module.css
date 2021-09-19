@@ -1,5 +1,8 @@
 .cardContainer {
-    padding: 1.1rem;
+    padding: 1rem;
+
+    min-width: 0;
+    max-width: 48%;
 
     border: 1px solid var(--divider);
     border-radius: 5px;
@@ -17,30 +20,50 @@
 }
 
 .cardContainer footer > form > div {
-    width: 8.125rem;
+    width: 6.25rem;
 }
 
 .productInfoContainer { 
     padding: 0rem 1rem;
     width: 100%;
+    min-width: 0;
 
     align-self: centerr;
 }
 
+.productInfoContainer h5, .productInfoContainer span {
+    font-size: 1.039rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .productInfoContainer h5 {
-    font-weight: 700;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 1.039rem;
+
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .productInfoContainer p {
     font-weight: 300;
     font-size: 0.91rem;
     color: var(--subtext);
+
+    min-height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    margin-top: 0.5rem;
 }
 
 .placeholderPic {
-    min-width: 130px;
-    min-height: 130px;
+    min-width: 100px;
+    min-height: 100px;
+    max-height: 100px;
 
     background: #F1F1F1; 
 

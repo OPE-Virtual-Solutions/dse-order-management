@@ -19,7 +19,7 @@ function ProductShopCard({ product }: Props) {
 
                 <div className={ styles.productInfoContainer }>
                     <h5>{ product.nome }</h5>
-                    <h5>R${ product.preco }</h5>
+                    <span>R${ product.preco }</span>
 
                     <p>
                         { product.ingredientes.map((ingredient, index) => (
