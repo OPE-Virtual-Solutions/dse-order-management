@@ -1,5 +1,5 @@
 .sidenavContainer {
-    width: 100px;
+    min-width: 100px;
     height: 100vh;
 
     border-right: 1px solid var(--divider);
