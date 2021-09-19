@@ -12,8 +12,8 @@ import { IngredientDashboard } from "pages/Ingredients/IngredientDashboard";
 function Routes() {
     return (
         <BrowserRouter>
-            <Route component={ OrderHistory } path="/orderHistory" />
-            <Route component={ OrderDashboard } path="/orders" />
+            <Route component={ OrderHistory } path="/order-history" />
+            <Route component={ OrderDashboard } path="/order-dashboard" />
             <Route component={ IngredientDashboard } path="/ingredients" />
             <Route component={ ProductDashboard } path="/products" />
             <Route component={ Login } path="/" exact/>

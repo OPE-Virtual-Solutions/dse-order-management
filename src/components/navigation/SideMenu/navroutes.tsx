@@ -20,15 +20,15 @@ const iconSize = 20;
 const navlinkRoutes: NavRoute[] = [
     {
         id: 1,
-        title: "Pedidos",
-        path: "/orders",
+        title: "Atendimento",
+        path: "/order-dashboard",
         role: "",
         icon: <FaShoppingBag size={iconSize} />
     },
     {
         id: 2,
         title: "Histórico de Pedidos",
-        path: "/orderHistory",
+        path: "/order-history",
         role: "",
         icon: <FaThList size={iconSize} />
     },
