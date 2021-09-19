@@ -9,3 +9,10 @@
     width: 100%;
     height: 100vh;
 }
+
+.cartContainer {
+    width: 650px;
+    height: 100vh;
+
+    border-left: 1px solid var(--divider);
+}
