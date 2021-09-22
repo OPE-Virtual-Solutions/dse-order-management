@@ -7,9 +7,28 @@
     position: relative;
 }
 
-.listContainer { 
-    height: 70vh;
+.cartContainer > footer {
+    padding: 1.5rem;
+}
 
+.cartContainer > footer > div {
+    display: flex;
+    align-self: stretch;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 0.7rem 0rem;
+}
+
+.fullContainer {
+    height: 100vh;
+}
+
+.containerWithFooter {
+    height: 70vh;
+}
+
+.listContainer { 
     overflow-y: auto;
     padding: 1.5rem 1.5rem;
 }
