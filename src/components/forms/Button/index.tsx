@@ -11,6 +11,7 @@ type Props = {
     className?: string;
     onClick?: MouseEventHandler<HTMLButtonElement>;
     children?: ReactNode;
+    disabled?: boolean;
 }
 
 function Button({
@@ -21,7 +22,8 @@ function Button({
     outline = false,
     className = "",
     onClick = () => {},
-    children
+    children,
+    disabled = false
 }: Props) {
     function getButtonStyle() {
         return (outline ? styles.buttonOutline : transparent ? styles.buttonTransparent : styles.button);
@@ -29,6 +31,7 @@ function Button({
 
     return (
         <button 
+            disabled={disabled}
             onClick={onClick}
             type={type} 
             className={`${ getButtonStyle() } ${ className }`}

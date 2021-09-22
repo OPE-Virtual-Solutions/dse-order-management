@@ -54,6 +54,12 @@
     background: #F1F1F1;
 }
 
+.buttonTransparent:disabled,
+.buttonTransparent[disabled] {
+    background: lightgray;
+    color: gray;
+}
+
 .button:hover, .buttonOutline:hover {
     background: var(--secondary);
 }
