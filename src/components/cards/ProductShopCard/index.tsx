@@ -22,9 +22,12 @@ function ProductShopCard({ product }: Props) {
                     <span>R${ product.preco }</span>
 
                     <p>
-                        { product.ingredientes.map((ingredient, index) => (
-                            index === product.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
-                        ))}
+                        { product.ingredientes.length !== 0 ? (
+                            product.ingredientes.map((ingredient, index) => (
+                                index === product.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
+                            ))) :
+                            product.descricao 
+                        }
                     </p>
                 </div>
             </main>
