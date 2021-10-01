@@ -1,5 +1,6 @@
 .cardContainer {
     width: 100%;
+    min-width: 0;
 
     border: 1px solid var(--divider);
     border-radius: 5px;
@@ -14,10 +15,16 @@
 }
 
 .cardContainer h6 {
+    width: 98%;
+
     text-transform: uppercase;
     font-weight: 500;
 
     margin: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cardContainer p {
