@@ -18,6 +18,8 @@ import { TabBar } from "components/display/TabBar";
 
 import { categories, products } from "pages/Products/ProductDashboard/data";
 
+import { OrderTable } from "../OrderTable";
+
 function OrderDashboard() {
     document.title = "DSE - Pedidos"
 
@@ -63,14 +65,18 @@ function OrderDashboard() {
                 <main>
                     {isGridList && (
                         <div className={styles.productListContainer}>
-                            { products.map((produto) => 
-                                produto.categoria.nome === categories[selectedCategory].nome && <ProductShopCard product={produto} />
+                            { products.length > 0 && products.map((produto, index) => 
+                                produto.categoria.nome === categories[selectedCategory].nome && <ProductShopCard key={index} product={produto} />
                             )}
                         </div>
                     )}
 
                     {!isGridList && (
-                        <span>TODO tabela para atendimento</span>
+                        <OrderTable 
+                            headers={["Imagem", "nome", "preço", "descrição", "quantidade", "ação"]}
+                            products={products}
+                            selectedCategory={categories[selectedCategory].nome}
+                        />
                     )}
                     
                     <div className={styles.gridButton}>
