@@ -20,7 +20,7 @@ function QuantityButton({
 }: Props) {
     return (
         <div className={ styles.buttonContainer }>
-            <button onClick={onSubtract}>
+            <button disabled={ quantity === 1 ? true : false } onClick={onSubtract}>
                 <FaChevronDown size={12} />
             </button>
             <span>{ quantity }</span>
