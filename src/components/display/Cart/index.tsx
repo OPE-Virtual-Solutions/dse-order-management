@@ -1,32 +1,44 @@
+import {
+    useState
+} from "react";
+
 import { 
     useHistory,
     useLocation
 } from "react-router-dom";
 
 import { 
-    categories, 
-    products 
+    categories,  
 } from "pages/Products/ProductDashboard/data";
+
+import { products as productList } from "pages/Products/ProductDashboard/data";
 
 import { Button } from "components/forms/Button";
 import { CartCard } from "components/cards/CartCard";
 
 import styles from "./Cart.module.css";
 
-type EmptyCategoryProps = {
-    category: string;
-}
+import { FiShoppingBag } from "react-icons/fi";
+import { IProduto } from "interfaces";
 
 function Cart() {
     let history = useHistory();
     const location = useLocation();
 
-    function EmptyProductCategory({ category }: EmptyCategoryProps) {
+    const [products, setProducts] = useState<IProduto[]>(productList);
+
+    if (products.length === 0) {
         return (
-            <div className={ styles.emptyCategoryContainer }>
-                <span>Nenhum(a) { category } selecionado(a)</span>
+            <div className={ styles.emptyCartContainer }>
+
+                <div>
+                    <FiShoppingBag size={20} />
+                    <h5>Carrinho vazio</h5>
+                    <span>Adicione um produto para continuar com o atendimento</span>
+                </div>
+
             </div>
-        )
+        );
     }
 
     return (
@@ -37,12 +49,12 @@ function Cart() {
                 </header>
 
                 <main>
-                    {categories.map((category) => (
-                        <section>
+                    {categories.map((category, index) => (
+                        <section key={index}>
                             <h6>{ category.nome }</h6>
 
-                            {products.map((product) => 
-                                product.categoria.nome === category.nome && (<CartCard product={product} />)
+                            {products.map((product, index) => 
+                                product.categoria.nome === category.nome && (<CartCard key={index} product={product} />)
                             )}
                         </section>
                     ))}
