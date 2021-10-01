@@ -1,0 +1,41 @@
+.table {
+    width: 100%;
+    overflow-y: hidden;
+}
+
+.table th {
+    text-transform: uppercase;
+    color: var(--subtext);
+
+    font-weight: 700;
+    font-size: 0.789rem;
+
+    margin-bottom: 1rem;
+
+    background: transparent;
+    border: 0px;
+}
+
+.tableBody {
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}
+
+.tableRow {
+    min-width: 0;
+    margin-bottom: 1rem;
+}
+
+.tableRow tr:last-of-type > td {
+    border-bottom: 0;
+}
+
+.imgPlaceholder {
+    width: 70px;
+    height: 70px;
+
+    background: #F1F1F1; 
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}
