@@ -26,6 +26,7 @@ import { IProduto } from "interfaces";
 import { ProductTable } from "../ProductTable";
 
 import { emptyProduct } from "interfaces/IProduto";
+import { TabBar } from "components/display/TabBar";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
@@ -90,17 +91,11 @@ function ProductDashboard() {
                         </div>                        
                     </div>
 
-                    <AppBar elevation={0} position="static">
-                        <Tabs 
-                            value={selectedCategory} 
-                            onChange={handleTabChange}
-                            className={ styles.tagsContainer }
-                        >
-                            { categories.map((category, key) => (
-                                <Tab key={key} label={category.nome} />
-                            )) }
-                        </Tabs>
-                    </AppBar>
+                    <TabBar 
+                        selectedTab={ selectedCategory }
+                        setSelectedTab={ setSelectedCategory }
+                        labelList={categories.map((category) => category.nome)}
+                    />
                 </header>
 
                 <div className={ styles.productListContainer }>
@@ -112,6 +107,7 @@ function ProductDashboard() {
                             "Quantidade"
                         ]} 
                         products={products} 
+                        selectedCategory={ categories[selectedCategory].nome }
                     />
                 </div>
                 
