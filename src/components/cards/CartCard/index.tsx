@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { FaTrashAlt } from "react-icons/fa";
 
@@ -7,13 +7,16 @@ import { Button } from "components/forms/Button";
 import { QuantityButton } from "components/forms/QuantityButton";
 
 import styles from "./CartCard.module.css";
-import { IProduto } from "interfaces";
+import { IItemPedido } from "interfaces";
+import { OrderContext } from "contexts/OrderContext/OrderContext";
 
 type Props = {
-    product: IProduto
+    orderItem: IItemPedido
 }
 
-function CartCard({ product }: Props) {
+function CartCard({ orderItem }: Props) {
+    const { removeFromCart } = useContext(OrderContext);
+
     const [quantity, setQuantity] = useState<number>(1);
 
     function onSum() {
@@ -24,18 +27,22 @@ function CartCard({ product }: Props) {
         if (quantity !== 1) setQuantity(quantity - 1);
     }
 
+    function onRemove() {
+        removeFromCart(orderItem);
+    }
+
     return (
         <div className={ styles.cardContainer }>
             <main>
-                <h6>{ product.nome }</h6>
-                <span>R${ product.preco }</span>
+                <h6>{ orderItem.produto.nome }</h6>
+                <span>R${ orderItem.produto.preco }</span>
 
                 <p>
-                    { product.ingredientes.length !== 0 ? (
-                        product.ingredientes.map((ingredient, index) => (
-                            index === product.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
+                    { orderItem.produto.ingredientes.length !== 0 ? (
+                        orderItem.produto.ingredientes.map((ingredient, index) => (
+                            index === orderItem.produto.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
                         ))) :
-                        product.descricao 
+                        orderItem.produto.descricao 
                     }
                 </p>
             </main>
@@ -47,6 +54,7 @@ function CartCard({ product }: Props) {
                 />
                 <Tooltip title="Remover produto do carrinho" placement="left">
                     <Button 
+                        onClick={() => { onRemove() }}
                         transparent
                         icon={<FaTrashAlt size={17} />}
                     />
