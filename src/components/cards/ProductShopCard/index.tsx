@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import { 
     TextField,
@@ -11,12 +11,15 @@ import { FaShoppingBag } from "react-icons/fa";
 import styles from "./styles.module.css";
 
 import { IProduto } from "interfaces";
+import { OrderContext } from "contexts/OrderContext/OrderContext";
 
 type Props = {
     product: IProduto;
 }
 
 function ProductShopCard({ product }: Props) {
+    const { addToCart } = useContext(OrderContext);
+
     const [showSnack, setShowSnack] = useState<boolean>(false);
     const [snackMessage, setSnackMessage] = useState<string>("");
 
@@ -27,6 +30,7 @@ function ProductShopCard({ product }: Props) {
         if (productCartQuantity === 0) {
             setSnackMessage("Insira a quantidade desejável do produto")
         } else {
+            addToCart(product, productCartQuantity);
             setSnackMessage(`${ product.nome } adicionado ao carrinho`)
         }
 
