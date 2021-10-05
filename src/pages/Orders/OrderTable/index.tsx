@@ -69,8 +69,8 @@ function OrderTable({
 
     return (
         <div>
-            <TableContainer className={ styles.table }>
-                <Table>
+            <TableContainer style={{ overflowY: "hidden"}} className={ styles.table }>
+                <Table style={{ width: "99%" }}>
                     <TableHead className={ styles.tableHeader }>
                         <TableRow>
                             { headers.map((header, index) => (
