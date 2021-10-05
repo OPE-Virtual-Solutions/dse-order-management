@@ -38,8 +38,8 @@ export function OrderProvider({ children }: IProviderProps) {
         if (cartChecker.status) {
             const _cart = cart; 
 
-            _cart[cartChecker.index].quantidade += 1;
-            _orderInfo.valor_total += produto.preco; 
+            _cart[cartChecker.index].quantidade += quantity;
+            _orderInfo.valor_total += roundNumber(produto.preco * quantity); 
 
             setCart(_cart);
         } else {
@@ -60,16 +60,60 @@ export function OrderProvider({ children }: IProviderProps) {
     };
 
     function removeFromCart(orderItem: IItemPedido) {
-        const _orderInfo = orderInfo;
-
-        _orderInfo.valor_total -= orderItem.preco;
-
+        
         setCart(cart => {
             return cart.filter(function(item) {
                 return item !== orderItem
             })
         });
-        setOrderInfo(_orderInfo);
+
+        setOrderInfo(orderInfo => {
+            let summary = { ...orderInfo };
+
+            summary.valor_total = orderInfo.valor_total - (orderItem.produto.preco * orderItem.quantidade);
+
+            return summary;
+        });
+    };
+
+    function sumProductQuantity(orderItem: IItemPedido) {
+        const _cart = cart.map(product => {
+            if (product.id === orderItem.id) {
+                product.quantidade = product.quantidade + 1;
+                
+                setOrderInfo(orderInfo => {
+                    let summary = { ...orderInfo };
+
+                    summary.valor_total = orderInfo.valor_total + orderItem.produto.preco;
+
+                    return summary;
+                });
+            };
+
+            return product;
+        });
+
+        setCart(_cart);
+    };
+
+    function subtractProductQuantity(orderItem: IItemPedido) {
+        const _cart = cart.map(product => {
+            if (product.id === orderItem.id) {
+                product.quantidade = product.quantidade - 1;
+                
+                setOrderInfo(orderInfo => {
+                    let summary = { ...orderInfo };
+
+                    summary.valor_total = orderInfo.valor_total - orderItem.produto.preco;
+
+                    return summary;
+                });
+            };
+
+            return product;
+        });
+
+        setCart(_cart);
     };
 
     return (
@@ -77,7 +121,9 @@ export function OrderProvider({ children }: IProviderProps) {
             addToCart,
             removeFromCart,
             cart,
-            summary: orderInfo
+            summary: orderInfo,
+            sumProductQuantity,
+            subtractProductQuantity,
         }}>
             { children }
         </OrderContext.Provider>

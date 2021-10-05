@@ -9,6 +9,8 @@ import {
 interface IContextValues {
     addToCart: (produto: IProduto, quantity: number) => void;
     removeFromCart: (orderItem: IItemPedido) => void;
+    sumProductQuantity: (orderItem: IItemPedido) => void;
+    subtractProductQuantity: (orderItem: IItemPedido) => void;
     cart: IItemPedido[];
     summary: IPedido;
 }
