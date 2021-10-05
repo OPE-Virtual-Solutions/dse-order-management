@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 
 import { FaTrashAlt } from "react-icons/fa";
 
@@ -15,19 +15,30 @@ type Props = {
 }
 
 function CartCard({ orderItem }: Props) {
-    const { removeFromCart } = useContext(OrderContext);
+    const { 
+        removeFromCart,
+        sumProductQuantity,
+        subtractProductQuantity,
+    } = useContext(OrderContext);
 
     const [quantity, setQuantity] = useState<number>(1);
 
+    useEffect(() => {
+        setQuantity(orderItem.quantidade);
+    }, []);
+
     function onSum() {
+        sumProductQuantity(orderItem);
         setQuantity(quantity + 1);
     };
 
     function onSubtract() {
-        if (quantity !== 1) setQuantity(quantity - 1);
+        subtractProductQuantity(orderItem);
+        setQuantity(quantity - 1);
     }
 
     function onRemove() {
+        setQuantity(0);
         removeFromCart(orderItem);
     }
 
@@ -48,9 +59,9 @@ function CartCard({ orderItem }: Props) {
             </main>
             <footer>
                 <QuantityButton 
-                    onSubtract={onSubtract}
-                    onSum={onSum}
-                    quantity={quantity}
+                    onSubtract={() => { onSubtract() }}
+                    onSum={() => { onSum() }}
+                    quantity={orderItem.quantidade}
                 />
                 <Tooltip title="Remover produto do carrinho" placement="left">
                     <Button 
