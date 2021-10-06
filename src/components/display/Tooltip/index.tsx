@@ -15,7 +15,7 @@ const CustomTooltip = withStyles((theme) => ({
         backgroundColor: "#FFF",
         color: "var(--text)",
         maxWidth: 220,
-        fontSize: theme.typography.pxToRem(13),
+        fontSize: theme.typography.pxToRem(12),
         fontWeight: 600,
         border: "1px solid var(--divider)"
     }

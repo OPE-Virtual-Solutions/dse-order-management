@@ -8,7 +8,7 @@
     color: var(--subtext);
 
     font-weight: 700;
-    font-size: 0.789rem;
+    font-size: 0.689rem;
 
     margin-bottom: 1rem;
 
@@ -24,6 +24,10 @@
 .tableRow {
     min-width: 0;
     margin-bottom: 1rem;
+}
+
+.tableRow > td {
+    font-size: 0.8rem;
 }
 
 .tableRow tr:last-of-type > td {

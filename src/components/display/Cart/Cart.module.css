@@ -2,15 +2,11 @@
     display: flex;
     flex-direction: column;
 
-    width: 425px;
+    width: 350px;
 
     height: 100%;
 
     position: relative;
-}
-
-.cartContainer > footer {
-    padding: 1.5rem;
 }
 
 .cartContainer > footer > div {
@@ -19,7 +15,16 @@
     align-items: center;
     justify-content: space-between;
 
-    margin: 0.7rem 0rem;
+    margin: 0.3rem 0rem;
+}
+
+.cartContainer > footer > div > span {
+    font-size: 0.85rem;
+}
+
+.cartContainer > footer > div:last-of-type > span {
+    font-weight: 700;
+    font-size: 0.93rem;
 }
 
 .emptyCartContainer {
@@ -32,9 +37,10 @@
     align-items: center;
 
     height: 100vh;
+    width: 350px;
 }
 
-.emptyCartContainer > div > h5 {
+.emptyCartContainer > div > h6 {
     font-weight: 700;
 }
 
@@ -42,7 +48,7 @@
     text-transform: uppercase;
     color: var(--subtext);
 
-    font-size: 0.7rem;
+    font-size: 0.6rem;
     margin-top: 1rem;
 
     text-align: center;
@@ -55,12 +61,12 @@
     flex-direction: column;
     align-items: center;
 
-    padding: 6rem 2.5rem;
+    padding: 4.5rem 1rem;
 
     border: 1px dashed var(--divider);
     border-radius: 5px;
 
-    width: 60%;
+    width: 65%;
 }
 
 .fullContainer {
@@ -86,18 +92,23 @@
     font-weight: 700;
 
     margin-top: 1.5rem;
+    font-size: 0.8rem;
 }
 
 .listContainer > main > section:first-of-type > h6 {
     margin-top: 0rem;
 }
 
-.cartContainer header h4 {
+.cartContainer header h5 {
     font-weight: 700;
 }
 
 .cartContainer > footer {
     position: absolute; 
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     width: 100%;
 
@@ -105,7 +116,8 @@
 
     border-top: 1px solid var(--divider);
 
-    min-height: 30vh;
+    height: 30vh;
+    padding: 1.5rem;
 }
 
 .emptyCategoryContainer {

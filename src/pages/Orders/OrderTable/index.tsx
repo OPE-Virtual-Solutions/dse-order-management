@@ -55,7 +55,14 @@ function OrderTable({
                         type="number" 
                         defaultValue={0} 
                         variant="outlined" 
+                        label="Qtd."
                         size="small" 
+                        inputProps={{
+                            style: {
+                                fontSize: 13,
+                                height: 10,
+                            }
+                        }}
                     />
                 </TableCell>
                 <TableCell>

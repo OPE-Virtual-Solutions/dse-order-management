@@ -2,7 +2,7 @@
     padding: 0.4rem 1.2rem;
 
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 
     transition: background 0.5s;
 
@@ -25,7 +25,6 @@
 
 .buttonTransparent {
     background: transparent;
-    /* height: 2.4375rem; */
 
     border: 1px solid var(--divider);
 
@@ -35,7 +34,7 @@
 
     color: var(--text);
     text-transform: uppercase;
-    font-size: 0.785rem;
+    font-size: 0.685rem;
     font-weight: 500;
 
     margin-left: 0.3rem;

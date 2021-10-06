@@ -3,7 +3,7 @@
 
     border-radius: 5px;
 
-    width: 45%;
+    width: 35%;
 }
 
 .buttonContainer button {
@@ -17,7 +17,7 @@
 }
 
 .buttonContainer > span {
-    font-size: 0.9rem;
+    font-size: 0.77rem;
     font-weight: 500;
 }
 
@@ -31,7 +31,7 @@
 
 .buttonContainer button, .buttonContainer span {
     background: var(--primary);
-    padding: 0.3rem;
+    padding: 0.2rem;
 
     margin: 0 1px;
 

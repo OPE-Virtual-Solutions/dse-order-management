@@ -65,9 +65,16 @@ function ProductShopCard({ product }: Props) {
                         type="number" 
                         variant="outlined" 
                         size="small" 
-                        label="Quantidade"
+                        label="Qtd."
                         defaultValue={0}
                         required
+
+                        inputProps={{
+                            style: {
+                                fontSize: 13,
+                                height: 10,
+                            }
+                        }}
                     />
 
                     <Button 

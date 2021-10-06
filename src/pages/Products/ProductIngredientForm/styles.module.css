@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.ingredientCard span {
+    font-size: 0.85rem;
+}
+
 .ingredientAddContainer {
     display: flex;
 }

@@ -21,11 +21,11 @@ function QuantityButton({
     return (
         <div className={ styles.buttonContainer }>
             <button disabled={ quantity === 1 ? true : false } onClick={onSubtract}>
-                <FaChevronDown size={12} />
+                <FaChevronDown size={10} />
             </button>
             <span>{ quantity }</span>
             <button onClick={onSum}>
-                <FaChevronUp size={12}/>
+                <FaChevronUp size={10}/>
             </button>
         </div>
     )

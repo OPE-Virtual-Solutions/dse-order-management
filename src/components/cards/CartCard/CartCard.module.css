@@ -10,8 +10,8 @@
     margin-bottom: 0.8rem;
 }
 
-.cardContainer h6, .cardContainer > span {
-    font-size: 1.039rem;
+.cardContainer h6, .cardContainer > main > span {
+    font-size: 0.85rem;
 }
 
 .cardContainer h6 {
@@ -30,9 +30,10 @@
 .cardContainer p {
     color: var(--subtext);
     font-weight: 300;
-    font-size: 0.88rem;
+    font-size: 0.81rem;
     
-    margin-top: 0.8rem;
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
 }
 
 .cardContainer footer {

@@ -30,7 +30,11 @@ function TabBar({
                 className={ styles.tabBarContainer }
             >
                 { labelList.map((label, index) => (
-                    <Tab key={index} label={label} />
+                    <Tab 
+                        style={{ fontSize: "0.78rem" }}
+                        key={index} 
+                        label={label} 
+                    />
                 ))}
             </Tabs>
         </AppBar>

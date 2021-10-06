@@ -58,7 +58,7 @@ function ProductDashboard() {
             <div className={ styles.productDashboardContainer }>
                 <header>
                     <div>
-                        <h4>Produtos</h4>
+                        <h5>Produtos</h5>
 
                         <div>
                             <TextField 
@@ -67,6 +67,17 @@ function ProductDashboard() {
                                 label="Pesquisar produto" 
                                 size="small"
                                 variant="outlined"
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 13,
+                                    }
+                                }}
+                                inputProps={{
+                                    style: {
+                                        fontSize: 15,
+                                        height: 14,
+                                    }
+                                }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">

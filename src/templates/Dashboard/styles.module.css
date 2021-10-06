@@ -11,7 +11,7 @@
 }
 
 .cartContainer {
-    width: 650px;
+    width: 450px;
     height: 100vh;
 
     border-left: 1px solid var(--divider);

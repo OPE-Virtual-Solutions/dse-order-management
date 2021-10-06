@@ -36,8 +36,8 @@ function Cart() {
             <div className={ styles.emptyCartContainer }>
 
                 <div>
-                    <FiShoppingBag size={20} />
-                    <h5>Carrinho vazio</h5>
+                    <FiShoppingBag size={18} />
+                    <h6>Carrinho vazio</h6>
                     <span>Adicione um produto para continuar com o atendimento</span>
                 </div>
 
@@ -52,7 +52,7 @@ function Cart() {
                 ${location.pathname === "/order" ? styles.fullContainer : styles.containerWithFooter}
             `}>
                 <header>
-                    <h4>Carrinho</h4>
+                    <h5>Carrinho</h5>
                 </header>
 
                 <main>
@@ -78,6 +78,9 @@ function Cart() {
                         <span>Taxa</span>
                         <span>R$--</span>
                     </div>
+
+                    {/* <hr /> */}
+
                     <div>
                         <span>Total</span>
                         <span>R${ summary.valor_total }</span>

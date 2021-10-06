@@ -37,7 +37,7 @@ function OrderDashboard() {
 
                 <header>
                     <div>
-                        <h4>Atendimento ao Cliente</h4>
+                        <h5>Atendimento ao Cliente</h5>
                         
                         <TextField 
                             type="text" 
@@ -45,6 +45,17 @@ function OrderDashboard() {
                             label="Pesquisar produto" 
                             size="small"
                             variant="outlined"
+                            InputLabelProps={{
+                                style: {
+                                    fontSize: 13,
+                                }
+                            }}
+                            inputProps={{
+                                style: {
+                                    fontSize: 15,
+                                    height: 14,
+                                }
+                            }}
                             InputProps={{
                                 endAdornment: (
                                     <InputAdornment position="end">

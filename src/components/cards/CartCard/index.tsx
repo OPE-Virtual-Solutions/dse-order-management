@@ -46,7 +46,7 @@ function CartCard({ orderItem }: Props) {
         <div className={ styles.cardContainer }>
             <main>
                 <h6>{ orderItem.produto.nome }</h6>
-                <span>R${ orderItem.produto.preco }</span>
+                <span>R${ orderItem.produto.preco } x { orderItem.quantidade }</span>
 
                 <p>
                     { orderItem.produto.ingredientes.length !== 0 ? (
@@ -67,7 +67,7 @@ function CartCard({ orderItem }: Props) {
                     <Button 
                         onClick={() => { onRemove() }}
                         transparent
-                        icon={<FaTrashAlt size={17} />}
+                        icon={<FaTrashAlt size={12} />}
                     />
                 </Tooltip>
             </footer>

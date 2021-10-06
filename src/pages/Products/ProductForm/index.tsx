@@ -14,8 +14,8 @@ type Props = {
 function ProductForm({ product, setCategory }: Props) {
     return (
         <div className={ styles.productFormContainer }>
-            { product.id === 0 && ( <h4>Adicionar produto</h4> )}
-            { product.id !== 0 && ( <h4>Produto #{ product.id }</h4> )}
+            { product.id === 0 && ( <h5>Adicionar produto</h5> )}
+            { product.id !== 0 && ( <h5>Produto #{ product.id }</h5> )}
 
             <div className="mb-3">
                 <TextField
