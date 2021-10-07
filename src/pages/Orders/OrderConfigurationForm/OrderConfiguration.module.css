@@ -1,1 +1,92 @@
-.orderConfigurationContainer {}
+.orderConfigurationContainer {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+
+    /* border: 1px solid var(--divider);
+    border-radius: 10px; */
+
+    margin-bottom: 20px;
+}
+
+.orderConfigurationContainer label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--subtext);
+}
+
+.orderConfigurationContainer select  {
+    font-size: 0.875rem;
+}
+
+.configurationColumn {
+    flex-grow: 1;
+    width: 100%;
+
+    padding: 1rem;
+}
+
+.configurationColumn h6 {
+    font-weight: 700;
+}
+
+.configurationColumn:first-of-type {
+    border-right: 1px solid var(--divider);
+}
+
+.configurationColumn > header {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    height: auto;
+}
+
+.configurationColumn h6 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.configurationColumn > main {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    align-items: flex-start;
+
+    height: auto;
+}
+
+.orderLocationCard, .orderConsumeCard, .orderPaymentInfoCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0.55rem 0.75rem;
+
+    margin-bottom: 0.5rem;
+}
+
+.orderLocationCard {
+    border: 1px dashed var(--secondary);
+    border-radius: 5px;
+}
+
+.orderConsumeCard {
+    border: 1px solid var(--secondary);
+    border-radius: 5px;
+}
+
+.orderPaymentInfoCard {
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}
+
+.orderLocationCard span, 
+.orderConsumeCard span,
+.orderPaymentInfoCard span {
+    font-size: 0.9rem;
+}
