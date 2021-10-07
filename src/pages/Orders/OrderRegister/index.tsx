@@ -20,9 +20,9 @@ function OrderRegister() {
     const [activeStep, setActiveStep] = useState<number>(0);
 
     const steps = [
-        "Resumo do pedido",
-        "Configurações e pagamento",
-        "Conclusão"
+        "Configurações gerais",
+        "Configurações de pagamento",
+        "Finalização"
     ];
 
     function handleNextStep() {
@@ -37,7 +37,7 @@ function OrderRegister() {
         <Dashboard showCart>
             <div className={styles.orderRegisterContainer}>
                 <header>
-                    <h4>Registrar novo pedido</h4>
+                    <h5>Registrar novo pedido</h5>
                 </header>
 
                 <main>
@@ -47,18 +47,58 @@ function OrderRegister() {
                     />
 
                     { activeStep === 0 && ( 
-                        <OrderSummary
-                            subtotal={49.99}
-                            tax={0}
-                            total={49.99}
-                        />
+                        <div className={ styles.configurationColumn }>
+                            <header>
+                                <h6>Configurações gerais</h6>
+                            </header>
+
+                            <hr />
+
+                            <main>
+                                <div className="form-check">
+                                    <input checked disabled className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
+                                    <label className="form-check-label" htmlFor="flexCheckDefault">
+                                        Pedido efetuado presencialmente
+                                    </label>
+                                </div>
+                                
+                                <div className="form-group mt-2 w-100">
+                                    <label htmlFor="">Local de consumo (tipo de pedido)</label>
+                                    <select className="form-select form-select-md" aria-label="Default select example">
+                                        <option selected>Selecione o local de consumo</option>
+                                        <option value="1">No local</option>
+                                        <option value="2">Pra viagem</option>
+                                    </select>
+                                </div>
+                            </main>
+                        </div>
                     )} 
 
                     { activeStep === 1 && ( 
-                        <OrderConfigurationForm />
+                        <div className={ styles.configurationColumn }>
+                            <header>
+                                <h6>Configurações de Pagamento</h6>
+                            </header>
+
+                            <hr />
+
+                            <main>
+                                <div className="form-group w-100">
+                                    <label htmlFor="">Pagamento em</label>
+                                    <select className="form-select" aria-label="Default select example">
+                                        <option selected>Selecione o tipo de pagamento</option>
+                                        <option value="1">Dinheiro</option>
+                                        <option value="2">Cartão de Crédito</option>
+                                        <option value="2">Cartão de Débito</option>
+                                    </select>
+                                </div>
+                            </main>
+                        </div>
                     )} 
 
-                    { activeStep === 2 && ( <span>Conclusão</span> ) } 
+                    { activeStep === 2 && (
+                        <OrderConfigurationForm />
+                    )}
 
                     <footer>
                         <Button

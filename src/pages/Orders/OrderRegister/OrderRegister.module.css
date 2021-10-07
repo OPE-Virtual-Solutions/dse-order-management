@@ -4,7 +4,7 @@
     padding: 1rem;
 }
 
-.orderRegisterContainer header > h4 {
+.orderRegisterContainer header > h5 {
     font-weight: 700;
 }
 
@@ -17,7 +17,7 @@
 
     height: 90vh;
 
-    padding: 5.5rem 7rem;
+    padding: 2rem 7rem;
 }
 
 .orderRegisterContainer footer {
@@ -44,4 +44,53 @@
 
 .orderSummary > div:last-of-type {
     font-weight: 700;
+}
+
+.configurationColumn {
+    flex-grow: 1;
+    width: 30vw;
+
+    /* padding: 1rem; */
+
+    /* border: 1px solid var(--divider);
+    border-radius: 5px; */
+
+    margin-bottom: 20px;
+}
+
+.configurationColumn > header {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    height: auto;
+}
+
+.configurationColumn h6 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.configurationColumn > main {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    align-items: flex-start;
+
+    height: auto;
+}
+
+.configurationColumn:first-of-type {
+    border-right: 1px solid var(--divider);
+}
+
+.configurationColumn label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--subtext);
+}
+
+.configurationColumn select  {
+    font-size: 0.875rem;
 }
