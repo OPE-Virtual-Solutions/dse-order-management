@@ -1,0 +1,43 @@
+.globalConfigurationContainer {
+    flex-grow: 1;
+    width: 30vw;
+
+    margin-bottom: 20px;
+}
+
+.globalConfigurationContainer > header {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    height: auto;
+}
+
+.globalConfigurationContainer h6 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.globalConfigurationContainer > main {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    align-items: flex-start;
+
+    height: auto;
+}
+
+.globalConfigurationContainer:first-of-type {
+    border-right: 1px solid var(--divider);
+}
+
+.globalConfigurationContainer label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--subtext);
+}
+
+.globalConfigurationContainer select  {
+    font-size: 0.875rem;
+}
