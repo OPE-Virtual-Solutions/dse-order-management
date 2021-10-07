@@ -13,8 +13,9 @@ import { Dashboard } from "templates/Dashboard";
 
 import styles from "./OrderRegister.module.css";
 
-import { OrderSummary } from "../OrderSummary";
-import { OrderConfigurationForm } from "../OrderConfigurationForm";
+import { OrderConclusion } from "../OrderConfigurationForm";
+import { GlobalConfiguration } from "components/cases/Orders/orderSteps/GlobalConfiguration";
+import { PaymentConfiguration } from "components/cases/Orders/orderSteps/PaymentConfiguration";
 
 function OrderRegister() {
     const [activeStep, setActiveStep] = useState<number>(0);
@@ -47,57 +48,15 @@ function OrderRegister() {
                     />
 
                     { activeStep === 0 && ( 
-                        <div className={ styles.configurationColumn }>
-                            <header>
-                                <h6>Configurações gerais</h6>
-                            </header>
-
-                            <hr />
-
-                            <main>
-                                <div className="form-check">
-                                    <input checked disabled className="form-check-input" type="checkbox" value="" id="flexCheckDefault" />
-                                    <label className="form-check-label" htmlFor="flexCheckDefault">
-                                        Pedido efetuado presencialmente
-                                    </label>
-                                </div>
-                                
-                                <div className="form-group mt-2 w-100">
-                                    <label htmlFor="">Local de consumo (tipo de pedido)</label>
-                                    <select className="form-select form-select-md" aria-label="Default select example">
-                                        <option selected>Selecione o local de consumo</option>
-                                        <option value="1">No local</option>
-                                        <option value="2">Pra viagem</option>
-                                    </select>
-                                </div>
-                            </main>
-                        </div>
+                        <GlobalConfiguration />
                     )} 
 
                     { activeStep === 1 && ( 
-                        <div className={ styles.configurationColumn }>
-                            <header>
-                                <h6>Configurações de Pagamento</h6>
-                            </header>
-
-                            <hr />
-
-                            <main>
-                                <div className="form-group w-100">
-                                    <label htmlFor="">Pagamento em</label>
-                                    <select className="form-select" aria-label="Default select example">
-                                        <option selected>Selecione o tipo de pagamento</option>
-                                        <option value="1">Dinheiro</option>
-                                        <option value="2">Cartão de Crédito</option>
-                                        <option value="2">Cartão de Débito</option>
-                                    </select>
-                                </div>
-                            </main>
-                        </div>
+                        <PaymentConfiguration />
                     )} 
 
                     { activeStep === 2 && (
-                        <OrderConfigurationForm />
+                        <OrderConclusion />
                     )}
 
                     <footer>
