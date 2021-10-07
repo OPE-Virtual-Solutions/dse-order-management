@@ -49,7 +49,7 @@ function Cart() {
         <div className={ styles.cartContainer }>
             <div className={`
                 ${styles.listContainer} 
-                ${location.pathname === "/order" ? styles.fullContainer : styles.containerWithFooter}
+                ${styles.containerWithFooter}
             `}>
                 <header>
                     <h5>Carrinho</h5>
