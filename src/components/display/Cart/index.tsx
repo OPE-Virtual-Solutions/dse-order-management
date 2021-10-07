@@ -68,31 +68,38 @@ function Cart() {
                 </main>
             </div>
             
-            { location.pathname !== "/order" && (
-                <footer>
-                    <div>
-                        <span>Subtotal</span>
-                        <span>R$19.00</span>
-                    </div>
-                    <div>
-                        <span>Taxa</span>
-                        <span>R$--</span>
-                    </div>
+            <footer>
+                <h6>Resumo do pedido</h6>
+                <div>
+                    <span>Subtotal</span>
+                    <span>R$--</span>
+                </div>
+                <div>
+                    <span>Taxa</span>
+                    <span>R$--</span>
+                </div>
 
-                    {/* <hr /> */}
+                <div>
+                    <span>Total</span>
+                    <span>R${ summary.valor_total }</span>
+                </div>
 
-                    <div>
-                        <span>Total</span>
-                        <span>R${ summary.valor_total }</span>
-                    </div>
-
+                { location.pathname !== "/order" && (
                     <Button
                         onClick={() => history.push("/order") }
                         className="w-100 mt-3"
                         text="Continuar com o Pedido"
                     />
-                </footer>
-            )}
+                )}
+  
+                { location.pathname === "/order" && (
+                    <Button
+                        onClick={() => history.goBack() }
+                        className="w-100 mt-3"
+                        text="Voltar para a tela principal"
+                    />
+                )}
+            </footer>
         </div>
     )
 }
