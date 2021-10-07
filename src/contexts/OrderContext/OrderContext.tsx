@@ -116,6 +116,20 @@ export function OrderProvider({ children }: IProviderProps) {
         setCart(_cart);
     };
 
+    function onSummaryChange(summary: IPedido) {
+        setOrderInfo(orderInfo => {
+            let _summary = { ...orderInfo };
+            _summary = summary;
+
+            return _summary;
+        });
+    };
+
+    function registerOrder() {
+        console.log("Detalhes do Pedido:", orderInfo);
+        console.log("Carrinho:", cart);
+    };
+
     return (
         <OrderContext.Provider value={{
             addToCart,
@@ -124,6 +138,8 @@ export function OrderProvider({ children }: IProviderProps) {
             summary: orderInfo,
             sumProductQuantity,
             subtractProductQuantity,
+            onSummaryChange,
+            registerOrder
         }}>
             { children }
         </OrderContext.Provider>

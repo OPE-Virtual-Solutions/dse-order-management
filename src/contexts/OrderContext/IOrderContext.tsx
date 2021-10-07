@@ -13,6 +13,8 @@ interface IContextValues {
     subtractProductQuantity: (orderItem: IItemPedido) => void;
     cart: IItemPedido[];
     summary: IPedido;
+    onSummaryChange: (summary: IPedido) => void;
+    registerOrder: () => void;
 }
 
 interface IProviderProps {
@@ -31,8 +33,9 @@ export type {
 }
 
 export const EmptyOrder: IPedido = {
+    id: Math.random(),
     atendimento_presencial: true,
     status: "",
-    metodo_pagamento: "",
-    valor_total: 0
+    valor_total: 0,
+    valor_pago: 0,
 }
