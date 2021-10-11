@@ -4,7 +4,7 @@ import { IProduto } from 'interfaces'
 
 import styles from "./styles.module.css";
 
-import { ProductModal } from "../ProductModal";
+import { ProductModal } from "components/cases/Products/ProductModal";
 import { Dialog } from "@material-ui/core";
 
 import { emptyProduct } from "interfaces/IProduto";

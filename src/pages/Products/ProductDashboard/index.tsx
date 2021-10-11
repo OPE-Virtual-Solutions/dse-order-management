@@ -8,9 +8,6 @@ import {
 import styles from "./styles.module.css";
 
 import {
-    AppBar,
-    Tabs,
-    Tab,
     InputAdornment,
     TextField,
     Dialog,
@@ -20,10 +17,10 @@ import { Button } from "components/forms/Button";
 
 import { categories, products } from "./data";
 import { Dashboard } from "templates/Dashboard";
-import { ProductModal } from "../ProductModal";
+import { ProductModal } from "components/cases/Products/ProductModal";
 
 import { IProduto } from "interfaces";
-import { ProductTable } from "../ProductTable";
+import { ProductTable } from "components/cases/Products/ProductTable";
 
 import { emptyProduct } from "interfaces/IProduto";
 import { TabBar } from "components/display/TabBar";
