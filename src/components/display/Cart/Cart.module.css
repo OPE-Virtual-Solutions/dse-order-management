@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: space-between;
 
-    margin: 0.3rem 0rem;
+    margin: 0.2rem 0rem;
 }
 
 .cartContainer > footer > div > span {
@@ -24,7 +24,7 @@
 
 .cartContainer > footer > div:last-of-type > span {
     font-weight: 700;
-    font-size: 0.93rem;
+    font-size: 1rem;
 }
 
 .emptyCartContainer {
@@ -74,7 +74,7 @@
 }
 
 .containerWithFooter {
-    height: 70vh;
+    height: 65vh;
 }
 
 .listContainer { 
@@ -116,8 +116,12 @@
 
     border-top: 1px solid var(--divider);
 
-    height: 30vh;
+    height: 35vh;
     padding: 1.5rem;
+}
+
+.cartContainer > footer h6 {
+    font-weight: 700;
 }
 
 .emptyCategoryContainer {

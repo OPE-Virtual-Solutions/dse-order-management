@@ -7,10 +7,6 @@
     overflow-y: auto;
 }
 
-.orderDashboardContainer > header {
-    height: 16.8vh;
-}
-
 .orderDashboardContainer > header > div {
     padding: 1.1rem 1.1rem 0.5rem 1.1rem;
 
@@ -33,11 +29,13 @@
 
 .orderDashboardContainer > main {
     position: relative;
-    height: 83vh;
+    
+    flex-grow: 1;
 
     padding: 5rem;
 
-    overflow-y: scroll;
+    overflow-y: auto;
+    border-right: 9px solid var(--background);
 }
 
 .gridButton {

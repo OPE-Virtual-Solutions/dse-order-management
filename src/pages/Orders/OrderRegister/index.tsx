@@ -13,16 +13,17 @@ import { Dashboard } from "templates/Dashboard";
 
 import styles from "./OrderRegister.module.css";
 
-import { OrderSummary } from "../OrderSummary";
-import { OrderConfigurationForm } from "../OrderConfigurationForm";
+import { OrderConclusion } from "../OrderConfigurationForm";
+import { GlobalConfiguration } from "components/cases/Orders/orderSteps/GlobalConfiguration";
+import { PaymentConfiguration } from "components/cases/Orders/orderSteps/PaymentConfiguration";
 
 function OrderRegister() {
     const [activeStep, setActiveStep] = useState<number>(0);
 
     const steps = [
-        "Resumo do pedido",
-        "Configurações e pagamento",
-        "Conclusão"
+        "Configurações gerais",
+        "Configurações de pagamento",
+        "Finalização"
     ];
 
     function handleNextStep() {
@@ -37,7 +38,7 @@ function OrderRegister() {
         <Dashboard showCart>
             <div className={styles.orderRegisterContainer}>
                 <header>
-                    <h4>Registrar novo pedido</h4>
+                    <h5>Registrar novo pedido</h5>
                 </header>
 
                 <main>
@@ -47,18 +48,16 @@ function OrderRegister() {
                     />
 
                     { activeStep === 0 && ( 
-                        <OrderSummary
-                            subtotal={49.99}
-                            tax={0}
-                            total={49.99}
-                        />
+                        <GlobalConfiguration />
                     )} 
 
                     { activeStep === 1 && ( 
-                        <OrderConfigurationForm />
+                        <PaymentConfiguration />
                     )} 
 
-                    { activeStep === 2 && ( <span>Conclusão</span> ) } 
+                    { activeStep === 2 && (
+                        <OrderConclusion />
+                    )}
 
                     <footer>
                         <Button
