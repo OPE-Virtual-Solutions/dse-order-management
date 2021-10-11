@@ -17,7 +17,7 @@ import styles from "./Cart.module.css";
 import { FiShoppingBag } from "react-icons/fi";
 
 import { OrderContext } from "contexts/OrderContext/OrderContext";
-import { categories } from "pages/Products/ProductDashboard/data";
+import { categories } from "utils/placeholderData";
 
 function Cart() {
     let history = useHistory();

@@ -6,7 +6,7 @@ import {
     IIngrediente, 
     IProduto 
 } from "interfaces";
-import { ingredients } from "../ProductDashboard/data";
+import { ingredients } from "utils/placeholderData";
 
 import { Autocomplete } from "@material-ui/lab";
 import { TextField } from "@material-ui/core";

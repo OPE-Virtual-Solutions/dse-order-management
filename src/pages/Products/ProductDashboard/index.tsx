@@ -15,7 +15,7 @@ import {
 
 import { Button } from "components/forms/Button";
 
-import { categories, products } from "./data";
+import { categories, products } from "utils/placeholderData";
 import { Dashboard } from "templates/Dashboard";
 import { ProductModal } from "components/cases/Products/ProductModal";
 

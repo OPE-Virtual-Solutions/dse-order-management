@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 import { InputAdornment, TextField } from "@material-ui/core";
 import { ICategoria, IProduto } from "interfaces";
-import { categories } from "pages/Products/ProductDashboard/data";
+import { categories } from "utils/placeholderData";
 import { Autocomplete } from "@material-ui/lab";
 
 type Props = {
