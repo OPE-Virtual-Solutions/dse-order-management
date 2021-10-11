@@ -18,7 +18,7 @@ import { TabBar } from "components/display/TabBar";
 
 import { categories, products } from "pages/Products/ProductDashboard/data";
 
-import { OrderTable } from "../OrderTable";
+import { OrderTable } from "components/cases/Orders/OrderTable";
 
 function OrderDashboard() {
     document.title = "DSE - Pedidos"
