@@ -29,7 +29,6 @@ function OrderTable({
     products,
     selectedCategory
 }: Props) {
-
     function renderTableRow(product: IProduto) {
         return (
             <TableRow className={ styles.tableRow }>
@@ -53,6 +52,7 @@ function OrderTable({
                 <TableCell style={{ maxWidth: 100 }}>
                     <TextField 
                         type="number" 
+                        id="inputQnt"
                         defaultValue={0} 
                         variant="outlined" 
                         label="Qtd."
@@ -67,7 +67,7 @@ function OrderTable({
                 </TableCell>
                 <TableCell>
                     <Tooltip title="Adicionar ao carrinho" placement="right">
-                        <Button transparent icon={<FaShoppingBag />}/>
+                        <Button type="submit" transparent icon={<FaShoppingBag />}/>
                     </Tooltip>
                 </TableCell>
             </TableRow>

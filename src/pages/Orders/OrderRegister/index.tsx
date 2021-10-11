@@ -13,9 +13,9 @@ import { Dashboard } from "templates/Dashboard";
 
 import styles from "./OrderRegister.module.css";
 
-import { OrderConclusion } from "../OrderConfigurationForm";
-import { GlobalConfiguration } from "components/cases/Orders/orderSteps/GlobalConfiguration";
-import { PaymentConfiguration } from "components/cases/Orders/orderSteps/PaymentConfiguration";
+import { OrderConclusion } from "components/cases/Orders/OrderSteps/OrderConclusion";
+import { GlobalConfiguration } from "components/cases/Orders/OrderSteps/GlobalConfiguration";
+import { PaymentConfiguration } from "components/cases/Orders/OrderSteps/PaymentConfiguration";
 
 function OrderRegister() {
     const [activeStep, setActiveStep] = useState<number>(0);
