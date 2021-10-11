@@ -34,7 +34,8 @@
 
     padding: 5rem;
 
-    overflow-y: scroll;
+    overflow-y: auto;
+    border-right: 9px solid var(--background);
 }
 
 .gridButton {
