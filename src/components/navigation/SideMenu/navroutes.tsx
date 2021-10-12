@@ -4,7 +4,7 @@ import {
     FaShoppingBag, 
     FaPepperHot,
     FaHamburger,
-    FaThList
+    FaTrello
 } from "react-icons/fa";
 
 type NavRoute = {
@@ -15,22 +15,22 @@ type NavRoute = {
     icon: ReactNode;
 }
 
-const iconSize = 20;
+const iconSize = 16;
 
 const navlinkRoutes: NavRoute[] = [
     {
         id: 1,
-        title: "Pedidos",
-        path: "/orders",
+        title: "Atendimento",
+        path: "/order-dashboard",
         role: "",
         icon: <FaShoppingBag size={iconSize} />
     },
     {
         id: 2,
-        title: "Histórico de Pedidos",
-        path: "/orderHistory",
+        title: "Quadro de pedidos",
+        path: "/order-history",
         role: "",
-        icon: <FaThList size={iconSize} />
+        icon: <FaTrello size={iconSize} />
     },
     {
         id: 3,

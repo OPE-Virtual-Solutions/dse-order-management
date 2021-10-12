@@ -1,0 +1,76 @@
+.cardContainer {
+    padding: 1rem;
+
+    min-width: 0;
+    max-width: 50%;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}
+
+.cardContainer:nth-child(1n) {
+    max-width: 47%;
+}
+
+.cardContainer main {
+    display: flex;
+}
+
+.cardContainer footer > form {
+    display: flex;
+    justify-content: space-between;
+
+    padding-top: 1rem;
+}
+
+.cardContainer footer > form > div {
+    width: 5.30rem;
+}
+
+.productInfoContainer { 
+    padding: 0rem 1rem;
+    width: 100%;
+    min-width: 0;
+
+    align-self: center;
+}
+
+.productInfoContainer h5, .productInfoContainer span {
+    font-size: 0.85rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.productInfoContainer h5 {
+    font-weight: 500;
+    font-size: 0.85rem;
+
+    margin: 0;
+    text-transform: uppercase;
+}
+
+.productInfoContainer p {
+    font-weight: 300;
+    font-size: 0.81rem;
+    color: var(--subtext);
+
+    min-height: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    margin-top: 0.5rem;
+}
+
+.placeholderPic {
+    min-width: 85px;
+    min-height: 85px;
+    max-height: 85px;
+
+    background: #F1F1F1; 
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+}

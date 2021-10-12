@@ -1,0 +1,21 @@
+.orderSummaryContainer {
+    margin-bottom: 3rem;
+}
+
+.orderSummaryContainer > div {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 0.5rem 0.7rem;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    min-width: 24vw;
+
+    margin: 0.5rem 0rem;
+}
+
+.orderSummaryContainer > div:last-of-type {
+    font-weight: 700;
+}

@@ -1,0 +1,43 @@
+.buttonContainer {
+    display: flex;
+
+    border-radius: 5px;
+
+    width: 35%;
+}
+
+.buttonContainer button {
+    border: 0px;
+
+    transition: background 0.3s;
+}
+
+.buttonContainer button:hover {
+    background: var(--secondary);
+}
+
+.buttonContainer > span {
+    font-size: 0.77rem;
+    font-weight: 500;
+}
+
+.buttonContainer button:first-of-type {
+    border-radius: 5px 0px 0px 5px;
+}
+
+.buttonContainer button:last-of-type {
+    border-radius: 0px 5px 5px 0px;
+}
+
+.buttonContainer button, .buttonContainer span {
+    background: var(--primary);
+    padding: 0.2rem;
+
+    margin: 0 1px;
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

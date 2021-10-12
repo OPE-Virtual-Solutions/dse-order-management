@@ -30,7 +30,7 @@ function IngredientDashboard() {
         <Dashboard>
             <div className={ styles.ingredientDashboardContainer }>
                 <header>
-                    <h4>Ingredientes</h4>
+                    <h5>Ingredientes</h5>
 
                     <div>
                         <TextField 

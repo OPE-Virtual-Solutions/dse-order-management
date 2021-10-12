@@ -2,6 +2,8 @@
     width: 100%;
     height: 100%;
 
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +20,7 @@
     color: var(--subtext);
     text-transform: uppercase;
     font-weight: 600;
-    font-size: 0.756rem;
+    font-size: 0.686rem;
 }
 
 .tableRowContainer {
@@ -36,6 +38,16 @@
     cursor: pointer;
 
     transition: background 0.2s;
+}
+
+.tableRowContainer span {
+    padding-right: 1rem;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    font-size: 0.85rem;
 }
 
 .tableRowContainer:last-of-type {

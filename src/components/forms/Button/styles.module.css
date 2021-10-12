@@ -2,7 +2,7 @@
     padding: 0.4rem 1.2rem;
 
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
 
     transition: background 0.5s;
 
@@ -23,6 +23,42 @@
     background: transparent;
 }
 
+.buttonTransparent {
+    background: transparent;
+
+    border: 1px solid var(--divider);
+
+    border-radius: 5px;
+
+    transition: background 0.5s;
+
+    color: var(--text);
+    text-transform: uppercase;
+    font-size: 0.685rem;
+    font-weight: 500;
+
+    margin-left: 0.3rem;
+
+    padding: 0.5rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.buttonTransparent span {
+    margin-left: 0.5rem;
+}
+
+.buttonTransparent:hover {
+    background: #F1F1F1;
+}
+
+.buttonTransparent:disabled,
+.buttonTransparent[disabled] {
+    background: lightgray;
+    color: gray;
+}
+
 .button:hover, .buttonOutline:hover {
     background: var(--secondary);
 }
@@ -30,3 +66,4 @@
 .button svg, .buttonOutline svg {
     margin-right: 0.8rem;
 }
+

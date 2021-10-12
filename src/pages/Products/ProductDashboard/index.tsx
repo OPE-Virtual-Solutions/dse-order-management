@@ -8,9 +8,6 @@ import {
 import styles from "./styles.module.css";
 
 import {
-    AppBar,
-    Tabs,
-    Tab,
     InputAdornment,
     TextField,
     Dialog,
@@ -18,13 +15,15 @@ import {
 
 import { Button } from "components/forms/Button";
 
+import { categories, products } from "utils/placeholderData";
 import { Dashboard } from "templates/Dashboard";
-import { ProductModal } from "../ProductModal";
+import { ProductModal } from "components/cases/Products/ProductModal";
 
-import { ICategoria, IProduto } from "interfaces";
-import { ProductTable } from "../ProductTable";
+import { IProduto, ICategoria } from "interfaces";
+import { ProductTable } from "components/cases/Products/ProductTable";
 
 import { emptyProduct } from "interfaces/IProduto";
+import { TabBar } from "components/display/TabBar";
 import { ProductService } from "services/ProductServices";
 import { ProductCategory } from "../ProductCategory";
 
@@ -38,7 +37,7 @@ function ProductDashboard() {
 
     const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
 
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [categories, setCategories] = useState<ICategoria[]>([]);
     const [products, setProducts] = useState<IProduto[]>([]);
@@ -67,8 +66,10 @@ function ProductDashboard() {
         await ProductService.getRelated().then((response) => {
             setProducts(response.produtos);
             setCategories(response.categorias);
-        }).finally(() => {
+
             setLoading(false);
+        }).finally(() => {
+            // setLoading(false);
         });
     }
 
@@ -76,12 +77,20 @@ function ProductDashboard() {
         retrieveAllData();
     }, []);
 
+    if (loading) {
+        return (
+            <Dashboard>
+                <span>Carregando</span>
+            </Dashboard>
+        )
+    }
+
     return (
         <Dashboard>
             <div className={ styles.productDashboardContainer }>
                 <header>
                     <div>
-                        <h4>Produtos</h4>
+                        <h5>Produtos</h5>
 
                         <div>
                             <TextField 
@@ -89,7 +98,18 @@ function ProductDashboard() {
                                 className="me-1" 
                                 label="Pesquisar produto" 
                                 size="small"
-                                variant="filled"
+                                variant="outlined"
+                                InputLabelProps={{
+                                    style: {
+                                        fontSize: 13,
+                                    }
+                                }}
+                                inputProps={{
+                                    style: {
+                                        fontSize: 15,
+                                        height: 14,
+                                    }
+                                }}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -115,17 +135,11 @@ function ProductDashboard() {
                         </div>                        
                     </div>
 
-                    <AppBar elevation={0} position="static">
-                        <Tabs 
-                            value={selectedCategory} 
-                            onChange={handleTabChange}
-                            className={ styles.tagsContainer }
-                        >
-                            { categories.map((category, key) => (
-                                <Tab key={key} label={category.nome} />
-                            )) }
-                        </Tabs>
-                    </AppBar>
+                    <TabBar 
+                        selectedTab={ selectedCategory }
+                        setSelectedTab={ setSelectedCategory }
+                        labelList={categories.map((category) => category.nome)}
+                    />
                 </header>
 
                 <div className={ styles.productListContainer }>
@@ -138,6 +152,7 @@ function ProductDashboard() {
                         ]} 
                         categories={categories}
                         products={products} 
+                        selectedCategory={ categories[selectedCategory].nome }
                     />
                 </div>
                 

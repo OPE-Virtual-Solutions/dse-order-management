@@ -1,0 +1,43 @@
+.cardContainer {
+    width: 100%;
+    min-width: 0;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    padding: 1rem;
+
+    margin-bottom: 0.8rem;
+}
+
+.cardContainer h6, .cardContainer > main > span {
+    font-size: 0.85rem;
+}
+
+.cardContainer h6 {
+    width: 98%;
+
+    text-transform: uppercase;
+    font-weight: 500;
+
+    margin: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cardContainer p {
+    color: var(--subtext);
+    font-weight: 300;
+    font-size: 0.81rem;
+    
+    margin-top: 0.3rem;
+    margin-bottom: 0.5rem;
+}
+
+.cardContainer footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

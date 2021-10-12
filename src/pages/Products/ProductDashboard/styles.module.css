@@ -4,7 +4,7 @@
 }
 
 .productDashboardContainer > header > div {
-    padding: 1.1rem;
+    padding: 1.1rem 1.1rem 0.5rem 1.1rem;
 
     display: flex;
     justify-content: space-between;
@@ -17,8 +17,9 @@
     display: flex;
 }
 
-.productDashboardContainer > header > div h4 {
+.productDashboardContainer > header > div h5 {
     font-weight: 700;
+    margin: 0;
 }
 
 .productListContainer {

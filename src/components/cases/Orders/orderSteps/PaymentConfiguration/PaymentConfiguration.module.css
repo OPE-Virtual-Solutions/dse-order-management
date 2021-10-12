@@ -1,0 +1,66 @@
+.paymentConfigurationContainer {
+    flex-grow: 1;
+    width: 30vw;
+
+    margin-bottom: 20px;
+}
+
+.paymentConfigurationContainer > header {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    height: auto;
+}
+
+.paymentConfigurationContainer h6 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.paymentConfigurationContainer > main {
+    padding: 1rem;
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    align-items: flex-start;
+
+    height: auto;
+}
+
+.paymentConfigurationContainer:first-of-type {
+    border-right: 1px solid var(--divider);
+}
+
+.paymentConfigurationContainer label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--subtext);
+}
+
+.paymentConfigurationContainer select  {
+    font-size: 0.875rem;
+}
+
+.moneyPaymentForm {
+    margin-top: 0.5rem;
+}
+
+.moneyPaymentInfo span {
+    font-size: 0.9rem;
+}
+
+.moneyPaymentInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+
+    margin: 0.7rem 0rem;
+
+    padding: 0.5rem 0.8rem;
+
+    border: 1px solid var(--secondary);
+    border-radius: 5px;
+}

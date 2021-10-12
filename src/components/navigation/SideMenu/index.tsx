@@ -28,7 +28,7 @@ function SideMenu() {
 
             <footer>
                 <button onClick={() => history.push("/")} className="navLink">
-                    <FaPowerOff size={20} />
+                    <FaPowerOff size={16} />
                 </button>
             </footer>
         </nav>

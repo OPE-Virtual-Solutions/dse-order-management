@@ -6,7 +6,7 @@ import {
     IIngrediente, 
     IProduto 
 } from "interfaces";
-import { ingredients } from "../ProductDashboard/data";
+import { ingredients } from "utils/placeholderData";
 
 import { Autocomplete } from "@material-ui/lab";
 import { TextField } from "@material-ui/core";
@@ -41,7 +41,7 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
 
     return (
         <div>
-            <h5 className="text-uppercase">Ingredientes</h5>
+            <h6 className="text-uppercase">Ingredientes</h6>
             { ingredientList?.map((ingrediente, key) => (
                 <div key={key} className={ styles.ingredientCard }>
                     <span>
