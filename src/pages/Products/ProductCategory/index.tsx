@@ -10,18 +10,34 @@ import styles from "./styles.module.css";
 
 import { FaSearch } from "react-icons/fa";
 
-import { ICategoria } from "interfaces";
+import { 
+    ICategoria, 
+} from "interfaces";
+import { MaterialInputProps } from "components/forms/MaterialInput";
 
 type Props = {
     categories: ICategoria[];
 }
 
+const EmptyCategoria: ICategoria = {
+    id: -1,
+    nome: "",
+    ativo: false
+}
+
 function ProductCategory({ categories }: Props) {
-    const [selectedCategory, setSelectedCategory] = useState<ICategoria>();
+    const [showNewForm, setShowNewForm] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<ICategoria>(EmptyCategoria);
 
     function handleCategorySelect(category: ICategoria) {
+        setShowNewForm(false);
         setSelectedCategory(category);
-    }
+    };
+
+    function handleNewCategoryClick() {
+        setSelectedCategory(EmptyCategoria);
+        setShowNewForm(true);
+    };
 
     return (
         <div className={ styles.productCategoryContainer }>
@@ -32,7 +48,7 @@ function ProductCategory({ categories }: Props) {
                     <form>
                         <TextField 
                             type="text" 
-                            label="Pesquisar produto" 
+                            label="Pesquisar categoria" 
                             size="small"
                             variant="outlined"
                             InputProps={{
@@ -42,10 +58,24 @@ function ProductCategory({ categories }: Props) {
                                     </InputAdornment>
                                 )
                             }}
+                            InputLabelProps={{
+                                style: {
+                                    fontSize: 13,
+                                }
+                            }}
+                            inputProps={{
+                                style: {
+                                    fontSize: 15,
+                                    height: 14,
+                                }
+                            }}
                         />
                     </form>
                 </header>
                 
+                <div onClick={() => { handleNewCategoryClick() }} className={ styles.addNewCategory }>
+                    <span>Adicionar nova categoria</span>
+                </div>
                 {categories.map((category, key) => (
                     <div 
                         onClick={() => {
@@ -58,17 +88,18 @@ function ProductCategory({ categories }: Props) {
                 ))}
             </div>
             <div className={ styles.column }>
-                { !selectedCategory && (
+                { selectedCategory.id === -1 && !showNewForm && (
                     <div className="d-flex justify-content-center h-100 align-items-center">
                         <span>Nenhuma categoria selecionada</span>
                     </div>
                 )}
 
-                { selectedCategory && (
+                { (selectedCategory.id !== -1 || showNewForm) && (
                     <form className={ styles.categoryFormContainer }>
-
                         <div className={ styles.categoryForm }>
-                            <h4>Categoria #{ selectedCategory.id }</h4>
+                            <h4>
+                                { selectedCategory.id === -1 ? "Nova categoria" : `Categoria #${ selectedCategory.id }` }
+                            </h4>
 
                             <TextField 
                                 key={selectedCategory.nome}
@@ -76,9 +107,11 @@ function ProductCategory({ categories }: Props) {
                                 fullWidth 
                                 defaultValue={selectedCategory.nome || ""} 
                                 type="text" 
-                                variant="filled" 
+                                variant="outlined" 
                                 size="small" 
                                 label="Nome da categoria" 
+                                {...MaterialInputProps}
+                                className="mt-3"
                             />
                         </div>
 

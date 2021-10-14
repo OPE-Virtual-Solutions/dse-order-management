@@ -14,6 +14,7 @@
 
 .productCategoryContainer h4 {
     font-weight: bold;
+    margin: 0;
 }
 
 .productCategoryContainer header > form {
@@ -53,6 +54,10 @@
     cursor: pointer;
 }
 
+.categoryCard span {
+    font-size: 0.9rem;
+}
+
 .categoryCard svg {
     cursor: pointer;
 }
@@ -82,4 +87,25 @@
     padding: 2.1875rem;
     
     height: 100%;
+}
+
+.addNewCategory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    padding: 1rem;
+
+    border: 1px dashed var(--secondary);
+    border-radius: 5px;
+
+    margin-bottom: 10px;
+}
+
+.addNewCategory span {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    font-weight: medium;
 }
