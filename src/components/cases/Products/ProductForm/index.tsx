@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 import { InputAdornment, TextField } from "@material-ui/core";
 import { ICategoria, IProduto } from "interfaces";
-import { categories } from "utils/placeholderData";
+
 import { Autocomplete } from "@material-ui/lab";
 
 type Props = {
@@ -23,15 +23,16 @@ function ProductForm({ product, categories, setCategory }: Props) {
                     name="inputNome"
                     fullWidth
                     defaultValue={ product.nome } 
-                    variant="filled" size="small" label="Nome do Produto"
+                    variant="outlined" size="small" label="Nome do Produto"
+
                 />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 d-flex">
                 <TextField 
                     name="inputPreco"
                     fullWidth
                     type="number" 
-                    variant="filled" 
+                    variant="outlined" 
                     size="small" 
                     label="Preço"
                     defaultValue={product.preco}
@@ -42,6 +43,19 @@ function ProductForm({ product, categories, setCategory }: Props) {
                             </InputAdornment>
                         )
                     }}
+
+                    style={{ marginRight: 10 }}
+                />
+
+                <TextField 
+                    name="inputQuantidade"
+                    fullWidth 
+                    defaultValue={product.quantidade} 
+                    type="number" 
+                    variant="outlined" 
+                    size="small" 
+                    label="Quantidade" 
+
                 />
             </div>
             <div className="mb-3">
@@ -57,23 +71,15 @@ function ProductForm({ product, categories, setCategory }: Props) {
                         <TextField 
                             {...params}
 
-                            variant="filled" 
+                            variant="outlined" 
                             size="small" 
                             label="Categoria" 
                         />
                     )}
+
                 />
             </div>
             <div className="mb-3">
-                <TextField 
-                    name="inputQuantidade"
-                    fullWidth 
-                    defaultValue={product.quantidade} 
-                    type="number" 
-                    variant="filled" 
-                    size="small" 
-                    label="Quantidade" 
-                />
             </div>
                     
             <TextField 
@@ -82,7 +88,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                 rows={4} 
                 fullWidth 
                 type="number" 
-                variant="filled" 
+                variant="outlined" 
                 size="small" 
                 label="Descrição" 
             />
