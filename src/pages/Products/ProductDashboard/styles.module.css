@@ -23,16 +23,27 @@
 }
 
 .productListContainer {
+    /* flex-grow: 1;
     display: flex;
     flex-direction: column;
 
+    justify-content: center;
     align-items: center;
 
     padding: 3rem 0rem;
-
     height: 83vh;
 
+    overflow-y: auto; */
+
+    position: relative;
+    
+    flex-grow: 1;
+
+    padding: 5rem;
+
     overflow-y: auto;
+    border-right: 9px solid var(--background);
+
 }
 
 .tagsContainer {

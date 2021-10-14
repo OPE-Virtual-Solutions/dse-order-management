@@ -11,21 +11,22 @@ import {
     InputAdornment,
     TextField,
     Dialog,
+    CircularProgress,
 } from "@material-ui/core";
 
 import { Button } from "components/forms/Button";
 
-import { categories, products } from "utils/placeholderData";
 import { Dashboard } from "templates/Dashboard";
 import { ProductModal } from "components/cases/Products/ProductModal";
 
 import { IProduto, ICategoria } from "interfaces";
-import { ProductTable } from "components/cases/Products/ProductTable";
 
 import { emptyProduct } from "interfaces/IProduto";
 import { TabBar } from "components/display/TabBar";
 import { ProductService } from "services/ProductServices";
 import { ProductCategory } from "../ProductCategory";
+import { ProductManageTable } from "components/cases/Products/ProductManageTable";
+import { MaterialInputProps } from "components/forms/MaterialInput";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
@@ -41,10 +42,6 @@ function ProductDashboard() {
 
     const [categories, setCategories] = useState<ICategoria[]>([]);
     const [products, setProducts] = useState<IProduto[]>([]);
-
-    function handleTabChange(event: any, category: number) {
-        setSelectedCategory(category);
-    }
 
     function handleModalOpen(modalType: "edit" | "create") {
         if (modalType === "create") {
@@ -68,22 +65,12 @@ function ProductDashboard() {
             setCategories(response.categorias);
 
             setLoading(false);
-        }).finally(() => {
-            // setLoading(false);
         });
     }
 
     useEffect(() => {
         retrieveAllData();
     }, []);
-
-    if (loading) {
-        return (
-            <Dashboard>
-                <span>Carregando</span>
-            </Dashboard>
-        )
-    }
 
     return (
         <Dashboard>
@@ -99,17 +86,7 @@ function ProductDashboard() {
                                 label="Pesquisar produto" 
                                 size="small"
                                 variant="outlined"
-                                InputLabelProps={{
-                                    style: {
-                                        fontSize: 13,
-                                    }
-                                }}
-                                inputProps={{
-                                    style: {
-                                        fontSize: 15,
-                                        height: 14,
-                                    }
-                                }}
+                                {...MaterialInputProps}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -134,26 +111,30 @@ function ProductDashboard() {
                             />
                         </div>                        
                     </div>
-
-                    <TabBar 
-                        selectedTab={ selectedCategory }
-                        setSelectedTab={ setSelectedCategory }
-                        labelList={categories.map((category) => category.nome)}
-                    />
+                    
+                    {!loading && (
+                        <TabBar 
+                            selectedTab={ selectedCategory }
+                            setSelectedTab={ setSelectedCategory }
+                            labelList={categories.map((category) => category.nome)}
+                        />
+                    )}
                 </header>
 
                 <div className={ styles.productListContainer }>
-                    <ProductTable 
-                        headers={[
-                            "Nome",
-                            "Categoria",
-                            "Preço",
-                            "Quantidade"
-                        ]} 
-                        categories={categories}
-                        products={products} 
-                        selectedCategory={ categories[selectedCategory].nome }
-                    />
+                    {loading && (
+                        <div className="d-flex justify-content-center align-items-center">
+                            <CircularProgress />
+                        </div>
+                    )}
+
+                    {!loading && (
+                        <ProductManageTable 
+                            products={products}
+                            categories={categories}
+                            selectedCategory={ categories[selectedCategory].nome }
+                        />
+                    )}
                 </div>
                 
                 <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleModalClose}>
