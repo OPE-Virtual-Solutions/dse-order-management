@@ -1,8 +1,28 @@
 import {  
     IIngrediente,
     IProduto,
-    ICategoria
+    ICategoria,
+    Ingredient,
+    Category
 } from "interfaces";
+
+export const newCategories: Category[] = [
+    {
+        id: 1,
+        name: "Lanches",
+        active: true,
+    },
+    {
+        id: 2,
+        name: "Bebidas",
+        active: true,
+    },
+    {
+        id: 3,
+        name: "Porções",
+        active: true,
+    }
+]
 
 const categories: ICategoria[] = [
     {
@@ -22,7 +42,30 @@ const categories: ICategoria[] = [
     }
 ];
 
-const ingredients: IIngrediente[] = [
+const ingredients: Ingredient[] = [
+    {
+        id: 1,
+        name: "Salsicha",
+        quantity: 12
+    },
+    {
+        id: 2,
+        name: "Hamburguer",
+        quantity: 24
+    },
+    {
+        id: 3,
+        name: "Pão",
+        quantity: 35
+    },
+    {
+        id: 4,
+        name: "Cebola",
+        quantity: 56
+    }
+]
+
+const oldIngredients: IIngrediente[] = [
     {
         id: 1,
         nome: "Salsicha",
@@ -45,6 +88,7 @@ const ingredients: IIngrediente[] = [
     }
 ]
 
+
 const products: IProduto[] = [
     {
         id: 1,
@@ -54,8 +98,8 @@ const products: IProduto[] = [
         categoria: categories[0],
         quantidade: 10,
         ingredientes: [
-            ingredients[0],
-            ingredients[1]
+            oldIngredients[0],
+            oldIngredients[1]
         ],
         ativo: true,
     },
@@ -67,8 +111,8 @@ const products: IProduto[] = [
         categoria: categories[0],
         quantidade: 10,
         ingredientes: [
-            ingredients[0],
-            ingredients[1]
+            oldIngredients[0],
+            oldIngredients[1]
         ],
         ativo: true,
     },
@@ -100,10 +144,10 @@ const products: IProduto[] = [
         categoria: categories[0],
         quantidade: 43,
         ingredientes: [
-            ingredients[0],
-            ingredients[1],
-            ingredients[2],
-            ingredients[3]
+            oldIngredients[0],
+            oldIngredients[1],
+            oldIngredients[2],
+            oldIngredients[3]
         ],
         ativo: true
     },
