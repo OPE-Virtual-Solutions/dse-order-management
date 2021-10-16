@@ -11,14 +11,17 @@ import {
     Dialog,
 } from "@material-ui/core";
 
-import { ICategoria, IProduto } from "interfaces";
+import { 
+    Category, 
+    Product,
+    EmptyProduct,
+} from "interfaces";
 import { ProductTableRow } from "./ProductTableRow";
 import { ProductModal } from "components/cases/Products/ProductModal";
-import { emptyProduct } from "interfaces/IProduto";
 
 type Props = {
-    products: IProduto[];
-    categories: ICategoria[];
+    products: Product[];
+    categories: Category[];
     selectedCategory: string;
 }
 
@@ -27,7 +30,7 @@ function ProductManageTable({
     categories,
     selectedCategory
 }: Props) {
-    const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
+    const [selectedProduct, setSelectedProduct] = useState<Product>(EmptyProduct);
 
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
@@ -39,7 +42,7 @@ function ProductManageTable({
         "Ação"
     ];
 
-    function openModal(product: IProduto) {
+    function openModal(product: Product) {
         setSelectedProduct(product);
         setOpenEditModal(true);
     }
@@ -62,7 +65,7 @@ function ProductManageTable({
                 </TableHead>
                 <TableBody className={ styles.tableBody }>
                     { products.map((product, index) => 
-                        product.categoria.nome === selectedCategory && (
+                        product.category.name === selectedCategory && (
                             <ProductTableRow
                                 onProductSelect={openModal} 
                                 key={index} 

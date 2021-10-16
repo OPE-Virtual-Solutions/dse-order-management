@@ -1,7 +1,6 @@
-import { MouseEventHandler } from "react";
 import styles from "./ProductTableRow.module.css";
 
-import { IProduto } from "interfaces";
+import { Product } from "interfaces";
 import { 
     TableCell,
     TableRow 
@@ -14,8 +13,8 @@ import { FaSlidersH } from "react-icons/fa";
 import { currencyFormat } from "utils/currencyFormat";
 
 type Props = {
-    product: IProduto;
-    onProductSelect: (product: IProduto) => void;
+    product: Product;
+    onProductSelect: (product: Product) => void;
 }
 
 function ProductTableRow({ 
@@ -25,16 +24,16 @@ function ProductTableRow({
     return (
         <TableRow onClick={() => { onProductSelect(product) }} className={ styles.tableRow }>
             <TableCell>
-                { product.nome }
+                { product.name }
             </TableCell>
             <TableCell>
-                { product.categoria.nome }
+                { product.category.name }
             </TableCell>
             <TableCell>
-                R${ currencyFormat(product.preco) }
+                R${ currencyFormat(product.price) }
             </TableCell>
             <TableCell>
-                { product.quantidade }
+                { product.quantity }
             </TableCell>
             <TableCell>
                 <Tooltip title="Editar produto" placement="right">

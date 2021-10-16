@@ -3,8 +3,8 @@ import { useState, useEffect, SetStateAction, Dispatch } from "react";
 import styles from "./styles.module.css";
 
 import { 
-    IIngrediente, 
-    IProduto 
+    Ingredient, 
+    Product
 } from "interfaces";
 import { ingredients } from "utils/placeholderData";
 
@@ -14,17 +14,17 @@ import { TextField } from "@material-ui/core";
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 
 type Props = {
-    product?: IProduto;
-    ingredientList: IIngrediente[];
-    setIngredientList: Dispatch<SetStateAction<IIngrediente[]>>;
+    product?: Product;
+    ingredientList: Ingredient[];
+    setIngredientList: Dispatch<SetStateAction<Ingredient[]>>;
 }
 
 function ProductIngredientForm({ product, ingredientList, setIngredientList }: Props) {
-    const [currentIngredient, setCurrentIngredient] = useState<IIngrediente>();
+    const [currentIngredient, setCurrentIngredient] = useState<Ingredient>();
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        if (product?.ingredientes) setIngredientList(product.ingredientes);
+        if (product?.ingredients) setIngredientList(product.ingredients);
     }, []);
 
     function addNewIngredient() {
@@ -45,7 +45,7 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
             { ingredientList?.map((ingrediente, key) => (
                 <div key={key} className={ styles.ingredientCard }>
                     <span>
-                        { ingrediente.nome } ● <span className="fw-bold">Qtd.</span> { ingrediente.quantidade }
+                        { ingrediente.name } ● <span className="fw-bold">Qtd.</span> { ingrediente.quantity }
                     </span>
 
                     <FaTrashAlt />
@@ -61,7 +61,7 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
                         if (ingredient) setCurrentIngredient(ingredient);                 
                     }}
                     options={ingredients}
-                    getOptionLabel={(option: IIngrediente) => option.nome}
+                    getOptionLabel={(option: Ingredient) => option.name }
                     renderInput={(params: any) => (
                         <TextField 
                             {...params}

@@ -4,48 +4,49 @@ import styles from "./styles.module.css";
 import { Button } from "components/forms/Button";
 
 import { 
-    IProduto, 
-    ICategoria, 
-    IIngrediente 
+    Product,
+    Category,
+    Ingredient,
+    ProductPost
 } from "interfaces";
 
 import { ProductIngredientForm } from "../ProductIngredientForm";
 import { ProductForm } from "../ProductForm";
-import { ProductService } from "services/ProductServices";
-import { ICreateProduto } from "interfaces/IProduto";
+
+import { ProductService } from "services/product.service";
 
 type Props = {
-    product: IProduto;
-    categories: ICategoria[];
+    product: Product;
+    categories: Category[];
 }
 
 function ProductModal({ categories, product }: Props) {
-    const [category, setCategory] = useState<ICategoria>({ id: -1, nome: "", ativo: false })
-    const [ingredientList, setIngredientList] = useState<IIngrediente[]>([]);
+    const [category, setCategory] = useState<Category>({ id: -1, name: "", active: false })
+    const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
 
-    async function createProduct(productObj: ICreateProduto, event: any) {
+    async function createProduct(productObj: Product) {
         await ProductService.create(productObj).then((response) => {
-            if (response.status !== 200) window.location.reload();
+            if (response.status === 200) window.location.reload();
         });
     }
 
-    async function updateProduct(productObj: ICreateProduto, event: any) {
-        await ProductService.update(product.id, productObj).then((response) => {
-            if (response.status !== 200) window.location.reload();
-        });
+    async function updateProduct(productObj: Product) {
+        // await ProductService.update(product.id, productObj).then((response) => {
+        //     if (response.status !== 200) window.location.reload();
+        // });
     }
 
     async function handleSubmit(event: any) {
-        const newProduct = {
-            nome: event.target.inputNome.value,
-            preco: event.target.inputPreco.value,
-            ativo: false,
-            categoria: category.id !== -1 ? category.id : product.id,
-            quantidade: event.target.inputQuantidade.value,
-            descricao: event.target.inputDescricao.value,
-        };
+        const _product: Product = {
+            name: event.target.inputNome.value,
+            price: event.target.inputPreco.value,
+            category: category,
+            description: event.target.inputDescricao.value,
+            quantity: event.target.inputQuantidade.value,
+            active: false
+        }
 
-        product.id ? updateProduct(newProduct, event) : createProduct(newProduct, event);
+        product.id ? updateProduct(_product) : createProduct(_product);
     }
 
     return (

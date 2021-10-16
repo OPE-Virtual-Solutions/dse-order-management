@@ -1,18 +1,22 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 import { InputAdornment, TextField } from "@material-ui/core";
-import { ICategoria, IProduto } from "interfaces";
+import { 
+    Product, 
+    Category 
+} from "interfaces";
 
 import { Autocomplete } from "@material-ui/lab";
 
 type Props = {
-    product: IProduto;
-    categories: ICategoria[];
-    setCategory: Dispatch<SetStateAction<ICategoria>>;
+    product: Product;
+    categories: Category[];
+    setCategory: Dispatch<SetStateAction<Category>>;
 }
 
 function ProductForm({ product, categories, setCategory }: Props) {
+
     return (
         <div className={ styles.productFormContainer }>
             { product.id === 0 && ( <h5>Adicionar produto</h5> )}
@@ -22,7 +26,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                 <TextField
                     name="inputNome"
                     fullWidth
-                    defaultValue={ product.nome } 
+                    defaultValue={ product.name } 
                     variant="outlined" size="small" label="Nome do Produto"
 
                 />
@@ -35,7 +39,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                     variant="outlined" 
                     size="small" 
                     label="Preço"
-                    defaultValue={product.preco}
+                    defaultValue={ product.price }
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -50,7 +54,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                 <TextField 
                     name="inputQuantidade"
                     fullWidth 
-                    defaultValue={product.quantidade} 
+                    defaultValue={product.quantity } 
                     type="number" 
                     variant="outlined" 
                     size="small" 
@@ -65,8 +69,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                         if (category) setCategory(category)   
                     }}
                     options={categories}
-                    defaultValue={product.categoria}
-                    getOptionLabel={(option: ICategoria) => option.nome}
+                    getOptionLabel={(option: Category) => option.name }
                     renderInput={(params: any) => (
                         <TextField 
                             {...params}
@@ -79,8 +82,6 @@ function ProductForm({ product, categories, setCategory }: Props) {
 
                 />
             </div>
-            <div className="mb-3">
-            </div>
                     
             <TextField 
                 name="inputDescricao"
@@ -91,6 +92,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                 variant="outlined" 
                 size="small" 
                 label="Descrição" 
+                defaultValue={ product.description }
             />
         </div>
     )
