@@ -1,4 +1,10 @@
-import { useContext, useState, useEffect } from "react";
+import { 
+    useContext, 
+    useState, 
+    useEffect 
+} from "react";
+
+import styles from "./CartCard.module.css";
 
 import { FaTrashAlt } from "react-icons/fa";
 
@@ -6,34 +12,36 @@ import { Tooltip } from "components/display/Tooltip";
 import { Button } from "components/forms/Button";
 import { QuantityButton } from "components/forms/QuantityButton";
 
-import styles from "./CartCard.module.css";
-import { IItemPedido } from "interfaces";
-import { OrderContext } from "contexts/OrderContext/OrderContext";
+import { 
+    CartProduct,  
+} from "interfaces";
+
+import { CartContext } from "contexts/CartContext/CartContext";
 
 type Props = {
-    orderItem: IItemPedido
+    orderItem: CartProduct
 }
 
 function CartCard({ orderItem }: Props) {
-    const { 
+    const {
         removeFromCart,
-        sumProductQuantity,
-        subtractProductQuantity,
-    } = useContext(OrderContext);
+        sumItemQuantity,
+        subtractItemQuantity,
+    } = useContext(CartContext);
 
     const [quantity, setQuantity] = useState<number>(1);
 
     useEffect(() => {
-        setQuantity(orderItem.quantidade);
+        setQuantity(orderItem.quantity);
     }, []);
 
     function onSum() {
-        sumProductQuantity(orderItem);
+        sumItemQuantity(orderItem);
         setQuantity(quantity + 1);
     };
 
     function onSubtract() {
-        subtractProductQuantity(orderItem);
+        subtractItemQuantity(orderItem);
         setQuantity(quantity - 1);
     }
 
@@ -45,15 +53,15 @@ function CartCard({ orderItem }: Props) {
     return (
         <div className={ styles.cardContainer }>
             <main>
-                <h6>{ orderItem.produto.nome }</h6>
-                <span>R${ orderItem.produto.preco } x { orderItem.quantidade }</span>
+                <h6>{ orderItem.product.name }</h6>
+                <span>R${ orderItem.product.price } x { orderItem.quantity }</span>
 
                 <p>
-                    { orderItem.produto.ingredientes.length !== 0 ? (
-                        orderItem.produto.ingredientes.map((ingredient, index) => (
-                            index === orderItem.produto.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
+                    { orderItem.product.ingredients.length !== 0 ? (
+                        orderItem.product.ingredients.map((ingredient: any, index: number) => (
+                            index === orderItem.product.ingredients.length - 1 ? ingredient.name : ingredient.name + ", "
                         ))) :
-                        orderItem.produto.descricao 
+                        orderItem.product.description 
                     }
                 </p>
             </main>
@@ -61,7 +69,7 @@ function CartCard({ orderItem }: Props) {
                 <QuantityButton 
                     onSubtract={() => { onSubtract() }}
                     onSum={() => { onSum() }}
-                    quantity={orderItem.quantidade}
+                    quantity={orderItem.quantity}
                 />
                 <Tooltip title="Remover produto do carrinho" placement="left">
                     <Button 

@@ -1,31 +1,32 @@
-import { OrderContext } from "contexts/OrderContext/OrderContext";
 import { useContext, useState, useEffect } from "react";
+
+import { CartContext } from "contexts/CartContext/CartContext";
+
 import { currencyFormat } from "utils/currencyFormat";
 
 import styles from "./PaymentConfiguration.module.css";
 
 function PaymentConfiguration() {
-    const { 
-        summary,
-        onSummaryChange 
-    } = useContext(OrderContext);
+    const {
+        order,
+        updateOrderInfo
+    } = useContext(CartContext);
 
     const [payment, setPayment] = useState<string>("default")
 
     function handlePaymentChange(event: any) {
         const value = event.target.value;
-
         if (value !== "default") {
-            const _summary = summary; 
-            _summary.metodo_pagamento = value;
+            const _order = { ...order };
+            _order.payment_method = value;
 
-            onSummaryChange(_summary)
+            updateOrderInfo(_order);
             setPayment(value);
         }
     };
 
     function isOptionSelected(optionValue: string): boolean {
-        return optionValue === summary.metodo_pagamento;
+        return optionValue === order.payment_method;
     }
 
     function handlePaymentValueChange(event: any) {
@@ -34,17 +35,16 @@ function PaymentConfiguration() {
     }
 
     function changePaymentValue(value: number) {
-        const _summary = summary;
+        const _order = { ...order };
+        _order.total_payed = value;
 
-        _summary.valor_pago = value;
-
-        onSummaryChange(_summary);
+        updateOrderInfo(_order);
     }
 
     useEffect(() => {
-        if (summary.metodo_pagamento) setPayment(summary.metodo_pagamento);
+        if (order.payment_method) setPayment(order.payment_method);
 
-        changePaymentValue(summary.valor_total);
+        changePaymentValue(order.total_price);
     }, []);
 
     return (
@@ -79,9 +79,10 @@ function PaymentConfiguration() {
                     <label>Informações de pagamento em dinheiro</label>
                     <div className={ styles.moneyPaymentInfo }>
                         <span>Valor a pagar</span>
-                        <span>R${ currencyFormat(summary.valor_total) }</span>
+                        <span>R${ currencyFormat(order.total_price) }</span>
                     </div>
 
+                    <label>Valor pago pelo cliente</label>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <span className="input-group-text" id="basic-addon1">R$</span>
@@ -91,8 +92,8 @@ function PaymentConfiguration() {
                             className="form-control" 
                             placeholder="Valor pago pelo cliente" 
                             onChange={handlePaymentValueChange}
-                            defaultValue={ summary.valor_total }
-                            min={ summary.valor_total }
+                            defaultValue={ order.total_price }
+                            min={ order.total_price }
                         />
                     </div>
                 </div>

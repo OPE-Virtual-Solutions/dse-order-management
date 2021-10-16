@@ -7,7 +7,9 @@ import {
     useLocation
 } from "react-router-dom";
 
-import { IItemPedido } from "interfaces";
+import { 
+    CartProduct 
+} from "interfaces";
 
 import { Button } from "components/forms/Button";
 import { CartCard } from "components/cards/CartCard";
@@ -16,16 +18,15 @@ import styles from "./Cart.module.css";
 
 import { FiShoppingBag } from "react-icons/fi";
 
-import { OrderContext } from "contexts/OrderContext/OrderContext";
-import { categories } from "utils/placeholderData";
+import { CartContext } from "contexts/CartContext/CartContext";
 
 function Cart() {
     let history = useHistory();
     const location = useLocation();
 
-    const { cart, summary } = useContext(OrderContext);
+    const { cart, order } = useContext(CartContext);
     
-    function renderCartCard(orderItem: IItemPedido) {
+    function renderCartCard(orderItem: CartProduct) {
         return (
             <CartCard key={orderItem.id} orderItem={orderItem} />
         )
@@ -56,15 +57,11 @@ function Cart() {
                 </header>
 
                 <main>
-                    {categories.map((category, index) => (
-                        <section key={index}>
-                            <h6>{ category.nome }</h6>
-
-                            {cart.map((orderItem) => 
-                                orderItem.produto.categoria.nome === category.nome && renderCartCard(orderItem)
-                            )}
-                        </section>
-                    ))}
+                    <section>
+                        {cart.map((orderItem) => 
+                            renderCartCard(orderItem)
+                        )}
+                    </section>
                 </main>
             </div>
             
@@ -81,7 +78,7 @@ function Cart() {
 
                 <div>
                     <span>Total</span>
-                    <span>R${ summary.valor_total }</span>
+                    <span>R${ order.total_price }</span>
                 </div>
 
                 { location.pathname !== "/order" && (

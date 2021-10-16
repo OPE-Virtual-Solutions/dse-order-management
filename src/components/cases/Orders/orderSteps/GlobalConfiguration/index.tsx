@@ -1,30 +1,27 @@
 import { useContext } from "react";
-import { OrderContext } from "contexts/OrderContext/OrderContext";
 
 import styles from "./GlobalConfiguration.module.css";
+import { CartContext } from "contexts/CartContext/CartContext";
 
 function GlobalConfiguration() {
-    const { 
-        summary,
-        onSummaryChange 
-    } = useContext(OrderContext);
+    const {
+        order,
+        updateOrderInfo
+    } = useContext(CartContext);
 
     function handleLocalChange(event: any) {
-        console.log(event.target.value);
-
         const value = event.target.value;
 
         if (value !== "default") {
-            const _summary = summary; 
+            const _order = { ...order };
+            _order.order_type = value;
 
-            _summary.tipo_consumo = value;
-
-            onSummaryChange(_summary);
+            updateOrderInfo(_order);
         }
     };
 
     function isOptionSelected(optionSelected: string) {
-        return optionSelected === summary.tipo_consumo;
+        return optionSelected === order.order_type;
     }
 
     return (
@@ -38,7 +35,7 @@ function GlobalConfiguration() {
             <main>
                 <div className="form-check">
                     <input 
-                        checked={ summary.atendimento_presencial }
+                        checked={ order.is_local_order }
                         disabled 
                         className="form-check-input" 
                         type="checkbox" 
@@ -58,7 +55,7 @@ function GlobalConfiguration() {
                         className="form-select form-select-md" 
                         aria-label="Default select example"
                     >
-                        <option value="default" selected={ !summary.tipo_consumo }>Selecione o local de consumo</option>
+                        <option value="default" selected={ !order.order_type }>Selecione o local de consumo</option>
                         <option value="local" selected={isOptionSelected("local")}>No local</option>
                         <option value="viagem" selected={isOptionSelected("viagem")}>Pra viagem</option>
                     </select>

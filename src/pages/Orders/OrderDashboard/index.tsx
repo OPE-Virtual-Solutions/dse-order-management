@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Dashboard } from "templates/Dashboard";
 
@@ -15,21 +15,44 @@ import { Tooltip } from "components/display/Tooltip";
 import { ProductShopCard } from "components/cards/ProductShopCard";
 import { Button } from "components/forms/Button";
 import { TabBar } from "components/display/TabBar";
-
-import { categories, products } from "pages/Products/ProductDashboard/data";
-
 import { OrderTable } from "components/cases/Orders/OrderTable";
+
+import { 
+    Product, 
+    Category 
+} from "interfaces";
+import { ProductService } from "services/product.service";
 
 function OrderDashboard() {
     document.title = "DSE - Pedidos"
+
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [isGridList, setIsGridList] = useState<boolean>(true);
 
     const [selectedCategory, setSelectedCategory] = useState<number>(0);
 
+    const [products, setProducts] = useState<Product[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+
     function handleListType() {
         setIsGridList(!isGridList);
     }
+
+    async function retrieveData() {
+        await ProductService.getProductRelatedInfo().then((response) => {
+            setProducts(response.products);
+            setCategories(response.categories);
+
+            setLoading(false);
+        })
+    }
+
+    useEffect(() => {
+        retrieveData();
+    }, [])
+
+    if (loading) return <div></div>
 
     return (
         <Dashboard showCart={true}>
@@ -69,7 +92,7 @@ function OrderDashboard() {
                     <TabBar 
                         selectedTab={selectedCategory}
                         setSelectedTab={setSelectedCategory}
-                        labelList={categories.map((category) => category.nome)}
+                        labelList={categories.map((category) => category.name )}
                     />
                 </header>
 
@@ -77,7 +100,7 @@ function OrderDashboard() {
                     {isGridList && (
                         <div className={styles.productListContainer}>
                             { products.length > 0 && products.map((produto, index) => 
-                                produto.categoria.nome === categories[selectedCategory].nome && <ProductShopCard key={index} product={produto} />
+                                produto.category.name === categories[selectedCategory].name && <ProductShopCard key={index} product={produto} />
                             )}
                         </div>
                     )}
@@ -86,7 +109,7 @@ function OrderDashboard() {
                         <OrderTable 
                             headers={["Imagem", "nome", "preço", "descrição", "quantidade", "ação"]}
                             products={products}
-                            selectedCategory={categories[selectedCategory].nome}
+                            selectedCategory={ categories[selectedCategory].name }
                         />
                     )}
                     
