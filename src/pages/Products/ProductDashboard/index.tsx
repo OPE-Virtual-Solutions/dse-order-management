@@ -19,14 +19,17 @@ import { Button } from "components/forms/Button";
 import { Dashboard } from "templates/Dashboard";
 import { ProductModal } from "components/cases/Products/ProductModal";
 
-import { IProduto, ICategoria } from "interfaces";
+import { 
+    Product,
+    EmptyProduct,
+    Category
+} from "interfaces";
 
-import { emptyProduct } from "interfaces/IProduto";
 import { TabBar } from "components/display/TabBar";
-import { ProductService } from "services/ProductServices";
 import { ProductCategory } from "../ProductCategory";
 import { ProductManageTable } from "components/cases/Products/ProductManageTable";
 import { MaterialInputProps } from "components/forms/MaterialInput";
+import { ProductService } from "services/product.service";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
@@ -36,16 +39,16 @@ function ProductDashboard() {
     const [openModal, setOpenModal] = useState<boolean>(false);
     const [openCategoryModal, setOpenCategoryModal] = useState<boolean>(false);
 
-    const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
+    const [selectedProduct, setSelectedProduct] = useState<Product>(EmptyProduct);
 
     const [loading, setLoading] = useState<boolean>(true);
 
-    const [categories, setCategories] = useState<ICategoria[]>([]);
-    const [products, setProducts] = useState<IProduto[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
     function handleModalOpen(modalType: "edit" | "create") {
         if (modalType === "create") {
-            setSelectedProduct(emptyProduct);
+            setSelectedProduct(EmptyProduct);
         }
 
         setOpenModal(true);
@@ -60,9 +63,9 @@ function ProductDashboard() {
     }
 
     async function retrieveAllData() {
-        await ProductService.getRelated().then((response) => {
-            setProducts(response.produtos);
-            setCategories(response.categorias);
+        await ProductService.getProductRelatedInfo().then((response) => {
+            setProducts(response.products);
+            setCategories(response.categories);
 
             setLoading(false);
         });
@@ -116,7 +119,7 @@ function ProductDashboard() {
                         <TabBar 
                             selectedTab={ selectedCategory }
                             setSelectedTab={ setSelectedCategory }
-                            labelList={categories.map((category) => category.nome)}
+                            labelList={categories.map((category) => category.name )}
                         />
                     )}
                 </header>
@@ -132,7 +135,7 @@ function ProductDashboard() {
                         <ProductManageTable 
                             products={products}
                             categories={categories}
-                            selectedCategory={ categories[selectedCategory].nome }
+                            selectedCategory={ categories[selectedCategory].name }
                         />
                     )}
                 </div>
