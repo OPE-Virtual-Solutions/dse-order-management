@@ -1,3 +1,23 @@
+import { Category, CategoryPT } from "interfaces";
+
+export interface ProductPost {
+    name: string;
+    price: number;
+    description: string;
+    quantity: number;
+    active: boolean;
+    category: number;
+}
+
+export interface ProductPostPT {
+    nome_produto: string;
+    preco: number;
+    descricao: string;
+    ativo: boolean;
+    categoria: number;
+    quantidade?: number;
+}
+
 export class Product {
     id?: number; 
     name: string;
@@ -5,7 +25,7 @@ export class Product {
     description: string;
     quantity: number;
     active: boolean;
-    category: string;
+    category: Category;
     ingredients?: any;
 
     constructor(produto: ProductPT) {
@@ -15,10 +35,28 @@ export class Product {
         this.description = produto.descricao;
         this.quantity = produto.quantidade || 0;
         this.active = produto.ativo;
-        this.category = produto.categoria;
+        this.category = {
+            id: produto.categoria.id_categoria,
+            name: produto.categoria.nome_categoria,
+            active: produto.categoria.ativo,
+        };
         this.ingredients = produto.ingredientes;
     };
 };
+
+export const EmptyProduct: Product = {
+    id: 0,
+    name: "",
+    price: 0,
+    description: "",
+    category: {
+        id: -1,
+        name: "",
+        active: false
+    },
+    quantity: 0,
+    active: false
+}
 
 export class ProductPT {
     id_produto?: number;
@@ -26,7 +64,7 @@ export class ProductPT {
     preco: number;
     descricao: string;
     ativo: boolean;
-    categoria: string;
+    categoria: CategoryPT;
     quantidade?: number;
     ingredientes?: any;
 
@@ -36,7 +74,11 @@ export class ProductPT {
         this.preco = product.price;
         this.descricao = product.description;
         this.ativo = product.active;
-        this.categoria = product.category;
+        this.categoria = {
+            id_categoria: product.category.id,
+            nome_categoria: product.category.name,
+            ativo: product.category.active
+        };
         this.quantidade = product.quantity;
         this.ingredientes = product.ingredients;
     }
