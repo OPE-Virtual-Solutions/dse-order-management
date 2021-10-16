@@ -6,7 +6,7 @@ import { IPedido } from "./Pedido";
 
 import { CartProduct, CartProductPT } from "./CartProduct";
 import { Category, CategoryPT } from "./Category";
-import { Order, OrderPT } from "./Order";
+import { Order, OrderPT, OrderPostPT } from "./Order";
 import { Product, ProductPost, ProductPostPT, ProductPT, EmptyProduct } from "./Product";
 import { Ingredient, IngredientPT } from "./Ingredient";
 
@@ -16,20 +16,22 @@ export type {
     IIngrediente,
     IItemPedido,
     IPedido,
-    CartProduct,
-    CartProductPT,
+    OrderPostPT,
+
     Category,
     CategoryPT,
     Order,
     OrderPT,
-    Product,
     ProductPost,
     ProductPostPT,
-    ProductPT,
     Ingredient,
     IngredientPT,
 };
 
 export {
-    EmptyProduct
+    CartProduct,
+    CartProductPT,
+    EmptyProduct,
+    ProductPT,
+    Product,
 }
