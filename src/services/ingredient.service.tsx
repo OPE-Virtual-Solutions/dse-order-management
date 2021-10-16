@@ -8,14 +8,17 @@ import {
 const ENDPOINT = "/ingredientes/";
 
 class _IngredientService {
+    translateListResponse(response: IngredientPT[]) {
+        return response.map((ingrediente: IngredientPT) => {
+            return new Ingredient(ingrediente);
+        });
+    }
+
     async list(): Promise<Ingredient[] | undefined> {
         const response = await api.get(ENDPOINT);
 
         if (response.status) {
-            const list: Ingredient[] = response.data.map((ingredient: IngredientPT) => {
-                return new Ingredient(ingredient);
-            });
-
+            const list: Ingredient[] = this.translateListResponse(response.data);
             return list;
         };
 
