@@ -13,6 +13,9 @@ import {
     Dialog,
     CircularProgress,
 } from "@material-ui/core";
+import {
+    Skeleton 
+} from "@material-ui/lab";
 
 import { Button } from "components/forms/Button";
 
@@ -67,7 +70,7 @@ function ProductDashboard() {
             setProducts(response.products);
             setCategories(response.categories);
 
-            setLoading(false);
+            // setLoading(false);
         });
     }
 
@@ -115,29 +118,29 @@ function ProductDashboard() {
                         </div>                        
                     </div>
                     
-                    {!loading && (
-                        <TabBar 
-                            selectedTab={ selectedCategory }
-                            setSelectedTab={ setSelectedCategory }
-                            labelList={categories.map((category) => category.name )}
-                        />
-                    )}
+
+                    <TabBar 
+                        selectedTab={ selectedCategory }
+                        setSelectedTab={ setSelectedCategory }
+                        labelList={categories.map((category) => category.name )}
+                        loading={loading}
+                    />
                 </header>
 
                 <div className={ styles.productListContainer }>
-                    {loading && (
-                        <div className="d-flex justify-content-center align-items-center">
-                            <CircularProgress />
-                        </div>
-                    )}
+                    <div>
+                        {loading && [...Array(4)].map(() => (
+                            <Skeleton height={50} />
+                        ))}
 
-                    {!loading && (
-                        <ProductManageTable 
-                            products={products}
-                            categories={categories}
-                            selectedCategory={ categories[selectedCategory].name }
-                        />
-                    )}
+                        {!loading && (
+                            <ProductManageTable 
+                                products={products}
+                                categories={categories}
+                                selectedCategory={ categories[selectedCategory].name }
+                            />
+                        )}
+                    </div>
                 </div>
                 
                 <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleModalClose}>

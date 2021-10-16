@@ -10,6 +10,7 @@ import {
     FaSearch
 } from "react-icons/fa";
 import { InputAdornment, TextField } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 
 import { Tooltip } from "components/display/Tooltip";
 import { ProductShopCard } from "components/cards/ProductShopCard";
@@ -52,8 +53,6 @@ function OrderDashboard() {
         retrieveData();
     }, [])
 
-    if (loading) return <div></div>
-
     return (
         <Dashboard showCart={true}>
             <div className={styles.orderDashboardContainer}>
@@ -93,24 +92,37 @@ function OrderDashboard() {
                         selectedTab={selectedCategory}
                         setSelectedTab={setSelectedCategory}
                         labelList={categories.map((category) => category.name )}
+                        loading={loading}
                     />
                 </header>
 
                 <main>
                     {isGridList && (
                         <div className={styles.productListContainer}>
-                            { products.length > 0 && products.map((produto, index) => 
+                            {loading && [...Array(4)].map(() => (
+                                <Skeleton height={50} />
+                            ))}
+
+                            {!loading && products.length > 0 && products.map((produto, index) => 
                                 produto.category.name === categories[selectedCategory].name && <ProductShopCard key={index} product={produto} />
                             )}
                         </div>
                     )}
 
                     {!isGridList && (
-                        <OrderTable 
-                            headers={["Imagem", "nome", "preço", "descrição", "quantidade", "ação"]}
-                            products={products}
-                            selectedCategory={ categories[selectedCategory].name }
-                        />
+                        <div>
+                            {loading && [...Array(4)].map(() => (
+                                <Skeleton height={50} />
+                            ))}
+
+                            {!loading && (
+                                <OrderTable 
+                                    headers={["Imagem", "nome", "preço", "descrição", "quantidade", "ação"]}
+                                    products={products}
+                                    selectedCategory={ categories[selectedCategory].name }
+                                />
+                            )}
+                        </div>
                     )}
                     
                     <div className={styles.gridButton}>
