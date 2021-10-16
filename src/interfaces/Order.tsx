@@ -1,19 +1,10 @@
-enum EnumPaymentMethods {
-    money = "dinheiro",
-    credit = "credito",
-    debit = "debito"
-}
-
-enum EnumOrderType {
-    toEat = "local",
-    toGo = "viagem"
-}
-
-enum EnumOrderStatus {
-    waiting = "aguardando",
-    onGoing = "em_andamento",
-    done = "concluido",
-    finished = "despachado"
+export type OrderPostPT = {
+    codigo_pedido?: string;
+    atendimento_presencial: boolean;
+    valor_total: number;
+    status: string;
+    metodo_pagamento?: string;
+    criado_em?: Date;
 }
 
 export class Order {
@@ -36,10 +27,9 @@ export class Order {
     created_at?: Date;
     finished_at?: Date;
 
-    employee?: Date;
+    employee?: number;
 
     constructor(pedido: OrderPT) {
-
         this.id = pedido.id_pedido;
 
         this.order_code = pedido.codigo_pedido;
@@ -83,7 +73,7 @@ export class OrderPT {
     criado_em?: Date;
     finalizado_em?: Date;
 
-    funcionario?: Date;
+    funcionario?: number;
 
     constructor(order: Order) {
         this.id_pedido = order.id;
