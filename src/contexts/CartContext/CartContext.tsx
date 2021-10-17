@@ -3,6 +3,8 @@ import {
     useState,
 } from "react";
 
+import Alert from 'sweetalert2';
+
 import { 
     CartProduct, 
     Product,
@@ -15,6 +17,7 @@ import {
     IOrderContextValues,
     OrderInstance
 } from "./ICartContext";
+import { OrderService } from "services/order.service";
 
 export const CartContext = createContext({} as IOrderContextValues);
 
@@ -57,6 +60,25 @@ export function CartProvider({ children }: any) {
     };
 
     function removeFromCart(cartProduct: CartProduct) {
+        if (cart.length === 1) {
+            Alert.fire({
+                title: 'Aviso',
+                text: 'Esse é o último produto do carrinho. Tem certeza que deseja removê-lo?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: "<span style='color: #1b1b1b'>Sim</span>",
+                confirmButtonColor: "#FFBF00",
+                cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
+                cancelButtonColor: "transparent",
+            }).then((result) => {
+                if (result.isConfirmed) saveRemoveChanges(cartProduct);
+            });
+        } else {
+            saveRemoveChanges(cartProduct)
+        }
+    };
+
+    function saveRemoveChanges(cartProduct: CartProduct) {
         setCart(cart => {
             return cart.filter(function(cartItem) {
                 return cartItem !== cartProduct;
@@ -65,11 +87,16 @@ export function CartProvider({ children }: any) {
 
         setOrder(orderInfo => {
             let _order = { ...orderInfo };
-            _order.total_price = orderInfo.total_price - (cartProduct.product.price * cartProduct.quantity);
+
+            if (cart.length === 1) {
+                _order = OrderInstance;
+            } else {
+                _order.total_price = orderInfo.total_price - (cartProduct.product.price * cartProduct.quantity);
+            }
 
             return _order;
         });
-    };
+    }
 
     function sumItemQuantity(cartProduct: CartProduct) {
         const _cart = cart.map(cartItem => {
@@ -120,8 +147,13 @@ export function CartProvider({ children }: any) {
         });
     }
 
-    function finishOrder() {
-        console.log("[LOG] ~ file: CartContext.tsx ~ line 23 ~ CartProvider ~ order", order);
+    async function finishOrder() {
+        await OrderService.create(order).then((response) => {
+            console.log("[LOG] ~ file: CartContext.tsx ~ line 126 ~ awaitOrderService.create ~ response", response);
+        }).catch((error) => {
+            console.log("[LOG] ~ file: CartContext.tsx ~ line 128 ~ awaitOrderService.create ~ error", JSON.stringify(error));
+            
+        });
     };
 
     return (
