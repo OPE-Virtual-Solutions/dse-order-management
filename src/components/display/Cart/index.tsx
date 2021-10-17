@@ -35,13 +35,11 @@ function Cart() {
     if (cart.length === 0) {
         return (
             <div className={ styles.emptyCartContainer }>
-
                 <div>
                     <FiShoppingBag size={18} />
                     <h6>Carrinho vazio</h6>
                     <span>Adicione um produto para continuar com o atendimento</span>
                 </div>
-
             </div>
         );
     }
@@ -54,6 +52,10 @@ function Cart() {
             `}>
                 <header>
                     <h5>Carrinho</h5>
+
+                    <div>
+                        <span>{ cart.length }</span>
+                    </div>
                 </header>
 
                 <main>
