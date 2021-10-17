@@ -1,23 +1,38 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import styles from "./GlobalConfiguration.module.css";
 import { CartContext } from "contexts/CartContext/CartContext";
 
-function GlobalConfiguration() {
+type Props = {
+    setStepCompletion: any;
+}
+
+function GlobalConfiguration({
+    setStepCompletion
+}: Props) {
     const {
         order,
         updateOrderInfo
     } = useContext(CartContext);
 
+    useEffect(() => {
+        (order.order_type) ? setStepCompletion(true) : setStepCompletion(false); 
+    }, []);
+
     function handleLocalChange(event: any) {
         const value = event.target.value;
+        
+        const _order = { ...order };
 
         if (value !== "default") {
-            const _order = { ...order };
             _order.order_type = value;
-
-            updateOrderInfo(_order);
+            setStepCompletion(true);
+        } else {
+            _order.order_type = undefined;
+            setStepCompletion(false);
         }
+
+        updateOrderInfo(_order);
     };
 
     function isOptionSelected(optionSelected: string) {

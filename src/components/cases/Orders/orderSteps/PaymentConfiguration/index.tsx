@@ -6,7 +6,13 @@ import { currencyFormat } from "utils/currencyFormat";
 
 import styles from "./PaymentConfiguration.module.css";
 
-function PaymentConfiguration() {
+type Props = {
+    setStepCompletion: any;
+}
+
+function PaymentConfiguration({
+    setStepCompletion
+}: Props) {
     const {
         order,
         updateOrderInfo
@@ -16,13 +22,18 @@ function PaymentConfiguration() {
 
     function handlePaymentChange(event: any) {
         const value = event.target.value;
-        if (value !== "default") {
-            const _order = { ...order };
-            _order.payment_method = value;
+        const _order = { ...order };
 
-            updateOrderInfo(_order);
-            setPayment(value);
+        if (value !== "default") {
+            _order.payment_method = value;
+            setStepCompletion(true);
+        } else {
+            _order.payment_method = undefined;
+            setStepCompletion(false);
         }
+        
+        setPayment(value);
+        updateOrderInfo(_order);
     };
 
     function isOptionSelected(optionValue: string): boolean {
@@ -42,7 +53,12 @@ function PaymentConfiguration() {
     }
 
     useEffect(() => {
-        if (order.payment_method) setPayment(order.payment_method);
+        if (order.payment_method) { 
+            setPayment(order.payment_method);
+            setStepCompletion(true);
+        } else {
+            setStepCompletion(false);
+        }
 
         changePaymentValue(order.total_price);
     }, []);
