@@ -1,0 +1,9 @@
+.orderHistoryContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.orderDragContainer {
+    display: flex;
+    height: 100vh;
+}
