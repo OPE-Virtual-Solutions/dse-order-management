@@ -10,6 +10,7 @@ export interface ProductPost {
 }
 
 export interface ProductPostPT {
+    id_produto?: number;
     nome_produto: string;
     preco: number;
     descricao: string;

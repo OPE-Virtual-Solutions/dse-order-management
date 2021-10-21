@@ -20,8 +20,7 @@ export type {
 
     Category,
     CategoryPT,
-    Order,
-    OrderPT,
+
     ProductPost,
     ProductPostPT,
     Ingredient,
@@ -29,6 +28,8 @@ export type {
 };
 
 export {
+    Order,
+    OrderPT,
     CartProduct,
     CartProductPT,
     EmptyProduct,

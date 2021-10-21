@@ -21,3 +21,9 @@ export class IngredientPT {
         this.quantidade = ingredient.quantity;
     }
 };
+
+export const IngredientInstance: Ingredient = {
+    id: 0,
+    name: "",
+    quantity: 0
+};
