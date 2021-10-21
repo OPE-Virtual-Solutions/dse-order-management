@@ -6,12 +6,23 @@ import {
 
 import styles from "./OrderDraggable.module.css";
 
+import { 
+    FaStoreAlt, 
+    FaMoneyBill, 
+    FaBarcode,
+    FaCreditCard
+} from "react-icons/fa";
+import { Tooltip } from "components/display/Tooltip";
+import { Button } from "components/forms/Button";
+
 type Props = {
     id: string;
     title: string;
     onDragEnd: (result: any) => void;
     data: any;
     withoutContext?: boolean;
+    showFinishButton?: boolean;
+    onOrderFinish?: (selectedItem: any) => void;
 }
 
 const getCardStyle = (draggableStyle: any) => ({
@@ -49,8 +60,23 @@ function OrderDraggable({
     title,
     onDragEnd,
     data,
-    withoutContext = false
+    withoutContext = false,
+    showFinishButton = false,
+    onOrderFinish = () => {}
 }: Props) {
+
+    function getCurrentPaymentMethod(paymentMethod: string) {
+        switch (paymentMethod) {
+            case "money":
+                return "dinheiro"
+            case "credit":
+                return "cartão de crédito"
+            case "debit":
+                return "cartão de débito"
+            default:
+                return "dinheiro"
+        }
+    }
 
     function renderDroppable() {
         return (
@@ -92,15 +118,52 @@ function OrderDraggable({
                                             Pedido <span>#{ element.id }</span>
                                         </h6>
                                         
-                                        <span>{ element.products } produtos</span>
-
                                         <footer>
-                                            <div className={ styles.typeBadge }>
-                                                <span className={ styles.priceText }>PRA VIAGEM</span>
+                                            <div>
+                                                <div className={ styles.typeBadge }>
+                                                    <span className={ styles.priceText }>
+                                                        { element.order_type === "pra_viagem" && "Pra viagem" }
+                                                        { element.order_type === "pra_consumir" && "Pra consumo"}
+                                                    </span>
+                                                </div>
+
+                                                {element.is_local_order && (
+                                                    <Tooltip 
+                                                        title="Pedido efetuado presencialmente"
+                                                        placement="right"
+                                                    >
+                                                        <div className={ styles.badge }>
+                                                            <FaStoreAlt size={11} />
+                                                        </div>
+                                                    </Tooltip>
+                                                )}
+
+                                                <Tooltip 
+                                                    title={`Pagamento em ${getCurrentPaymentMethod(element.payment_method)}`}
+                                                    placement="right"
+                                                >
+                                                    <div className={ styles.badge }>
+                                                        {element.payment_method === "money" && <FaMoneyBill size={11} />}
+                                                        {element.payment_method === "credit" && <FaCreditCard size={11} />}
+                                                        {element.payment_method === "debit" && <FaBarcode size={11} />}
+                                                    
+                                                    </div>
+                                                </Tooltip>
                                             </div>
 
-                                            <span className={ styles.priceText}>R${ element.price }</span>
+                                            <span className={ styles.priceText}>R${ element.total_price }</span>
                                         </footer>
+                                        
+                                        { showFinishButton && (
+                                            <div className="d-flex align-stretch">
+                                                <Button 
+                                                    onClick={() => { onOrderFinish(element) }}
+                                                    className="w-100 m-0 mt-2 justify-content-center"
+                                                    text="Despachar"
+                                                    transparent
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 )}
                             </Draggable>

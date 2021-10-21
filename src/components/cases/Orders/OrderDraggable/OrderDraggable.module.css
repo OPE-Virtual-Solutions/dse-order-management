@@ -19,6 +19,10 @@
     margin-top: 10px;
 }
 
+.orderCard footer > div {
+    display: flex;
+}
+
 .orderListContainer header {
     display: flex;
     align-items: center;
@@ -41,8 +45,16 @@
     font-weight: 700;
 }
 
-.typeBadge { 
+.typeBadge {
     background-color: var(--primary);
+}
+
+.badge {
+    background-color: transparent;
+    margin-left: 5px;
+}
+
+.badge, .typeBadge { 
 
     border: 1px solid var(--divider);
     border-radius: 5px;
