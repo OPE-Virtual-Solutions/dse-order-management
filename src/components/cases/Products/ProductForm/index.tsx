@@ -70,6 +70,7 @@ function ProductForm({ product, categories, setCategory }: Props) {
                     }}
                     options={categories}
                     getOptionLabel={(option: Category) => option.name }
+                    defaultValue={product.category}
                     renderInput={(params: any) => (
                         <TextField 
                             {...params}
