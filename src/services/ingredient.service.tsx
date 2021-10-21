@@ -14,15 +14,31 @@ class _IngredientService {
         });
     }
 
-    async list(): Promise<Ingredient[] | undefined> {
+    async list() {
         const response = await api.get(ENDPOINT);
 
+        let list: Ingredient[] = [];
         if (response.status) {
-            const list: Ingredient[] = this.translateListResponse(response.data);
-            return list;
+            list = this.translateListResponse(response.data);
         };
 
-        return undefined;
+        return list;
+    };
+
+    async create(ingredient: Ingredient) {
+        const ingrediente = new IngredientPT(ingredient);
+
+        const response = await api.post(ENDPOINT, ingrediente);
+        
+        return response;
+    };
+
+    async update(id: number, ingredient: Ingredient) {
+        const ingrediente = new IngredientPT(ingredient);
+
+        const response = await api.patch(ENDPOINT + `${id}/`, ingrediente);
+    
+        return response;
     };
 };
 
