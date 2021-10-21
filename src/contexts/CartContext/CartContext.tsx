@@ -148,11 +148,14 @@ export function CartProvider({ children }: any) {
     }
 
     async function finishOrder() {
-        await OrderService.create(order).then((response) => {
-            console.log("[LOG] ~ file: CartContext.tsx ~ line 126 ~ awaitOrderService.create ~ response", response);
-        }).catch((error) => {
-            console.log("[LOG] ~ file: CartContext.tsx ~ line 128 ~ awaitOrderService.create ~ error", JSON.stringify(error));
-            
+        await OrderService.create(order).then(() => {
+            setCart([]);
+            setOrder(order => {
+                let _order = { ...order };
+                _order = OrderInstance;
+
+                return _order;
+            });
         });
     };
 
