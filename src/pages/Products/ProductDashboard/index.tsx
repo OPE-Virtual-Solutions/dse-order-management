@@ -70,7 +70,7 @@ function ProductDashboard() {
             setProducts(response.products);
             setCategories(response.categories);
 
-            // setLoading(false);
+            setLoading(false);
         });
     }
 
