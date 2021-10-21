@@ -1,59 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Dashboard } from "templates/Dashboard";
 import styles from "./styles.module.css";
 
 import { DragDropContext } from "react-beautiful-dnd";
 import { OrderDraggable } from "components/cases/Orders/OrderDraggable";
+import { OrderService } from "services/order.service";
+import { Order } from "interfaces";
 
-type IPlaceholderOrder = {
-    id: number;
-    products: number;
-    type: "toGo" | "toEat";
-    price: number;
-}
-
-const waitingList: IPlaceholderOrder[] = [
-    {
-        id: 1334,
-        products: 5,
-        type: "toGo",
-        price: 59.99
-    },
-    {
-        id: 1335,
-        products: 1,
-        type: "toGo",
-        price: 39.99
-    },
-]
-
-const onGoingList: IPlaceholderOrder[] = [
-    {
-        id: 1331,
-        products: 3,
-        type: "toGo",
-        price: 29.99
-    },
-    {
-        id: 1322,
-        products: 2,
-        type: "toGo",
-        price: 9.99
-    },
-    {
-        id: 1332,
-        products: 2,
-        type: "toGo",
-        price: 9.99
-    },
-    {
-        id: 1352,
-        products: 2,
-        type: "toGo",
-        price: 9.99
-    },
-]
+import Alert from 'sweetalert2';
 
 const reorder = (list: any, startIndex: any, endIndex: any) => {
   const result = Array.from(list);
@@ -78,30 +33,80 @@ const move = (source: any, destination: any, droppableSource: any, droppableDest
 };
 
 function OrderHistory() {
-    const [waitingOrders, setWaitingOrders] = useState<any[]>(waitingList);
-    const [onGoingOrders, setOnGoingOrders] = useState<any[]>(onGoingList);
+    const [waitingOrders, setWaitingOrders] = useState<any[]>([]);
+    const [onGoingOrders, setOnGoingOrders] = useState<any[]>([]);
     const [doneOrders, setDoneOrders] = useState<any[]>([]);
 
     const stateLists: any = {
         dragWaiting: {
             list: waitingOrders,
-            set: setWaitingOrders
+            set: setWaitingOrders,
+            code: "aguardando"
         },
         dragOnGoing: {
             list: onGoingOrders,
-            set: setOnGoingOrders
+            set: setOnGoingOrders,
+            code: "em_andamento"
         },
         dragDone:  {
             list: doneOrders,
-            set: setDoneOrders
+            set: setDoneOrders,
+            code: "pronto"
         }
     }
 
     const getList = (id: any) => stateLists[id];
 
+    function onOrderFinish(selectedItem: Order) {
+        Alert.fire({
+            title: 'Aviso',
+            text: 'Você está prestes a finalizar um pedido. Se continuar, o pedido não será mais exibido no quadro de pedidos e será dado como finalizado e entregue. Deseja continuar?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: "<span style='color: #1b1b1b'>Sim</span>",
+            confirmButtonColor: "#FFBF00",
+            cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
+            cancelButtonColor: "transparent",
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                selectedItem.status = "finalizado";
+
+                await OrderService.update(selectedItem.id || 0, selectedItem).then((response) => {
+                    if (response.status === 200) window.location.reload();
+                });
+            } 
+        });
+    };
+
+    async function updateOrderStatus(destinationId: any, selectedItem: any) {
+        const state = getList(destinationId);
+
+        const order: Order = {
+            id: selectedItem.id,
+            is_local_order: selectedItem.is_local_order,
+            status: state.code,
+            total_payed: selectedItem.total_payed,
+            total_price: selectedItem.total_price,
+            address: selectedItem.address,
+            costumer: selectedItem.costumer,
+            created_at: selectedItem.created_at,
+            employee: selectedItem.employee,
+            finished_at: selectedItem.finished_at,
+            order_code: selectedItem.order_code,
+            order_type: selectedItem.order_type,
+            payment_method: selectedItem.payment_method,
+        };
+
+        await OrderService.update(order.id || 0, order).then((response) => {
+            if (response.status === 200) console.log("~ modificado com sucesso");
+        });
+    }
+
     function onDragEnd(result: any) {
         const { source, destination } = result;
+
         const state = getList(source.droppableId);
+        const selectedItem = state.list[source.index];
 
         if (!destination) return;
 
@@ -121,7 +126,7 @@ function OrderHistory() {
                 destination
             );
 
-            console.log(result);
+            updateOrderStatus(destination.droppableId, selectedItem);
 
             if (result.dragWaiting) setWaitingOrders(result.dragWaiting);
             if (result.dragOnGoing) setOnGoingOrders(result.dragOnGoing);
@@ -129,6 +134,23 @@ function OrderHistory() {
         };
     };
 
+    async function retrieveData() {
+        await OrderService.list().then((response) => {
+            if (response.length === 0) alert("Vazio");
+
+            const _waiting = response.filter((order) => order.status === "aguardando");
+            const _onGoing = response.filter((order) => order.status === "em_andamento");
+            const _done = response.filter((order) => order.status === "pronto");
+
+            setWaitingOrders(_waiting);
+            setOnGoingOrders(_onGoing);
+            setDoneOrders(_done);
+        });
+    }
+
+    useEffect(() => {
+        retrieveData();
+    }, []);
 
     return (
         <Dashboard>
@@ -156,6 +178,8 @@ function OrderHistory() {
                             data={doneOrders}
                             onDragEnd={onDragEnd}
                             withoutContext
+                            showFinishButton
+                            onOrderFinish={onOrderFinish}
                         />
                     </DragDropContext>
                 </div>
