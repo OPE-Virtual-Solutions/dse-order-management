@@ -31,19 +31,21 @@ function ProductModal({ categories, product }: Props) {
     }
 
     async function updateProduct(productObj: Product) {
-        // await ProductService.update(product.id, productObj).then((response) => {
-        //     if (response.status !== 200) window.location.reload();
-        // });
+        await ProductService.update(product.id || 0, productObj).then((response) => {
+            if (response.status === 200) window.location.reload();
+        });
     }
 
     async function handleSubmit(event: any) {
+        event.preventDefault();
+
         const _product: Product = {
             name: event.target.inputNome.value,
             price: event.target.inputPreco.value,
-            category: category,
+            category: category.id === -1 ? product.category : category,
             description: event.target.inputDescricao.value,
             quantity: event.target.inputQuantidade.value,
-            active: false
+            active: true
         }
 
         product.id ? updateProduct(_product) : createProduct(_product);
