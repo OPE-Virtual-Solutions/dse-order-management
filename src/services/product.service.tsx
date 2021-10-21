@@ -7,7 +7,6 @@ import { Ingredient } from "interfaces/Ingredient";
 import {
     Product,
     ProductPT,
-    ProductPost,
     ProductPostPT
 } from "interfaces/Product";
 import { CategoryService } from "./category.service";
@@ -53,6 +52,23 @@ class _ProductService {
 
         const response = await api.post(Endpoints.product, produto);
         
+        return response;
+    };
+
+    async update(id: number, product: Product) {
+
+        const produto: ProductPostPT = {
+            id_produto: id,
+            nome_produto: product.name,
+            categoria: product.category.id || 1,
+            ativo: product.active,
+            descricao: product.description,
+            preco: product.price,
+            quantidade: product.quantity
+        }
+
+        const response = await api.patch(Endpoints.product + `${id}/`, produto);
+    
         return response;
     };
 
