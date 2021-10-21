@@ -71,8 +71,8 @@ function GlobalConfiguration({
                         aria-label="Default select example"
                     >
                         <option value="default" selected={ !order.order_type }>Selecione o local de consumo</option>
-                        <option value="local" selected={isOptionSelected("local")}>No local</option>
-                        <option value="viagem" selected={isOptionSelected("viagem")}>Pra viagem</option>
+                        <option value="pra_consumir" selected={isOptionSelected("local")}>No local</option>
+                        <option value="pra_viagem" selected={isOptionSelected("viagem")}>Pra viagem</option>
                     </select>
                 </div>
             </main>
