@@ -54,7 +54,7 @@ function OrderRegister() {
     }
 
     return (
-        <Dashboard showCart>
+        <Dashboard showCart cartProps={{ showCardActions: activeStep === 2 ? false : true }}>
             <div className={styles.orderRegisterContainer}>
                 <header>
                     <h5>Registrar novo pedido</h5>

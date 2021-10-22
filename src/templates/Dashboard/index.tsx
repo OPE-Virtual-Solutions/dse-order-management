@@ -3,15 +3,16 @@ import { ReactNode } from "react";
 import styles from "./styles.module.css";
 
 import { SideMenu } from "components/navigation/SideMenu";
-import { Cart } from "components/display/Cart";
+import { Cart, CartProps } from "components/display/Cart";
 
 type Props = {
     children: ReactNode;
     className?: string;
     showCart?: boolean;
+    cartProps?: CartProps;
 }
 
-function Dashboard({ children, className = "", showCart = false }: Props) {
+function Dashboard({ children, className = "", showCart = false, cartProps }: Props) {
     return (
         <div className={ `${className} ${styles.dashboardContainer}` }>
             <SideMenu />
@@ -22,7 +23,7 @@ function Dashboard({ children, className = "", showCart = false }: Props) {
 
             { showCart && (
                 <div className={styles.cartContainer}>
-                    <Cart />
+                    <Cart {...cartProps} />
                 </div>
             )}
         </div>

@@ -19,10 +19,11 @@ import {
 import { CartContext } from "contexts/CartContext/CartContext";
 
 type Props = {
-    orderItem: CartProduct
+    orderItem: CartProduct;
+    showCardActions: boolean;
 }
 
-function CartCard({ orderItem }: Props) {
+function CartCard({ orderItem, showCardActions }: Props) {
     const {
         removeFromCart,
         sumItemQuantity,
@@ -65,20 +66,23 @@ function CartCard({ orderItem }: Props) {
                     }
                 </p>
             </main>
-            <footer>
-                <QuantityButton 
-                    onSubtract={() => { onSubtract() }}
-                    onSum={() => { onSum() }}
-                    quantity={orderItem.quantity}
-                />
-                <Tooltip title="Remover produto do carrinho" placement="left">
-                    <Button 
-                        onClick={() => { onRemove() }}
-                        transparent
-                        icon={<FaTrashAlt size={12} />}
+
+            {showCardActions && (
+                <footer>
+                    <QuantityButton 
+                        onSubtract={() => { onSubtract() }}
+                        onSum={() => { onSum() }}
+                        quantity={orderItem.quantity}
                     />
-                </Tooltip>
-            </footer>
+                    <Tooltip title="Remover produto do carrinho" placement="left">
+                        <Button 
+                            onClick={() => { onRemove() }}
+                            transparent
+                            icon={<FaTrashAlt size={12} />}
+                        />
+                    </Tooltip>
+                </footer>
+            )}
         </div>
     )
 };

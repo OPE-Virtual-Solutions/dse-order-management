@@ -20,7 +20,11 @@ import { FiShoppingBag } from "react-icons/fi";
 
 import { CartContext } from "contexts/CartContext/CartContext";
 
-function Cart() {
+export type CartProps = {
+    showCardActions?: boolean;
+}
+
+function Cart({ showCardActions = true }: CartProps) {
     let history = useHistory();
     const location = useLocation();
 
@@ -28,7 +32,11 @@ function Cart() {
     
     function renderCartCard(orderItem: CartProduct) {
         return (
-            <CartCard key={orderItem.id} orderItem={orderItem} />
+            <CartCard 
+                key={orderItem.id} 
+                orderItem={orderItem} 
+                showCardActions={showCardActions}
+            />
         )
     }
 
