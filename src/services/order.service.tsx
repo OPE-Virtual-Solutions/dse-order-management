@@ -21,9 +21,7 @@ class _OrderService {
 
         let list: Order [] = [];
         if (response.status) {
-            console.log("~ lista de pedidos:", response.data);
-            list = this.translateListResponse(response.data);
-            console.log("~ lista de pedidos convertida:", list);
+            list = this.translateListResponse(response.data.results);
         };
 
         return list;

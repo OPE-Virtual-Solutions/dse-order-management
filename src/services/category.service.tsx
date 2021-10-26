@@ -18,7 +18,7 @@ class _CategoryService {
         const response = await api.get(ENDPOINT);
 
         if (response.status) {
-            const list = this.translateListResponse(response.data);
+            const list = this.translateListResponse(response.data.results);
 
             return list;
         }

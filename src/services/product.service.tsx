@@ -33,7 +33,7 @@ class _ProductService {
         const response = await api.get(Endpoints.product);
 
         if (response.status) {
-            const list: Product[] = this.translateListResponse(response.data);
+            const list: Product[] = this.translateListResponse(response.data.results);
             return list;
         };
 
@@ -78,9 +78,9 @@ class _ProductService {
             api.get(Endpoints.category),
             api.get(Endpoints.ingredient)
         ]).then(axios.spread((products, categories, ingredients) => {
-            this.products = this.translateListResponse(products.data);
-            this.categories = CategoryService.translateListResponse(categories.data);
-            this.ingredients = IngredientService.translateListResponse(ingredients.data);
+            this.products = this.translateListResponse(products.data.results);
+            this.categories = CategoryService.translateListResponse(categories.data.results);
+            this.ingredients = IngredientService.translateListResponse(ingredients.data.results);
         }));
 
         return {

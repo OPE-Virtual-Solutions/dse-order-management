@@ -19,7 +19,7 @@ class _IngredientService {
 
         let list: Ingredient[] = [];
         if (response.status) {
-            list = this.translateListResponse(response.data);
+            list = this.translateListResponse(response.data.results);
         };
 
         return list;
