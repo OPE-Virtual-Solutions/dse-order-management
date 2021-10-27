@@ -1,4 +1,5 @@
 import { api } from "api";
+import { AuthLoading } from "components/display/AuthLoading";
 import {
     createContext,
     useState,
@@ -17,6 +18,8 @@ export function UserProvider({ children }: any) {
     const TOKEN_KEY = "@dse-Token";
     const USER_KEY = "@dse-User";
 
+    const [loading, setLoading] = useState<boolean>(true);
+
     const [user, setUser] = useState<any>({});
     const [authenticated, setAuthenticated] = useState<boolean>(false);
 
@@ -30,6 +33,8 @@ export function UserProvider({ children }: any) {
             api.defaults.headers.Authorization = `Token ${currentToken.token}`
             setAuthenticated(true);
         }
+
+        setLoading(false);
     }, []);
 
     async function login(credentials: ICredentials): Promise<boolean> {
@@ -52,6 +57,8 @@ export function UserProvider({ children }: any) {
         setAuthenticated(false);
         localStorage.removeItem(TOKEN_KEY);
     }
+
+    if (loading) return <AuthLoading />
 
     return (
         <UserContext.Provider
