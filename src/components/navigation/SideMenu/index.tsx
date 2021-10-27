@@ -1,16 +1,25 @@
+import { useContext } from "react";
+import { UserContext } from "contexts/UserContext/UserContext";
+
 import styles from "./styles.module.css";
 
 import { 
     FaPowerOff
 } from "react-icons/fa";
-import { useHistory } from "react-router";
 
 import { navlinkRoutes } from "./navroutes";
 
 import { NavLink } from "../NavLink";
 
+
 function SideMenu() {
-    let history = useHistory();
+    const {
+        logout 
+    } = useContext(UserContext);
+
+    function handleLogout() {
+        logout();
+    }
 
     return (
         <nav className={ styles.sidenavContainer }>
@@ -27,7 +36,7 @@ function SideMenu() {
             </div>
 
             <footer>
-                <button onClick={() => history.push("/")} className="navLink">
+                <button onClick={() => handleLogout()} className="navLink">
                     <FaPowerOff size={16} />
                 </button>
             </footer>

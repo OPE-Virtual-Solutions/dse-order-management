@@ -4,7 +4,8 @@ import {
     FaShoppingBag, 
     FaPepperHot,
     FaHamburger,
-    FaTrello
+    FaTrello,
+    FaUser
 } from "react-icons/fa";
 
 type NavRoute = {
@@ -45,6 +46,13 @@ const navlinkRoutes: NavRoute[] = [
         path: "/ingredients",
         role: "",
         icon: <FaPepperHot size={iconSize} />
+    },
+    {
+        id: 5,
+        title: "Gerenciamento de Usuários",
+        path: "/users",
+        role: "",
+        icon: <FaUser size={iconSize} />
     }
 ];
 
