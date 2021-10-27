@@ -1,5 +1,7 @@
 import {
     createContext,
+    useContext,
+    useEffect,
     useState,
 } from "react";
 
@@ -19,11 +21,36 @@ import {
 } from "./ICartContext";
 import { OrderService } from "services/order.service";
 
+import { UserContext } from "contexts/UserContext/UserContext";
+import { CartService } from "services/cart.service";
+
 export const CartContext = createContext({} as IOrderContextValues);
 
 export function CartProvider({ children }: any) {
+    const { authenticated } = useContext(UserContext);
+
     const [order, setOrder] = useState<Order>(OrderInstance);
     const [cart, setCart] = useState<CartProduct[]>([]);
+
+    useEffect(() => {
+        if (authenticated) getCart();
+    }, []);
+
+    async function getCart() {
+        await CartService.get(1).then((response) => {
+            if (response.length !== 0) {
+                const _order = { ...order };
+    
+                response.map((cart, index) => {
+                    _order.total_price += roundNumber(cart.price * cart.quantity);
+                });
+
+                setOrder(_order); 
+                setCart(response);
+            }
+
+        });
+    };
 
     function getProductIndex(product: Product): number {
         for (let index = 0; index < cart.length; index++) {
