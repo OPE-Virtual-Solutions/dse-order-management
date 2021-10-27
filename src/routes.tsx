@@ -11,17 +11,20 @@ import { IngredientDashboard } from "pages/Ingredients/IngredientDashboard";
 import { OrderRegister } from "pages/Orders/OrderRegister";
 
 import { OrderRoute } from "components/routes/OrderRoute";
+import { UserDashboard } from "pages/Users/UserDashboard";
+import { PrivateRoute } from "components/routes/PrivateRoute";
 
 function Routes() {
     return (
         <BrowserRouter>
-            <Route component={ OrderHistory } path="/order-history" />
+            <PrivateRoute component={UserDashboard} path="/users" />
 
+            <PrivateRoute component={ OrderHistory } path="/order-history" />
             <OrderRoute component={ OrderRegister } path="/order" />
+            <PrivateRoute component={ OrderDashboard } path="/order-dashboard" />
 
-            <Route component={ OrderDashboard } path="/order-dashboard" />
-            <Route component={ IngredientDashboard } path="/ingredients" />
-            <Route component={ ProductDashboard } path="/products" />
+            <PrivateRoute component={ IngredientDashboard } path="/ingredients" />
+            <PrivateRoute component={ ProductDashboard } path="/products" />
             <Route component={ Login } path="/" exact/>
         </BrowserRouter>
     )
