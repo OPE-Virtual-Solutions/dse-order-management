@@ -12,6 +12,8 @@ import {
     IToken
 } from "./IUserContext";
 
+import { parseISO } from "date-fns";
+
 export const UserContext = createContext({} as IContextValues);
 
 export function UserProvider({ children }: any) {
@@ -29,13 +31,20 @@ export function UserProvider({ children }: any) {
 
         if (tokenStorage) currentToken = JSON.parse(localStorage.getItem(TOKEN_KEY) || "{}");
 
-        if (currentToken.token !== "") {
+        if (currentToken.token !== "" && !tokenHasExpired(currentToken)) {
             api.defaults.headers.Authorization = `Token ${currentToken.token}`
             setAuthenticated(true);
         }
 
         setLoading(false);
     }, []);
+
+    function tokenHasExpired(token: IToken) {
+        const currentDate = parseISO(Date.now().toString());
+        const tokenDate = parseISO(token.expiry);
+
+        return currentDate < tokenDate;
+    }
 
     async function login(credentials: ICredentials): Promise<boolean> {
         return await api.post("/login/", credentials).then((response) => {
