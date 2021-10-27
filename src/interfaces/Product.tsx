@@ -1,4 +1,6 @@
 import { Category, CategoryPT } from "interfaces";
+import { IngredientService } from "services/ingredient.service";
+
 
 export interface ProductPost {
     name: string;
@@ -41,7 +43,7 @@ export class Product {
             name: produto.categoria.nome_categoria,
             active: produto.categoria.ativo,
         };
-        this.ingredients = produto.ingredientes;
+        this.ingredients = IngredientService.translateListResponse(produto.ingredientes);
     };
 };
 

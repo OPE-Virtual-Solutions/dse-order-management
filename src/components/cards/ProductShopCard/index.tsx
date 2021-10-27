@@ -50,7 +50,7 @@ function ProductShopCard({ product }: Props) {
                     <p>
                         { product.ingredients.length !== 0 ? (
                             product.ingredients.map((ingredient: any, index: number) => (
-                                index === product.ingredients.length - 1 ? ingredient.nome : ingredient.nome + ", "
+                                index === product.ingredients.length - 1 ? ingredient.name : ingredient.name + ", "
                             ))) :
                             product.description 
                         }
