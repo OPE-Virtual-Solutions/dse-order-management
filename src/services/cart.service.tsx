@@ -1,6 +1,7 @@
 import { api } from "api";
 
 import { CartProduct, CartProductPT } from "interfaces";
+import { CartProductPost } from "interfaces/CartProduct";
 
 const ENDPOINT = "/itensPedidos/";
 
@@ -25,6 +26,21 @@ class _CartService {
 
         return list;
     };
+
+    async create(cartProduct: CartProduct) {
+        const item: CartProductPost = {
+            pedido: cartProduct.order,
+            produto: cartProduct.product.id || 0,
+            quantidade: cartProduct.quantity,
+            usuario: cartProduct.user
+        }
+
+        await api.post(ENDPOINT, item);
+    };
+
+    async remove(cartProduct: CartProduct) {
+        await api.delete(`${ENDPOINT}${cartProduct.id}/`);
+    }
 }
 
 export const CartService = new _CartService();
