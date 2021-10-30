@@ -6,7 +6,7 @@ import { CartProductPost } from "interfaces/CartProduct";
 const ENDPOINT = "/itensPedidos/";
 
 class _CartService {
-    private translateListResponse(response: CartProductPT[]) {
+    translateListResponse(response: CartProductPT[]) {
         return response.map((carrinho: CartProductPT) => {
             return new CartProduct(carrinho);
         });
