@@ -1,4 +1,4 @@
-export type OrderPostPT = {
+type OrderPost = {
     codigo_pedido?: string;
     atendimento_presencial: boolean;
     valor_total: number;
@@ -6,6 +6,11 @@ export type OrderPostPT = {
     metodo_pagamento?: string;
     criado_em?: Date;
     tipo_pedido: string;
+}
+
+export type OrderPostPT = {
+    usuario: number;
+    pedido: OrderPost;
 }
 
 export class Order {

@@ -17,11 +17,11 @@ class _OrderService {
     }
 
     async list() {
-        const response = await api.get(ENDPOINT);
+        const response = await api.get(ENDPOINT + "?apenasAtendimento=true");
 
         let list: Order [] = [];
         if (response.status) {
-            list = this.translateListResponse(response.data.results);
+            list = this.translateListResponse(response.data);
         };
 
         return list;
@@ -29,13 +29,16 @@ class _OrderService {
 
     async create(order: Order) {
         const pedido: OrderPostPT = {
-            codigo_pedido: order.order_code,
-            status: "aguardando",
-            atendimento_presencial: order.is_local_order,
-            valor_total: order.total_price,
-            metodo_pagamento: order.payment_method,
-            criado_em: new Date(),
-            tipo_pedido: order.order_type || "pra_consumir"
+            usuario: 1,
+            pedido: {
+                codigo_pedido: order.order_code,
+                status: "aguardando",
+                atendimento_presencial: order.is_local_order,
+                valor_total: order.total_price,
+                metodo_pagamento: order.payment_method,
+                criado_em: new Date(),
+                tipo_pedido: order.order_type || "pra_consumir"
+            }
         };
 
         const response = await api.post(ENDPOINT, pedido);
