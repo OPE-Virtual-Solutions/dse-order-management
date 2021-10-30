@@ -6,14 +6,7 @@ import {
 
 import styles from "./OrderDraggable.module.css";
 
-import { 
-    FaStoreAlt, 
-    FaMoneyBill, 
-    FaBarcode,
-    FaCreditCard
-} from "react-icons/fa";
-import { Tooltip } from "components/display/Tooltip";
-import { Button } from "components/forms/Button";
+import { OrderDragCard } from "../OrderDragCard";
 
 type Props = {
     id: string;
@@ -24,22 +17,6 @@ type Props = {
     showFinishButton?: boolean;
     onOrderFinish?: (selectedItem: any) => void;
 }
-
-const getCardStyle = (draggableStyle: any) => ({
-    background: "white",
-    
-    padding: 15,
-
-    borderColor: "var(--divider)",
-    borderWidth: 1,
-    borderStyle: "solid",
-    borderRadius: 5,
-
-    margin: 5,
-
-    // configurações essenciais para o Draggable funcionar
-    ...draggableStyle
-});
 
 const getListContainerStyle = () => ({
     flex: 1,
@@ -64,20 +41,6 @@ function OrderDraggable({
     showFinishButton = false,
     onOrderFinish = () => {}
 }: Props) {
-
-    function getCurrentPaymentMethod(paymentMethod: string) {
-        switch (paymentMethod) {
-            case "money":
-                return "dinheiro"
-            case "credit":
-                return "cartão de crédito"
-            case "debit":
-                return "cartão de débito"
-            default:
-                return "dinheiro"
-        }
-    }
-
     function renderDroppable() {
         return (
             <Droppable
@@ -104,67 +67,13 @@ function OrderDraggable({
                                 index={index}
                             >
                                 {(provided, snapshot) => (
-                                    <div
-                                        ref={provided.innerRef}
-                                        {...provided.draggableProps}
-                                        {...provided.dragHandleProps}
-                                        style={getCardStyle(
-                                            provided.draggableProps.style
-                                        )}
-
-                                        className={ styles.orderCard }
-                                    >
-                                        <h6>
-                                            Pedido <span>#{ element.id }</span>
-                                        </h6>
-                                        
-                                        <footer>
-                                            <div>
-                                                <div className={ styles.typeBadge }>
-                                                    <span className={ styles.priceText }>
-                                                        { element.order_type === "pra_viagem" && "Pra viagem" }
-                                                        { element.order_type === "pra_consumir" && "Pra consumo"}
-                                                    </span>
-                                                </div>
-
-                                                {element.is_local_order && (
-                                                    <Tooltip 
-                                                        title="Pedido efetuado presencialmente"
-                                                        placement="right"
-                                                    >
-                                                        <div className={ styles.badge }>
-                                                            <FaStoreAlt size={11} />
-                                                        </div>
-                                                    </Tooltip>
-                                                )}
-
-                                                <Tooltip 
-                                                    title={`Pagamento em ${getCurrentPaymentMethod(element.payment_method)}`}
-                                                    placement="right"
-                                                >
-                                                    <div className={ styles.badge }>
-                                                        {element.payment_method === "money" && <FaMoneyBill size={11} />}
-                                                        {element.payment_method === "credit" && <FaCreditCard size={11} />}
-                                                        {element.payment_method === "debit" && <FaBarcode size={11} />}
-                                                    
-                                                    </div>
-                                                </Tooltip>
-                                            </div>
-
-                                            <span className={ styles.priceText}>R${ element.total_price }</span>
-                                        </footer>
-                                        
-                                        { showFinishButton && (
-                                            <div className="d-flex align-stretch">
-                                                <Button 
-                                                    onClick={() => { onOrderFinish(element) }}
-                                                    className="w-100 m-0 mt-2 justify-content-center"
-                                                    text="Despachar"
-                                                    transparent
-                                                />
-                                            </div>
-                                        )}
-                                    </div>
+                                    <OrderDragCard 
+                                        key={index}
+                                        order={element}
+                                        provided={provided}
+                                        onOrderFinish={onOrderFinish}
+                                        showFinishButton={showFinishButton}
+                                    />
                                 )}
                             </Draggable>
                         ))}

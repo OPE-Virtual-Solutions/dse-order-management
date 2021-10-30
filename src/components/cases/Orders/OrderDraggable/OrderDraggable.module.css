@@ -23,7 +23,7 @@
     display: flex;
 }
 
-.orderListContainer header {
+.orderListContainer > header {
     display: flex;
     align-items: center;
 
@@ -34,7 +34,7 @@
     overflow-y: auto;
 }
 
-.orderListContainer header > span {
+.orderListContainer > header > span {
     text-transform: uppercase;
     font-weight: 700;
     font-size: 0.8125rem;
