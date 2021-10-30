@@ -40,10 +40,10 @@ export function UserProvider({ children }: any) {
     }, []);
 
     function tokenHasExpired(token: IToken) {
-        const currentDate = parseISO(Date.now().toString());
+        const currentDate = new Date();
         const tokenDate = parseISO(token.expiry);
 
-        return currentDate < tokenDate;
+        return currentDate > tokenDate;
     }
 
     async function login(credentials: ICredentials): Promise<boolean> {
