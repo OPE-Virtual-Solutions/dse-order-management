@@ -1,3 +1,6 @@
+import { CartProduct } from "interfaces";
+import { CartService } from "services/cart.service";
+
 type OrderPost = {
     codigo_pedido?: string;
     atendimento_presencial: boolean;
@@ -35,6 +38,8 @@ export class Order {
 
     employee?: number;
 
+    products?: CartProduct[];
+
     constructor(pedido: OrderPT) {
         this.id = pedido.id_pedido;
 
@@ -56,6 +61,8 @@ export class Order {
         this.finished_at = pedido.finalizado_em;
 
         this.employee = pedido.funcionario;
+        
+        this.products = CartService.translateListResponse(pedido.produtos);
     }
 }
 
@@ -81,6 +88,8 @@ export class OrderPT {
 
     funcionario?: number;
 
+    produtos?: any;
+
     constructor(order: Order) {
         this.id_pedido = order.id;
 
@@ -102,5 +111,7 @@ export class OrderPT {
         this.finalizado_em = order.finished_at;
 
         this.funcionario = order.employee;
+
+        this.produtos = order.products;
     }
 }
