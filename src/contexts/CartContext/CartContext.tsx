@@ -68,23 +68,37 @@ export function CartProvider({ children }: any) {
             const _cart = { ...cart };
             
             _cart[cartIndex].addQuantity();
-            
-            setCart(_cart);
+
+            saveCart(_cart[cartIndex]).then(() => {
+                setCart(_cart);
+            }).catch((err) => {
+                console.log("~ error:", err)
+            });
+
         } else {
             const cartProduct = new CartProduct({
                 id_item_pedido: Math.random(),
                 pedido: null,
                 produto: new ProductPT(product),
                 quantidade: quantity,
-                preco: roundNumber(product.price * quantity)
+                preco: roundNumber(product.price * quantity),
+                usuario: 1 // id fixo temporário 
             });
 
-            setCart(cart => [...cart, cartProduct]);
+            saveCart(cartProduct).then(() => {
+                setCart(cart => [...cart, cartProduct]);
+            }).catch((err) => {
+                console.log("~ error:", err.response)
+            });
         };
 
         _order.total_price += roundNumber(product.price * quantity);
         setOrder(_order);
     };
+
+    async function saveCart(cartProduct: CartProduct) {
+        return await CartService.create(cartProduct);
+    }
 
     function removeFromCart(cartProduct: CartProduct) {
         if (cart.length === 1) {
@@ -105,23 +119,25 @@ export function CartProvider({ children }: any) {
         }
     };
 
-    function saveRemoveChanges(cartProduct: CartProduct) {
-        setCart(cart => {
-            return cart.filter(function(cartItem) {
-                return cartItem !== cartProduct;
+    async function saveRemoveChanges(cartProduct: CartProduct) {
+        await CartService.remove(cartProduct).then(() => {
+            setCart(cart => {
+                return cart.filter(function(cartItem) {
+                    return cartItem !== cartProduct;
+                });
             });
-        });
-
-        setOrder(orderInfo => {
-            let _order = { ...orderInfo };
-
-            if (cart.length === 1) {
-                _order = OrderInstance;
-            } else {
-                _order.total_price = orderInfo.total_price - (cartProduct.product.price * cartProduct.quantity);
-            }
-
-            return _order;
+    
+            setOrder(orderInfo => {
+                let _order = { ...orderInfo };
+    
+                if (cart.length === 1) {
+                    _order = OrderInstance;
+                } else {
+                    _order.total_price = orderInfo.total_price - (cartProduct.product.price * cartProduct.quantity);
+                }
+    
+                return _order;
+            });
         });
     }
 
