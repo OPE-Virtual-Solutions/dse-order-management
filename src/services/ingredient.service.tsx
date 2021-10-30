@@ -9,9 +9,13 @@ const ENDPOINT = "/ingredientes/";
 
 class _IngredientService {
     translateListResponse(response: IngredientPT[]) {
-        return response.map((ingrediente: IngredientPT) => {
-            return new Ingredient(ingrediente);
-        });
+        if (response) {
+            return response.map((ingrediente: IngredientPT) => {
+                return new Ingredient(ingrediente);
+            });
+        } else {
+            return [];
+        }
     }
 
     async list() {
