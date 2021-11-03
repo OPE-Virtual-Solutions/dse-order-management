@@ -36,6 +36,8 @@ export class Order {
     created_at?: Date;
     finished_at?: Date;
 
+    note?: string;
+
     employee?: number;
 
     products?: CartProduct[];
@@ -59,6 +61,8 @@ export class Order {
 
         this.created_at = pedido.criado_em;
         this.finished_at = pedido.finalizado_em;
+
+        this.note = pedido.observacao;
 
         this.employee = pedido.funcionario;
         
@@ -86,6 +90,8 @@ export class OrderPT {
     criado_em?: Date;
     finalizado_em?: Date;
 
+    observacao?: string;
+
     funcionario?: number;
 
     produtos?: any;
@@ -111,6 +117,8 @@ export class OrderPT {
         this.finalizado_em = order.finished_at;
 
         this.funcionario = order.employee;
+
+        this.observacao = order.note;
 
         this.produtos = order.products;
     }
