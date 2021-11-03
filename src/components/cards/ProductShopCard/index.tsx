@@ -69,12 +69,16 @@ function ProductShopCard({ product }: Props) {
                         label="Qtd."
                         defaultValue={0}
                         required
-
+                        onInput = {(e: any) =>{
+                            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12);
+                            e.target.value = Math.min(parseInt(e.target.value), product.quantity).toString().slice(0,12)
+                        }}
                         inputProps={{
                             style: {
                                 fontSize: 13,
                                 height: 10,
-                            }
+                            },
+                            minLength: 0,
                         }}
                     />
 
