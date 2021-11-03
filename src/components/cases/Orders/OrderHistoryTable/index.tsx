@@ -27,7 +27,7 @@ function OrderHistoryTable() {
     const [orders, setOrders] = useState<Order[]>([]);
     const [selectedOrder, setSelectedOrder] = useState<Order>(OrderInstance);
 
-    const [openModal, setOpenModal] = useState<boolean>(true);
+    const [openModal, setOpenModal] = useState<boolean>(false);
 
     const headers: string[] = [
         "ID",
