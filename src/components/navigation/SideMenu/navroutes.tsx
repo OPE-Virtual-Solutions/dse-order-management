@@ -5,7 +5,8 @@ import {
     FaPepperHot,
     FaHamburger,
     FaTrello,
-    FaUser
+    FaUser,
+    FaWpforms
 } from "react-icons/fa";
 
 type NavRoute = {
@@ -28,32 +29,39 @@ const navlinkRoutes: NavRoute[] = [
     },
     {
         id: 2,
-        title: "Quadro de pedidos",
-        path: "/order-history",
+        title: "Quadro de Pedidos",
+        path: "/order-board",
         role: "",
         icon: <FaTrello size={iconSize} />
     },
     {
         id: 3,
+        title: "Histórico de Pedidos",
+        path: "/order-history",
+        role: "",
+        icon: <FaWpforms size={iconSize} />
+    },
+    {
+        id: 4,
         title: "Gerenciamento de Produtos",
         path: "/products",
         role: "",
         icon: <FaHamburger size={iconSize} />
     },
     {
-        id: 4,
+        id: 5,
         title: "Gerenciamento de Ingredientes",
         path: "/ingredients",
         role: "",
         icon: <FaPepperHot size={iconSize} />
     },
     {
-        id: 5,
+        id: 6,
         title: "Gerenciamento de Usuários",
         path: "/users",
         role: "",
         icon: <FaUser size={iconSize} />
-    }
+    },
 ];
 
 export { navlinkRoutes };
