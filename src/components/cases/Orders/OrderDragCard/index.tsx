@@ -15,6 +15,8 @@ import { FaBarcode, FaCreditCard, FaMoneyBill, FaStoreAlt, FaTrashAlt } from "re
 
 import { CartProduct, EmptyProduct, Order, ProductPT } from "interfaces";
 
+import Alert from 'sweetalert2';
+import { OrderService } from "services/order.service";
 
 type Props = {
     provided: DraggableProvided;
@@ -72,6 +74,57 @@ function OrderDragCard({
                 </div>
             </div>
         )
+    };
+
+    function handleOrderCancel() {
+        Alert.fire({
+            title: 'Alerta',
+            text: `Você está prestes a cancelar o pedido #${order.id}. Se prosseguir, o pedido não será mais rastreado e será dado como finalizado sem sucesso (cancelado). Deseja continuar?`,
+            icon: 'error',
+            input: 'textarea',
+            inputLabel: 'Se precisar, insire o motivo do cancelamento:',
+            inputPlaceholder: 'Motivo do cancelamento (opcional)',
+            inputAttributes: {
+                maxlength: "280"
+            },
+            customClass: {
+                popup: styles.sweetAlertText
+            },
+            showCancelButton: true,
+            confirmButtonText: "<span style='color: #1b1b1b'>Efetuar cancelamento</span>",
+            confirmButtonColor: "#FFBF00",
+            cancelButtonText: "<span style='color: #1b1b1b'>Desistir</span>",
+            cancelButtonColor: "transparent",
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                order.status = "cancelado";
+
+                await OrderService.update(order.id || 0, order).then(() => {
+                    window.location.reload();
+                });
+            };
+        });
+    }
+
+    function handleObservation() {
+        Alert.fire({
+            title: 'Adicionar observação',
+            input: 'textarea',
+            inputPlaceholder: 'Até 280 caracteres...',
+            inputAttributes: {
+                maxlength: "280"
+            },
+            customClass: {
+                popup: styles.sweetAlertText
+            },
+            showCancelButton: true,
+            confirmButtonText: "<span style='color: #1b1b1b'>Salvar</span>",
+            confirmButtonColor: "#FFBF00",
+            cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
+            cancelButtonColor: "transparent",
+        }).then(async(result) => {
+            if (result.isConfirmed) console.log("~ confirmed")
+        });
     }
 
     function handleIngredientSelection(cartProduct: CartProduct) {
@@ -103,6 +156,7 @@ function OrderDragCard({
                     placement="left"
                 >
                     <Button 
+                        onClick={() => handleOrderCancel() }
                         icon={<FaTrashAlt />}
                         transparent 
                     />
@@ -155,17 +209,23 @@ function OrderDragCard({
 
             <footer>
                 { showFinishButton && (
-                    <div>
+                    <div className="me-2">
                         <Button 
                             onClick={() => { onOrderFinish(order) }}
                             className="w-100 m-0 mt-2 justify-content-center"
-                            text="Despachar"
+                            text="Efetuar retirada"
                             transparent
                         />
                     </div>
                 )}
-                <div className="mt-2 mb-1">
-                    <span>Mais detalhes</span>
+
+                <div>
+                    <Button 
+                        onClick={() => { handleObservation() }}
+                        className="w-100 m-0 mt-2 justify-content-center"
+                        text="Adicionar Observação"
+                        transparent
+                    />
                 </div>
             </footer>
             

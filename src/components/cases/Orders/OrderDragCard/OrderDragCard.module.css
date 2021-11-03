@@ -89,7 +89,7 @@
 .typeBadge > span {
     text-transform: uppercase;
     font-size: 0.7rem;
-    font-weight: "medium";
+    font-weight: 600;
 }
 
 .countBadge {
@@ -142,4 +142,8 @@
 
 .orderProductCartContainer > div > span:hover {
     text-decoration: underline;
+}
+
+.sweetAlertText {
+    font-family: Inter;
 }
