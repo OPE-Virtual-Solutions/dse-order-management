@@ -147,3 +147,22 @@
 .sweetAlertText {
     font-family: Inter;
 }
+
+.observationContainer {
+    margin: 10px 0px;
+
+    padding: 0.5rem;
+
+    border: 1px dashed var(--divider);
+    border-radius: 5px;
+}
+
+.observationContainer  span {
+    color: var(--subtext);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.observationContainer  p {
+    font-size: 0.85rem;
+}

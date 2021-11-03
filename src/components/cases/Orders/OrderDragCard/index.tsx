@@ -108,8 +108,9 @@ function OrderDragCard({
 
     function handleObservation() {
         Alert.fire({
-            title: 'Adicionar observação',
+            title: `${ order.note ? "Editar" : "Adicionar"} observação`,
             input: 'textarea',
+            inputValue: order.note,
             inputPlaceholder: 'Até 280 caracteres...',
             inputAttributes: {
                 maxlength: "280"
@@ -123,7 +124,13 @@ function OrderDragCard({
             cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
             cancelButtonColor: "transparent",
         }).then(async(result) => {
-            if (result.isConfirmed) console.log("~ confirmed")
+            if (result.isConfirmed) {
+                order.note = result.value;
+
+                await OrderService.update(order.id || 0, order).then(() => {
+                    window.location.reload();
+                });
+            };
         });
     }
 
@@ -205,6 +212,13 @@ function OrderDragCard({
 
                     <span className={ styles.priceText}>R${ order.total_price }</span>
                 </div>
+                
+                {order.note && (
+                    <div className={ styles.observationContainer }>
+                        <span>Observação</span>
+                        <p>{ order.note }</p>
+                    </div>
+                )}
             </main>
 
             <footer>
@@ -223,7 +237,7 @@ function OrderDragCard({
                     <Button 
                         onClick={() => { handleObservation() }}
                         className="w-100 m-0 mt-2 justify-content-center"
-                        text="Adicionar Observação"
+                        text={`${ order.note ? "Editar" : "Adicionar"} observação`}
                         transparent
                     />
                 </div>
