@@ -56,11 +56,13 @@ function OrderDetailModal({ order }: Props) {
 
                     <span>Cliente efetuou pedido</span>
                     <p>{order.is_local_order ? "Presencialmente" : "Online (delivery)"}</p>
-
-                    <span>Observação</span>
-                    <p>
-                        {order.note ? order.note : "Nenhuma observação registrada"}
-                    </p>
+                    
+                    <div className={styles.observationContainer}>
+                        <span>Observação</span>
+                        <p>
+                            {order.note ? order.note : "Nenhuma observação registrada"}
+                        </p>
+                    </div>
                 </main>
 
             </div>
