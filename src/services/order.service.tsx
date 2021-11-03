@@ -27,6 +27,15 @@ class _OrderService {
         return list;
     };
 
+    async listAll() {
+        const response = await api.get(ENDPOINT);
+
+        let list: Order[] = [];
+        if (response.status) list = this.translateListResponse(response.data);
+
+        return list;
+    }
+
     async create(order: Order) {
         const pedido: OrderPostPT = {
             usuario: 1,
