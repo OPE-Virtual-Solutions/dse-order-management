@@ -1,0 +1,27 @@
+.container > header {
+    height: 10vh;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 1.1rem;
+
+    border-bottom: 1px solid var(--divider);
+}
+
+.container > header h5 {
+    font-weight: 700;
+    margin: 0;
+}
+
+.tableContainer {
+    flex-grow: 1;
+    position: relative;
+
+    padding: 5rem;
+
+    overflow-y: auto;
+
+    border-right: 9px solid var(--background);
+}
