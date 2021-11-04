@@ -71,6 +71,8 @@ function OrderBoard() {
             if (result.isConfirmed) {
                 selectedItem.status = "finalizado";
 
+                selectedItem.finished_at = new Date();
+
                 await OrderService.update(selectedItem.id || 0, selectedItem).then((response) => {
                     if (response.status === 200) window.location.reload();
                 });
@@ -136,8 +138,6 @@ function OrderBoard() {
 
     async function retrieveData() {
         await OrderService.list().then((response) => {
-            if (response.length === 0) alert("Vazio");
-
             const _waiting = response.filter((order) => order.status === "aguardando");
             const _onGoing = response.filter((order) => order.status === "em_andamento");
             const _done = response.filter((order) => order.status === "pronto");
