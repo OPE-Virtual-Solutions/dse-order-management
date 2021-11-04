@@ -25,7 +25,7 @@ function ProductModal({ categories, product }: Props) {
     const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
 
     async function createProduct(productObj: Product) {
-        await ProductService.create(productObj).then((response) => {
+        await ProductService.create(productObj, ingredientList).then((response) => {
             if (response.status === 200) window.location.reload();
         });
     }

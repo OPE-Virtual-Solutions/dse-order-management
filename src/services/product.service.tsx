@@ -2,7 +2,7 @@ import { api } from "api";
 import axios from "axios";
 
 import { Category } from "interfaces/Category";
-import { Ingredient } from "interfaces/Ingredient";
+import { Ingredient, IngredientPT } from "interfaces/Ingredient";
 
 import {
     Product,
@@ -40,7 +40,7 @@ class _ProductService {
         return undefined;
     };
 
-    async create(product: Product) {
+    async create(product: Product, ingredients: Ingredient[]) {
         const produto: ProductPostPT = {
             nome_produto: product.name,
             categoria: product.category.id ? product.category.id : 1,
@@ -50,7 +50,14 @@ class _ProductService {
             quantidade: product.quantity
         };
 
-        const response = await api.post(Endpoints.product, produto);
+        const ingredientes: IngredientPT[] = ingredients.map((ingredient) => new IngredientPT(ingredient));
+
+        const post = {
+            ...produto,
+            ingredientes: ingredientes
+        }
+
+        const response = await api.post(Endpoints.product, post);
         
         return response;
     };
