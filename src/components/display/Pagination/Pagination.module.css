@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    justify-content: center;
+
+    list-style-type: none;
+
+    width: 99%;
+
+    border: 1px solid var(--divider);
+
+    /* padding: 0.5rem; */
+
+    border-radius: 5px;
+
+    margin: 10px 0px;
+}
+
+.button {
+    height: 50px;
+
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background 0.3s;
+
+    padding: 0.5rem;
+}
+
+.button:first-of-type {
+    border-left: 0;
+}
+
+.button:hover {
+    background: var(--divider);
+}
