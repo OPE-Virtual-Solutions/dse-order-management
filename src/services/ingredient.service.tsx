@@ -29,6 +29,24 @@ class _IngredientService {
         return list;
     };
 
+    async listByPage(pageNumber: number) {
+        const response = await api.get(ENDPOINT, {
+            params: {
+                page: pageNumber
+            }
+        });
+
+        let list: Ingredient[] = [];
+        if (response.status) {
+            list = this.translateListResponse(response.data.results);
+        };
+
+        let count: number = 0;
+        if (pageNumber === 1) count = response.data.count;
+
+        return { list, count };
+    }
+    
     async create(ingredient: Ingredient) {
         const ingrediente = new IngredientPT(ingredient);
 
