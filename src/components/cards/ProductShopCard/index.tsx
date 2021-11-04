@@ -66,6 +66,7 @@ function ProductShopCard({ product }: Props) {
                         type="number" 
                         variant="outlined" 
                         size="small" 
+                        disabled={product.quantity === 0}
                         label="Qtd."
                         defaultValue={0}
                         required
@@ -83,8 +84,9 @@ function ProductShopCard({ product }: Props) {
                     />
 
                     <Button 
+                        disabled={product.quantity === 0}
                         type="submit"
-                        text="Adicionar ao carrinho"
+                        text={`${ product.quantity === 0 ? "Todos vendidos" : "Adicionar ao carrinho" }`}
                         icon={<FaShoppingBag />}
                         transparent
                     />
