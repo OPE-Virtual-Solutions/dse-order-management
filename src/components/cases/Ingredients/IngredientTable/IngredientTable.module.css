@@ -1,7 +1,8 @@
 .tableContainer table {
     width: 99%;
 
-    border-radius: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--divider);
 }
 
 .tableContainer th {
@@ -14,19 +15,30 @@
     margin-bottom: 1rem;
 
     background: transparent;
-    border: 0px;
+    /* border: 0px; */
 }
 
-.tableBody {
-    /* border: 1px solid var(--divider); */
-    border-radius: 5px;
+.tableBody { width: 100%}
+
+/* .tableRow:first-of-type > td:first-of-type {
+    border-width: 1px 0px 1px 1px;
+    border-style: solid;
+    border-color: var(--divider);
+    border-top-left-radius: 10px;
 }
 
+.tableRow:first-of-type > td:last-of-type {
+    border-width: 1px 1px 1px 0px;
+    border-style: solid;
+    border-color: var(--divider);
+    border-top-right-radius: 10px; 
+}
+ */
 .tableRow {
     min-width: 0;
     margin-bottom: 1rem;
 
-    border: 1px solid var(--divider);
+    /* border: 1px solid var(--divider); */
 
     cursor: pointer;
 
