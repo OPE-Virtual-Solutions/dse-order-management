@@ -60,6 +60,13 @@ function OrderDraggable({
                                 <span>{ data.length }</span>
                             </div>
                         </header>
+
+                        {data.length === 0 && (
+                            <div className="d-flex justify-content-center align-items-center h-75">
+                                <span style={{ color: "var(--subtext)"}}>Nenhum pedido encontrado</span>
+                            </div>
+                        )}
+
                         {data.map((element: any, index: any) => (
                             <Draggable
                                 key={element.id}
