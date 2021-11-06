@@ -82,7 +82,9 @@ export function UserProvider({ children }: any) {
     async function logout() {
         api.defaults.headers.Authorization = null;
         setAuthenticated(false);
+
         localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
     }
 
     if (loading) return <AuthLoading />

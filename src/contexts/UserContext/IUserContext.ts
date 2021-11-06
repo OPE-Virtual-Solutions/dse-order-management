@@ -2,7 +2,7 @@
 import { User } from "interfaces/User"
 
 export const UserInstance: User = new User({
-    id_usuario: 0,
+    id_usuario: -1,
     email: "",
     nome_usuario: "",
     senha: "",
