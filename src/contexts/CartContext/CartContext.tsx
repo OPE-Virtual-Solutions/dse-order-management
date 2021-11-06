@@ -27,7 +27,7 @@ import { CartService } from "services/cart.service";
 export const CartContext = createContext({} as IOrderContextValues);
 
 export function CartProvider({ children }: any) {
-    const { authenticated } = useContext(UserContext);
+    const { user, authenticated } = useContext(UserContext);
 
     const [order, setOrder] = useState<Order>(OrderInstance);
     const [cart, setCart] = useState<CartProduct[]>([]);
@@ -36,8 +36,12 @@ export function CartProvider({ children }: any) {
         if (authenticated) getCart();
     }, []);
 
+    useEffect(() => {
+        if (user.id !== -1) getCart();
+    }, [user]);
+
     async function getCart() {
-        await CartService.get(1).then((response) => {
+        await CartService.get(user.id).then((response) => {
             if (response.length !== 0) {
                 const _order = { ...order };
     
@@ -47,8 +51,9 @@ export function CartProvider({ children }: any) {
 
                 setOrder(_order); 
                 setCart(response);
+            } else {
+                setCart([]);
             }
-
         });
     };
 
@@ -60,7 +65,7 @@ export function CartProvider({ children }: any) {
         return -1;
     }
 
-    function addToCart(product: Product, quantity: number) {
+    function addToCart(product: Product, quantity: number, userId: number) {
         const cartIndex = getProductIndex(product);
         const _order = { ...order };
 
@@ -82,7 +87,7 @@ export function CartProvider({ children }: any) {
                 produto: new ProductPT(product),
                 quantidade: quantity,
                 preco: roundNumber(product.price * quantity),
-                usuario: 1 // id fixo temporário 
+                usuario: user.id 
             });
 
             saveCart(cartProduct).then(() => {
