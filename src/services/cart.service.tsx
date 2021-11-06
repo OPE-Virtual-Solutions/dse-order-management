@@ -15,7 +15,7 @@ class _CartService {
     async get(userId: number) {
         const response = await api.get(ENDPOINT, {
             params: {
-                userId: userId
+                user: userId
             }
         });
 
