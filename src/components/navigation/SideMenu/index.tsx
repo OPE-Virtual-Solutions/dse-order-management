@@ -11,6 +11,7 @@ import { navlinkRoutes } from "./navroutes";
 
 import { NavLink } from "../NavLink";
 
+import Alert from 'sweetalert2';
 
 function SideMenu() {
     const {
@@ -18,7 +19,18 @@ function SideMenu() {
     } = useContext(UserContext);
 
     function handleLogout() {
-        logout();
+        Alert.fire({
+            icon: "question",
+            title: "Você será desconectado",
+            text: "Deseja continuar?",
+            confirmButtonText: "<span style='color: #1b1b1b'>Sim</span>",
+            confirmButtonColor: "#FFBF00",
+            showCancelButton: true,
+            cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
+            cancelButtonColor: "transparent",
+        }).then((result) => {
+            if (result.isConfirmed) logout();
+        });
     }
 
     return (
