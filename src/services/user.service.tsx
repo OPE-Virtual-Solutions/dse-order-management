@@ -1,6 +1,6 @@
 import { api } from "api";
 
-import { User, UserPT } from "interfaces/User";
+import { User, UserPost, UserPT } from "interfaces/User";
 
 type UserTypeParam = "funcionario" | "cliente";
 
@@ -25,6 +25,16 @@ class _UserService {
         }
 
         return list;
+    }
+
+    async create(user: UserPost) {
+        return await api.post("/register/", user);
+    }
+
+    async update(user: User) {
+        const usuario = new UserPT(user);
+
+        return await api.patch(`/usuarios/${user.id}/`, usuario)
     }
 }
 
