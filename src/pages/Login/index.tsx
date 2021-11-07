@@ -39,14 +39,14 @@ function Login() {
         }
 
         login(credentials).then((response) => {
-            response ? history.push("/order-dashboard") : setShowSnack(true);
+            response ? history.push("/profile") : setShowSnack(true);
         }).finally(() => {
             setAuthenticating(false);
         });
     };
 
     if (authenticated) {
-        return <Redirect to="/order" />
+        return <Redirect to="/profile" />
     }
 
     return (
