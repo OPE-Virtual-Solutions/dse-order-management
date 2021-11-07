@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+}
+
+.container h5 {
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+}
+
+.column {
+    padding: 2.1875rem;
+
+    width: 100%;
+}
+
+.column:first-of-type {
+    border-right: 1px solid var(--divider);
+}
+
+.wrapper footer {
+    padding: 1.1rem;
+
+    border-top: 1px solid var(--divider);
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.roleContainer, .infoContainer {
+    display: flex;
+    align-items: center;
+
+    margin-top: 0.5rem;
+    padding: 0.8rem;
+
+    border: 1px dashed var(--divider);
+    border-radius: 5px;
+}
+
+.infoContainer {
+    flex-direction: column;
+    border: 1px dashed var(--primary);
+}
+
+.roleContainer svg {
+    margin-left: 0.5rem;
+    margin-right: 1rem;
+}
+
+.roleContainer span, .infoContainer span {
+    color: var(--subtext);
+    font-size: 0.9rem;
+}
+
+.infoContainer span > span {
+    font-weight: bold;
+    text-decoration: underline;
+}
