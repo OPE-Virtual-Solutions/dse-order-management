@@ -3,6 +3,9 @@ export interface UserPost {
     email: string;
     senha: string;
     tipo: "funcionario" | "cliente";
+
+    cargo?: string;
+    telefone?: string;
 }
 
 export interface FuncionarioPT {
@@ -16,15 +19,28 @@ export interface ClientePT {
     telefone: string;
 }
 
-export interface UserPT {
+export class UserPT {
     id_usuario: number;
     nome_usuario: string;
     email: string;
-    senha: string;
+    senha?: string;
     tipo: "funcionario" | "cliente";
 
     funcionario?: FuncionarioPT;
     cliente?: ClientePT;
+
+    primeiro_acesso: boolean | undefined;
+
+    constructor(user: User) {
+
+        this.id_usuario = user.id;
+        this.nome_usuario = user.name;
+        this.email = user.email;
+        this.senha = user.password;
+        this.tipo = user.type;
+
+        this.primeiro_acesso = user.firstAccess;
+    }
 }
 
 export class User {
@@ -41,11 +57,15 @@ export class User {
 
     phone?: string;
 
+    firstAccess?: boolean;
+
     constructor(usuario: UserPT) {
         this.id = usuario.id_usuario;
         this.name = usuario.nome_usuario;
         this.email = usuario.email;
         this.type = usuario.tipo;
+
+        this.firstAccess = usuario.primeiro_acesso;
         
         switch(usuario.tipo) {
             case "funcionario":
@@ -57,7 +77,7 @@ export class User {
         }
     }
 
-    setPassword(password: string) {
+    public setPassword(password: string) {
         this.password = password;
     }
 }
