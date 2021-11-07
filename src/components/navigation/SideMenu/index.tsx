@@ -15,6 +15,7 @@ import Alert from 'sweetalert2';
 
 function SideMenu() {
     const {
+        user,
         logout 
     } = useContext(UserContext);
 
@@ -40,11 +41,15 @@ function SideMenu() {
             </header>
 
             <div className={ styles.sidenavLinks }>
-                { navlinkRoutes.map((link) => (
-                    <NavLink key={link.id} title={link.title} path={link.path}>
-                        { link.icon }
-                    </NavLink>
-                ))}
+                { navlinkRoutes.map((link) => {
+                    if (user.role && link.roles.includes(user.role)) {
+                        return (
+                            <NavLink key={link.id} title={link.title} path={link.path}>
+                                { link.icon }
+                            </NavLink>
+                        )
+                    }
+                })}
             </div>
 
             <footer>
