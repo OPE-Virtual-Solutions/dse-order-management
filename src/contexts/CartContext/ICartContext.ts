@@ -7,7 +7,7 @@ import {
 interface IOrderContextValues {
     cart: CartProduct[];
     order: Order;
-    addToCart: (product: Product, quantity: number, userId: number) => void;
+    addToCart: (product: Product, quantity: number) => void;
     removeFromCart: (cartProduct: CartProduct) => void;
     sumItemQuantity: (cartProduct: CartProduct) => void;
     subtractItemQuantity: (cartProduct: CartProduct) => void;

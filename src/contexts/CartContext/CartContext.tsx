@@ -65,7 +65,7 @@ export function CartProvider({ children }: any) {
         return -1;
     }
 
-    function addToCart(product: Product, quantity: number, userId: number) {
+    function addToCart(product: Product, quantity: number) {
         const cartIndex = getProductIndex(product);
         const _order = { ...order };
 
