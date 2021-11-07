@@ -6,7 +6,7 @@ export const UserInstance: User = new User({
     email: "",
     nome_usuario: "",
     senha: "",
-    tipo: ""
+    tipo: "funcionario"
 });
 
 export type IContextValues = {
