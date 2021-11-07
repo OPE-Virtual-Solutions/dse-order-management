@@ -1,40 +1,54 @@
+import { useState } from "react";
+
 import styles from "./UserDashboard.module.css";
 
 import { UserTable } from "components/cases/Users/UserTable";
 import { Dashboard } from "templates/Dashboard";
-import { InputAdornment, TextField } from "@material-ui/core";
-import { MaterialInputProps } from "components/forms/MaterialInput";
-import { FaPlus, FaSearch } from "react-icons/fa";
+
+import { FaPlus, FaSearch, FaSlidersH } from "react-icons/fa";
 import { Button } from "components/forms/Button";
+import { Dialog } from "@material-ui/core";
+import { UserForm } from "components/cases/Users/UserForm";
 
 function UserDashboard() {
+    document.title = "Usuários - Delivery System Express";
+
+    const [openModal, setOpenModal] = useState<boolean>(false);
+
+    function onAddButtonPress() {
+        setOpenModal(true);
+    }
+
     return (
         <Dashboard>
             <div className={styles.container}>
                 <header>
                     <h5>Usuários</h5>
 
-                    <div>
-                        <TextField 
-                            type="text" 
-                            className="me-1" 
-                            label="Pesquisar usuário" 
-                            size="small"
-                            variant="outlined"
-                            {...MaterialInputProps}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <FaSearch color="var(--divider)" />
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
+                    <div className="d-flex align-items-center">
+                        <form className="d-flex me-3">
+                            <input 
+                                type="text" 
+                                placeholder="Pesquisar usuário"
+                                className="form-control"
+                            />
 
-                        <Button  
-                            outline 
+                            <Button  
+                                transparent 
+                                icon={<FaSearch size={14} />} 
+                            />
+                             <Button  
+                                disabled
+                                transparent 
+                                icon={<FaSlidersH size={14} />} 
+                            />
+                        </form>
+
+                        <Button
+                            onClick={() => onAddButtonPress()}
+                            outline
                             icon={<FaPlus size={14} />} 
-                            className="h-100"
+                            className="ms-1 align-self-stretch"
                             text="Adicionar" 
                         />
                     </div>        
@@ -43,6 +57,10 @@ function UserDashboard() {
                 <div className={styles.tableContainer}>
                     <UserTable />
                 </div>
+
+                <Dialog fullWidth maxWidth="md" open={openModal} onClose={() => { setOpenModal(false)}}>
+                    <UserForm />
+                </Dialog>
             </div>
         </Dashboard>
     )
