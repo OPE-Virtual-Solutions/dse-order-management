@@ -1,0 +1,23 @@
+.tableContainer table {
+    width: 99%;
+
+    border-radius: 10px;
+}
+
+.tableContainer th {
+    text-transform: uppercase;
+    color: var(--subtext);
+
+    font-weight: 700;
+    font-size: 0.689rem;
+
+    margin-bottom: 1rem;
+
+    background: transparent;
+    border: 0px;
+}
+
+.tableBody {
+    /* border: 1px solid var(--divider); */
+    border-radius: 5px;
+}

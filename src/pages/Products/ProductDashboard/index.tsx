@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { 
     FaPlus, 
@@ -11,19 +11,28 @@ import {
     InputAdornment,
     TextField,
     Dialog,
+    CircularProgress,
 } from "@material-ui/core";
+import {
+    Skeleton 
+} from "@material-ui/lab";
 
 import { Button } from "components/forms/Button";
 
-import { categories, products } from "utils/placeholderData";
 import { Dashboard } from "templates/Dashboard";
 import { ProductModal } from "components/cases/Products/ProductModal";
 
-import { IProduto } from "interfaces";
-import { ProductTable } from "components/cases/Products/ProductTable";
+import { 
+    Product,
+    EmptyProduct,
+    Category
+} from "interfaces";
 
-import { emptyProduct } from "interfaces/IProduto";
 import { TabBar } from "components/display/TabBar";
+import { ProductCategory } from "../ProductCategory";
+import { ProductManageTable } from "components/cases/Products/ProductManageTable";
+import { MaterialInputProps } from "components/forms/MaterialInput";
+import { ProductService } from "services/product.service";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
@@ -31,16 +40,18 @@ function ProductDashboard() {
     const [selectedCategory, setSelectedCategory] = useState(0);
 
     const [openModal, setOpenModal] = useState<boolean>(false);
+    const [openCategoryModal, setOpenCategoryModal] = useState<boolean>(false);
 
-    const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
+    const [selectedProduct, setSelectedProduct] = useState<Product>(EmptyProduct);
 
-    function handleTabChange(event: any, category: number) {
-        setSelectedCategory(category);
-    }
+    const [loading, setLoading] = useState<boolean>(true);
+
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [products, setProducts] = useState<Product[]>([]);
 
     function handleModalOpen(modalType: "edit" | "create") {
         if (modalType === "create") {
-            setSelectedProduct(emptyProduct);
+            setSelectedProduct(EmptyProduct);
         }
 
         setOpenModal(true);
@@ -49,6 +60,23 @@ function ProductDashboard() {
     function handleModalClose() {
         setOpenModal(false);
     }
+
+    function manageCategoryModal() {
+        setOpenCategoryModal(!openCategoryModal);
+    }
+
+    async function retrieveAllData() {
+        await ProductService.getProductRelatedInfo().then((response) => {
+            setProducts(response.products);
+            setCategories(response.categories);
+
+            setLoading(false);
+        });
+    }
+
+    useEffect(() => {
+        retrieveAllData();
+    }, []);
 
     return (
         <Dashboard>
@@ -64,17 +92,7 @@ function ProductDashboard() {
                                 label="Pesquisar produto" 
                                 size="small"
                                 variant="outlined"
-                                InputLabelProps={{
-                                    style: {
-                                        fontSize: 13,
-                                    }
-                                }}
-                                inputProps={{
-                                    style: {
-                                        fontSize: 15,
-                                        height: 14,
-                                    }
-                                }}
+                                {...MaterialInputProps}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
@@ -92,35 +110,45 @@ function ProductDashboard() {
                                 className="me-1" 
                             />
                             <Button 
+                                onClick={ () => manageCategoryModal() }
                                 icon={<FaSlidersH size={14} />} 
                                 text="Gerenciar Categorias" 
                                 className="me-1" 
                             />
                         </div>                        
                     </div>
+                    
 
                     <TabBar 
                         selectedTab={ selectedCategory }
                         setSelectedTab={ setSelectedCategory }
-                        labelList={categories.map((category) => category.nome)}
+                        labelList={categories.map((category) => category.name )}
+                        loading={loading}
                     />
                 </header>
 
                 <div className={ styles.productListContainer }>
-                    <ProductTable 
-                        headers={[
-                            "Nome",
-                            "Categoria",
-                            "Preço",
-                            "Quantidade"
-                        ]} 
-                        products={products} 
-                        selectedCategory={ categories[selectedCategory].nome }
-                    />
+                    <div>
+                        {loading && [...Array(4)].map(() => (
+                            <Skeleton height={50} />
+                        ))}
+
+                        {!loading && (
+                            <ProductManageTable 
+                                products={products}
+                                categories={categories}
+                                selectedCategory={ categories[selectedCategory].name }
+                            />
+                        )}
+                    </div>
                 </div>
                 
                 <Dialog fullWidth maxWidth="md" open={openModal} onClose={handleModalClose}>
-                    <ProductModal product={selectedProduct} />
+                    <ProductModal categories={categories} product={selectedProduct} />
+                </Dialog>
+
+                <Dialog fullWidth maxWidth="md" open={openCategoryModal} onClose={manageCategoryModal}>
+                    <ProductCategory categories={categories} />
                 </Dialog>
             </div>
         </Dashboard>

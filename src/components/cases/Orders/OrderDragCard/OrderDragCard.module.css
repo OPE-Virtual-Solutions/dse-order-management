@@ -1,0 +1,168 @@
+.orderCard {
+    background: #FFF;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    padding: 15px 15px 0px 15px;
+
+    margin: 5px;
+}
+
+.orderCard header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.orderCard header h6 {
+    font-weight: bold;
+    margin: 0;
+}
+
+.orderCard header p {
+    font-size: 0.80rem;
+    color: var(--subtext);
+
+    margin: 0;
+}
+
+.orderCard footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    margin-bottom: 10px;
+}
+
+.orderCard footer > div > span {
+    font-weight: 700;
+    font-size: 0.8125rem;
+
+    /* margin: 10px 0px; */
+}
+
+.orderCard footer > div {
+    flex-grow: 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badgeContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.badgeContainer > div {
+    display: flex;
+}
+
+.priceText span {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.typeBadge {
+    background-color: var(--primary);
+}
+
+.badge {
+    background-color: transparent;
+    margin-left: 5px;
+}
+
+.badge, .typeBadge { 
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    padding: 0rem 0.5rem;
+}
+
+.typeBadge > span {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.countBadge {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    margin-left: 7px;
+}
+
+.countBadge > span {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.productsContainer {
+    margin: 10px 0px 20px 0px;
+}
+
+.orderProductCartContainer {
+    margin-bottom: 10px;
+}
+
+.orderProductCartContainer > div { 
+    line-height: 10px;
+}
+
+.orderProductCartContainer > p, .orderProductCartContainer > div > span {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.orderProductCartContainer > p > span {
+    font-weight: 700;
+}
+
+.orderProductCartContainer > div > span {
+    color: var(--secondary);
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.orderProductCartContainer > div > span:hover {
+    text-decoration: underline;
+}
+
+.sweetAlertText {
+    font-family: Inter;
+}
+
+.observationContainer {
+    margin: 10px 0px;
+
+    padding: 0.5rem;
+
+    border: 1px dashed var(--divider);
+    border-radius: 5px;
+}
+
+.observationContainer  span {
+    color: var(--subtext);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.observationContainer  p {
+    font-size: 0.85rem;
+}

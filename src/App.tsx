@@ -5,16 +5,19 @@ import { materialTheme } from './utils/materialUiTheme';
 
 import { Routes } from './routes';
 
-import { OrderProvider } from 'contexts/OrderContext/OrderContext';
+import { UserProvider } from 'contexts/UserContext/UserContext';
+import { CartProvider } from 'contexts/CartContext/CartContext';
 
 function App() {
   return (
     <ThemeProvider theme={materialTheme}>
-      <div className="App">
-        <OrderProvider>
-          <Routes />
-        </OrderProvider>
-      </div>
+      <UserProvider>
+        <CartProvider>
+          <div className="App">
+            <Routes />
+          </div>
+        </CartProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 }

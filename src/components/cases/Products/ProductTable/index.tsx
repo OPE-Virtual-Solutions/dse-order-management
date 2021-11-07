@@ -1,28 +1,33 @@
 import { useState, MouseEventHandler } from "react";
 
-import { IProduto } from 'interfaces'
+import { 
+    Category, 
+    Product,
+    EmptyProduct
+} from 'interfaces'
 
 import styles from "./styles.module.css";
 
 import { ProductModal } from "components/cases/Products/ProductModal";
 import { Dialog } from "@material-ui/core";
 
-import { emptyProduct } from "interfaces/IProduto";
 import { currencyFormat } from "utils/currencyFormat";
+import { newCategories } from "utils/placeholderData";
 
 type Props = {
     headers: string[];
-    products: IProduto[];
+    products: Product[];
+    categories: Category[];
     onClick?: MouseEventHandler<HTMLDivElement>;
     selectedCategory: string;
 };
 
 function ProductTable({ headers, products, selectedCategory }: Props) {
-    const [selectedProduct, setSelectedProduct] = useState<IProduto>(emptyProduct);
+    const [selectedProduct, setSelectedProduct] = useState<Product>(EmptyProduct);
 
     const [open, setOpen] = useState<boolean>(false);
 
-    function openEditModal(product: IProduto) {
+    function openEditModal(product: Product) {
         setSelectedProduct(product);
         setOpen(true);
     }
@@ -31,18 +36,18 @@ function ProductTable({ headers, products, selectedCategory }: Props) {
         setOpen(false);
     }
 
-    function renderTableRow(product: IProduto) {
+    function renderTableRow(product: Product) {
         return (
             <div className={ styles.tableRowContainer }
                 onClick={() => { openEditModal(product) }}
             >
-                <span>{ product.nome }</span>
-                <span>{ product.categoria.nome }</span>
+                <span>{ product.name }</span>
+                <span>{ product.category }</span>
                 <span>
                     <span className="fw-bold p-0">R$</span>
-                    { currencyFormat(product.preco) }
+                    { currencyFormat(product.price) }
                 </span>
-                <span>{ product.quantidade }</span>
+                <span>{ product.quantity }</span>
             </div>
         )
     }
@@ -56,11 +61,11 @@ function ProductTable({ headers, products, selectedCategory }: Props) {
             </div>
 
             { products.map((product, key) => 
-                product.categoria.nome === selectedCategory && renderTableRow(product)
+                product.category.name === selectedCategory && renderTableRow(product)
             )}
 
             <Dialog fullWidth maxWidth="md" open={open} onClose={closeEditModal}>
-                <ProductModal product={selectedProduct} />
+                <ProductModal categories={newCategories} product={selectedProduct} />
             </Dialog>
         </div>
     )

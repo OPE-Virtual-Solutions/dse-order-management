@@ -1,0 +1,27 @@
+.modalContainer {
+    padding: 1rem;
+
+    min-width: 300px;
+}
+
+
+.modalContainer h6 {
+    color: var(--subtext);
+    font-weight: 500;
+}
+
+.modalContainer header {
+    margin-bottom: 1.2rem;
+}
+
+.modalContainer header h5 {
+    font-weight: bold;
+    margin: 0;
+}
+
+.modalContainer header span {
+    font-size: 0.80rem;
+    color: var(--subtext);
+
+    margin: 0;
+}

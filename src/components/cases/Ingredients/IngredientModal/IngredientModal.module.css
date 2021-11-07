@@ -1,0 +1,22 @@
+.ingredientModalContainer {
+    width: 100%;
+    padding: 2.1875rem;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+}
+
+.form footer {
+    padding: 1.1rem;
+
+    border-top: 1px solid var(--divider);
+
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form h5 {
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+}

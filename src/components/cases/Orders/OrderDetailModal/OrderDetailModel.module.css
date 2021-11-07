@@ -1,0 +1,102 @@
+.container {
+    display: flex;
+}
+
+.container h5 {
+    font-weight: bold;
+}
+
+.column {
+    width: 100%;
+    max-height: 80vh;
+    
+    padding: 2.1875rem;
+
+    overflow-y: auto;
+}
+
+.orderContainer header {
+    margin-bottom: 15px;
+}
+
+.orderContainer header > div {
+    display: flex;
+    align-items: center;
+}
+
+.orderContainer header svg {
+    margin-right: 0.4rem;
+}
+
+.orderContainer > header > h5 {
+    margin-bottom: 0.4rem;
+}
+
+.orderContainer span {
+    font-size: 0.90rem;
+    color: var(--subtext);
+
+    margin: 0;
+}
+
+.orderContainer main > span {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.orderContainer main > p {
+    font-size: 0.95rem;
+}
+
+.countBadge {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    margin-left: 7px;
+}
+
+.countBadge > span {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+
+.productsContainer {
+    border-left: 1px solid var(--divider);
+}
+
+.productsContainer header { 
+    display: flex;
+
+    margin-bottom: 0.4rem;
+}
+
+.productsContainer header h5 {
+    margin-bottom: 1.2rem;
+}
+
+.observationContainer {
+    margin: 10px 0px;
+
+    padding: 0.5rem;
+
+    border: 1px dashed var(--divider);
+    border-radius: 5px;
+}
+
+.observationContainer  span {
+    color: var(--subtext);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.observationContainer  p {
+    font-size: 0.85rem;
+}

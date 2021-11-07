@@ -1,30 +1,42 @@
-import { useContext } from "react";
-import { OrderContext } from "contexts/OrderContext/OrderContext";
+import { useContext, useEffect } from "react";
 
 import styles from "./GlobalConfiguration.module.css";
+import { CartContext } from "contexts/CartContext/CartContext";
 
-function GlobalConfiguration() {
-    const { 
-        summary,
-        onSummaryChange 
-    } = useContext(OrderContext);
+type Props = {
+    setStepCompletion: any;
+}
+
+function GlobalConfiguration({
+    setStepCompletion
+}: Props) {
+    const {
+        order,
+        updateOrderInfo
+    } = useContext(CartContext);
+
+    useEffect(() => {
+        (order.order_type) ? setStepCompletion(true) : setStepCompletion(false); 
+    }, []);
 
     function handleLocalChange(event: any) {
-        console.log(event.target.value);
-
         const value = event.target.value;
+        
+        const _order = { ...order };
 
         if (value !== "default") {
-            const _summary = summary; 
-
-            _summary.tipo_consumo = value;
-
-            onSummaryChange(_summary);
+            _order.order_type = value;
+            setStepCompletion(true);
+        } else {
+            _order.order_type = undefined;
+            setStepCompletion(false);
         }
+
+        updateOrderInfo(_order);
     };
 
     function isOptionSelected(optionSelected: string) {
-        return optionSelected === summary.tipo_consumo;
+        return optionSelected === order.order_type;
     }
 
     return (
@@ -38,7 +50,7 @@ function GlobalConfiguration() {
             <main>
                 <div className="form-check">
                     <input 
-                        checked={ summary.atendimento_presencial }
+                        checked={ order.is_local_order }
                         disabled 
                         className="form-check-input" 
                         type="checkbox" 
@@ -58,9 +70,9 @@ function GlobalConfiguration() {
                         className="form-select form-select-md" 
                         aria-label="Default select example"
                     >
-                        <option value="default" selected={ !summary.tipo_consumo }>Selecione o local de consumo</option>
-                        <option value="local" selected={isOptionSelected("local")}>No local</option>
-                        <option value="viagem" selected={isOptionSelected("viagem")}>Pra viagem</option>
+                        <option value="default" selected={ !order.order_type }>Selecione o local de consumo</option>
+                        <option value="pra_consumir" selected={isOptionSelected("local")}>No local</option>
+                        <option value="pra_viagem" selected={isOptionSelected("viagem")}>Pra viagem</option>
                     </select>
                 </div>
             </main>

@@ -1,17 +1,22 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import styles from "./styles.module.css";
 
 import { InputAdornment, TextField } from "@material-ui/core";
-import { ICategoria, IProduto } from "interfaces";
-import { categories } from "utils/placeholderData";
+import { 
+    Product, 
+    Category 
+} from "interfaces";
+
 import { Autocomplete } from "@material-ui/lab";
 
 type Props = {
-    product: IProduto;
-    setCategory: Dispatch<SetStateAction<ICategoria>>;
+    product: Product;
+    categories: Category[];
+    setCategory: Dispatch<SetStateAction<Category>>;
 }
 
-function ProductForm({ product, setCategory }: Props) {
+function ProductForm({ product, categories, setCategory }: Props) {
+
     return (
         <div className={ styles.productFormContainer }>
             { product.id === 0 && ( <h5>Adicionar produto</h5> )}
@@ -21,19 +26,20 @@ function ProductForm({ product, setCategory }: Props) {
                 <TextField
                     name="inputNome"
                     fullWidth
-                    defaultValue={ product.nome } 
-                    variant="filled" size="small" label="Nome do Produto"
+                    defaultValue={ product.name } 
+                    variant="outlined" size="small" label="Nome do Produto"
+
                 />
             </div>
-            <div className="mb-3">
+            <div className="mb-3 d-flex">
                 <TextField 
                     name="inputPreco"
                     fullWidth
                     type="number" 
-                    variant="filled" 
+                    variant="outlined" 
                     size="small" 
                     label="Preço"
-                    defaultValue={product.preco}
+                    defaultValue={ product.price }
                     InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
@@ -41,6 +47,19 @@ function ProductForm({ product, setCategory }: Props) {
                             </InputAdornment>
                         )
                     }}
+
+                    style={{ marginRight: 10 }}
+                />
+
+                <TextField 
+                    name="inputQuantidade"
+                    fullWidth 
+                    defaultValue={product.quantity } 
+                    type="number" 
+                    variant="outlined" 
+                    size="small" 
+                    label="Quantidade" 
+
                 />
             </div>
             <div className="mb-3">
@@ -50,28 +69,18 @@ function ProductForm({ product, setCategory }: Props) {
                         if (category) setCategory(category)   
                     }}
                     options={categories}
-                    defaultValue={product.categoria}
-                    getOptionLabel={(option: ICategoria) => option.nome}
+                    getOptionLabel={(option: Category) => option.name }
+                    defaultValue={product.category}
                     renderInput={(params: any) => (
                         <TextField 
                             {...params}
 
-                            variant="filled" 
+                            variant="outlined" 
                             size="small" 
                             label="Categoria" 
                         />
                     )}
-                />
-            </div>
-            <div className="mb-3">
-                <TextField 
-                    name="inputQuantidade"
-                    fullWidth 
-                    defaultValue={product.quantidade} 
-                    type="number" 
-                    variant="filled" 
-                    size="small" 
-                    label="Quantidade" 
+
                 />
             </div>
                     
@@ -81,9 +90,10 @@ function ProductForm({ product, setCategory }: Props) {
                 rows={4} 
                 fullWidth 
                 type="number" 
-                variant="filled" 
+                variant="outlined" 
                 size="small" 
                 label="Descrição" 
+                defaultValue={ product.description }
             />
         </div>
     )

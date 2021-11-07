@@ -4,14 +4,17 @@ import {
     FaShoppingBag, 
     FaPepperHot,
     FaHamburger,
-    FaTrello
+    FaTrello,
+    FaUsers,
+    FaWpforms,
+    FaUserAlt
 } from "react-icons/fa";
 
 type NavRoute = {
     id: number;
     title: string;
     path: string;
-    role: string;
+    roles: string[];
     icon: ReactNode;
 }
 
@@ -20,32 +23,53 @@ const iconSize = 16;
 const navlinkRoutes: NavRoute[] = [
     {
         id: 1,
-        title: "Atendimento",
-        path: "/order-dashboard",
-        role: "",
-        icon: <FaShoppingBag size={iconSize} />
+        title: "Meu usuário",
+        path: "/profile",
+        roles: ["admin", "atendente", "estoquista"],
+        icon: <FaUserAlt size={iconSize} />
     },
     {
         id: 2,
-        title: "Quadro de pedidos",
-        path: "/order-history",
-        role: "",
-        icon: <FaTrello size={iconSize} />
+        title: "Atendimento",
+        path: "/order-dashboard",
+        roles: ["admin", "atendente"],
+        icon: <FaShoppingBag size={iconSize} />
     },
     {
         id: 3,
-        title: "Gerenciamento de Produtos",
-        path: "/products",
-        role: "",
-        icon: <FaHamburger size={iconSize} />
+        title: "Quadro de Pedidos",
+        path: "/order-board",
+        roles: ["admin", "atendente"],
+        icon: <FaTrello size={iconSize} />
     },
     {
         id: 4,
+        title: "Histórico de Pedidos",
+        path: "/order-history",
+        roles: ["admin", "atendente"],
+        icon: <FaWpforms size={iconSize} />
+    },
+    {
+        id: 5,
+        title: "Gerenciamento de Produtos",
+        path: "/products",
+        roles: ["admin", "estoquista"],
+        icon: <FaHamburger size={iconSize} />
+    },
+    {
+        id: 6,
         title: "Gerenciamento de Ingredientes",
         path: "/ingredients",
-        role: "",
+        roles: ["admin", "estoquista"],
         icon: <FaPepperHot size={iconSize} />
-    }
+    },
+    {
+        id: 7,
+        title: "Gerenciamento de Usuários",
+        path: "/users",
+        roles: ["admin"],
+        icon: <FaUsers size={iconSize} />
+    },
 ];
 
 export { navlinkRoutes };

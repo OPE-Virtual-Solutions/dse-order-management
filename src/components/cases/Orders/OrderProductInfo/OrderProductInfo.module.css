@@ -1,0 +1,28 @@
+.container {
+    margin-bottom: 10px;
+}
+
+.container > div {
+    line-height: 10px;
+}
+
+.container > p,
+.container > div > span {
+    font-size: 0.875rem;
+    margin: 0;
+}
+
+.container > p > span {
+    font-weight: 700;
+}
+
+.container > div > span {
+    color: var(--secondary);
+    font-weight: 500;
+
+    cursor: pointer;
+}
+
+.container > div > span:hover {
+    text-decoration: underline;
+}

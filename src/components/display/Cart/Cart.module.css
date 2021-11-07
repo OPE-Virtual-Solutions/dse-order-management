@@ -84,7 +84,26 @@
 
 .listContainer > header {
     padding-bottom: 1.2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.listContainer > header > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px var(--divider) solid;
+    border-radius: 5px;
+
+    width: 25px;
+    height: 25px;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+};
 
 .listContainer > main > section > h6 {
     text-transform: uppercase;
@@ -101,6 +120,7 @@
 
 .cartContainer header h5 {
     font-weight: 700;
+    margin: 0;
 }
 
 .cartContainer > footer {

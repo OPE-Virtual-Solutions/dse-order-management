@@ -1,0 +1,89 @@
+.orderCard h6 {
+    font-weight: bold;
+    margin: 0;
+}
+
+.orderCard h6 > span {
+    color: var(--subtext);
+}
+
+.orderCard > span {
+    font-size: 0.875rem;
+}
+
+.orderCard footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 10px;
+}
+
+.orderCard footer > div {
+    display: flex;
+}
+
+.orderListContainer > header {
+    display: flex;
+    align-items: center;
+
+    margin: 10px 0px;
+
+    padding: 0px 8px;
+
+    overflow-y: auto;
+}
+
+.orderListContainer > header > span {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.8125rem;
+}
+
+.priceText span {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.typeBadge {
+    background-color: var(--primary);
+}
+
+.badge {
+    background-color: transparent;
+    margin-left: 5px;
+}
+
+.badge, .typeBadge { 
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    padding: 0rem 0.5rem;
+}
+
+.typeBadge > span {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: "medium";
+}
+
+.countBadge {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid var(--divider);
+    border-radius: 5px;
+
+    margin-left: 7px;
+}
+
+.countBadge > span {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+}

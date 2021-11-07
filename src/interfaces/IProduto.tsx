@@ -17,6 +17,16 @@ export interface IProduto {
     ingredientes: IIngrediente[]; 
 }
 
+export interface ICreateProduto {
+    id?: number;
+    nome: string;
+    preco: number;
+    descricao: string;
+    quantidade: number;
+    ativo: boolean;
+    categoria: number;
+}
+
 export const emptyProduct: IProduto = {
     id: 0,
     nome: "",

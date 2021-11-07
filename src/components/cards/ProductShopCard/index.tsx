@@ -10,15 +10,16 @@ import { FaShoppingBag } from "react-icons/fa";
 
 import styles from "./styles.module.css";
 
-import { IProduto } from "interfaces";
-import { OrderContext } from "contexts/OrderContext/OrderContext";
+import { Product } from "interfaces";
+
+import { CartContext } from "contexts/CartContext/CartContext";
 
 type Props = {
-    product: IProduto;
+    product: Product;
 }
 
 function ProductShopCard({ product }: Props) {
-    const { addToCart } = useContext(OrderContext);
+    const { addToCart } = useContext(CartContext);
 
     const [showSnack, setShowSnack] = useState<boolean>(false);
     const [snackMessage, setSnackMessage] = useState<string>("");
@@ -31,7 +32,7 @@ function ProductShopCard({ product }: Props) {
             setSnackMessage("Insira a quantidade desejável do produto")
         } else {
             addToCart(product, productCartQuantity);
-            setSnackMessage(`${ product.nome } adicionado ao carrinho`)
+            setSnackMessage(`${ product.name } adicionado ao carrinho`)
         }
 
         setShowSnack(true);
@@ -43,15 +44,15 @@ function ProductShopCard({ product }: Props) {
                 <div className={ styles.placeholderPic }></div>
 
                 <div className={ styles.productInfoContainer }>
-                    <h5>{ product.nome }</h5>
-                    <span>R${ product.preco }</span>
+                    <h5>{ product.name }</h5>
+                    <span>R${ product.price }</span>
 
                     <p>
-                        { product.ingredientes.length !== 0 ? (
-                            product.ingredientes.map((ingredient, index) => (
-                                index === product.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
+                        { product.ingredients.length !== 0 ? (
+                            product.ingredients.map((ingredient: any, index: number) => (
+                                index === product.ingredients.length - 1 ? ingredient.name : ingredient.name + ", "
                             ))) :
-                            product.descricao 
+                            product.description 
                         }
                     </p>
                 </div>
@@ -65,21 +66,27 @@ function ProductShopCard({ product }: Props) {
                         type="number" 
                         variant="outlined" 
                         size="small" 
+                        disabled={product.quantity === 0}
                         label="Qtd."
                         defaultValue={0}
                         required
-
+                        onInput = {(e: any) =>{
+                            e.target.value = Math.max(0, parseInt(e.target.value) ).toString().slice(0,12);
+                            e.target.value = Math.min(parseInt(e.target.value), product.quantity).toString().slice(0,12)
+                        }}
                         inputProps={{
                             style: {
                                 fontSize: 13,
                                 height: 10,
-                            }
+                            },
+                            minLength: 0,
                         }}
                     />
 
                     <Button 
+                        disabled={product.quantity === 0}
                         type="submit"
-                        text="Adicionar ao carrinho"
+                        text={`${ product.quantity === 0 ? "Todos vendidos" : "Adicionar ao carrinho" }`}
                         icon={<FaShoppingBag />}
                         transparent
                     />

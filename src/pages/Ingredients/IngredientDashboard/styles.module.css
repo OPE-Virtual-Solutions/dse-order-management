@@ -16,14 +16,12 @@
 }
 
 .ingredientContentContainer {
-    display: flex;
-    flex-direction: column;
+    position: relative;
+    
+    flex-grow: 1;
 
-    align-items: center;
-
-    padding: 3rem 0rem;
-
-    height: 83vh;
+    padding: 5rem;
 
     overflow-y: auto;
+    border-right: 9px solid var(--background);
 }

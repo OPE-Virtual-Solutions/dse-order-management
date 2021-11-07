@@ -16,11 +16,11 @@ import {
 import { Button } from "components/forms/Button";
 import { Tooltip } from "components/display/Tooltip";
 
-import { IProduto } from "interfaces";
+import { Product } from "interfaces";
 
 type Props = {
     headers: string[];
-    products: IProduto[];
+    products: Product[];
     selectedCategory: string;
 }
 
@@ -29,24 +29,24 @@ function OrderTable({
     products,
     selectedCategory
 }: Props) {
-    function renderTableRow(product: IProduto) {
+    function renderTableRow(product: Product) {
         return (
             <TableRow className={ styles.tableRow }>
                 <TableCell>
                     <div className={ styles.imgPlaceholder } />
                 </TableCell>
                 <TableCell >
-                    { product.nome }
+                    { product.name }
                 </TableCell>
                 <TableCell>
-                    R${ currencyFormat(product.preco) }
+                    R${ currencyFormat(product.price) }
                 </TableCell>
                 <TableCell>
-                    { product.ingredientes.length !== 0 ? (
-                        product.ingredientes.map((ingredient, index) => (
-                            index === product.ingredientes.length - 1 ? ingredient.nome : ingredient.nome + ", "
+                    { product.ingredients.length !== 0 ? (
+                        product.ingredients.map((ingredient: any, index: number) => (
+                            index === product.ingredients.length - 1 ? ingredient.name : ingredient.name + ", "
                         ))) :
-                        product.descricao 
+                        product.description 
                     }
                 </TableCell>
                 <TableCell style={{ maxWidth: 100 }}>
@@ -89,7 +89,7 @@ function OrderTable({
                     </TableHead>
                     <TableBody className={ styles.tableBody }>
                         { products.map((product, index) => 
-                            product.categoria.nome === selectedCategory && renderTableRow(product)
+                            product.category.name === selectedCategory && renderTableRow(product)
                         )}
                     </TableBody>
                 </Table>

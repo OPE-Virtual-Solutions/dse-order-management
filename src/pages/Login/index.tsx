@@ -1,17 +1,53 @@
+import { 
+    useContext, 
+    useState,
+} from "react";
+import { Redirect, useHistory } from "react-router";
+
 import styles from "./styles.module.css";
 
 import TextField from '@material-ui/core/TextField';
-import { useHistory } from "react-router";
+
+import { UserContext } from "contexts/UserContext/UserContext";
+import { Snackbar } from "@material-ui/core";
+
+type ILoginProps = {
+    username: string;
+    password: string;
+}
 
 function Login() {
-    let history = useHistory();
+    const history = useHistory();
+
+    const {
+        login,
+        authenticated 
+    } = useContext(UserContext);
+
     document.title = "DSE - Autenticação de Usuário"
 
-    function handleLoginSubmit(event: any) {
-        event.preventDefault();
+    const [authenticating, setAuthenticating] = useState<boolean>(false);
+    const [showSnack, setShowSnack] = useState<boolean>(false);
 
-        history.push("/order-dashboard");
+    async function handleLoginSubmit(event: any) {
+        event.preventDefault();
+        setAuthenticating(true);
+
+        const credentials: ILoginProps = {
+            username: event.target.inputEmail.value,
+            password: event.target.inputPassword.value
+        }
+
+        login(credentials).then((response) => {
+            response ? history.push("/profile") : setShowSnack(true);
+        }).finally(() => {
+            setAuthenticating(false);
+        });
     };
+
+    if (authenticated) {
+        return <Redirect to="/profile" />
+    }
 
     return (
         <div className={ styles.loginContainer }>
@@ -25,10 +61,10 @@ function Login() {
 
             <form onSubmit={handleLoginSubmit} className={ styles.loginFormContainer }>
                 <div className="mb-3">
-                    <TextField label="E-mail" fullWidth variant="outlined" />
+                    <TextField id="inputEmail" label="E-mail" fullWidth variant="outlined" />
                 </div>
                 <div className="mb-3">
-                    <TextField type="password" label="Senha" fullWidth variant="outlined" />
+                    <TextField id="inputPassword" type="password" label="Senha" fullWidth variant="outlined" />
                 </div>
 
                 <div className="form-group d-flex align-items-center justify-content-between">
@@ -37,11 +73,21 @@ function Login() {
                         <label htmlFor="flexCheckbox">Lembrar-me</label>
                     </div>
 
-                    <button type="submit" className="btn-solid">
+                    <button disabled={ authenticating } type="submit" className="btn-solid">
                         Entrar
                     </button>
                 </div>
             </form>
+
+            <Snackbar
+                open={ showSnack }
+                autoHideDuration={3000}
+                onClose={() => { setShowSnack(false) }}
+                ContentProps={{
+                    'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">E-mail ou senha inválidos</span>}
+            />
         </div>
     )
 };

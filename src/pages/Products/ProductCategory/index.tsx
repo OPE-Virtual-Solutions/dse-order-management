@@ -10,18 +10,60 @@ import styles from "./styles.module.css";
 
 import { FaSearch } from "react-icons/fa";
 
-import { ICategoria } from "interfaces";
+import { 
+    Category, 
+} from "interfaces";
+import { MaterialInputProps } from "components/forms/MaterialInput";
+
+import { CategoryService } from "services/category.service";
 
 type Props = {
-    categories: ICategoria[];
+    categories: Category[];
+}
+
+const EmptyCategoria: Category = {
+    id: -1,
+    name: "",
+    active: false
 }
 
 function ProductCategory({ categories }: Props) {
-    const [selectedCategory, setSelectedCategory] = useState<ICategoria>();
+    const [showNewForm, setShowNewForm] = useState<boolean>(false);
+    const [selectedCategory, setSelectedCategory] = useState<Category>(EmptyCategoria);
 
-    function handleCategorySelect(category: ICategoria) {
+    function handleCategorySelect(category: Category) {
+        setShowNewForm(false);
         setSelectedCategory(category);
+    };
+
+    function handleNewCategoryClick() {
+        setSelectedCategory(EmptyCategoria);
+        setShowNewForm(true);
+    };
+
+    async function createCategory(category: Category) {
+        await CategoryService.create(category).then((response) => {
+            if (response.status) window.location.reload();
+        });
+    };
+
+    async function updateCategory(category: Category) {
+        await CategoryService.update(
+            category
+        ).then((response) => {
+            if (response.status) window.location.reload();
+        });
     }
+
+    function handleFormSubmit(event: any) {
+        const category: Category = {
+            id: selectedCategory.id,
+            name: event.target.inputName.value,
+            active: true
+        };
+
+        selectedCategory.id !== -1 ? updateCategory(category) : createCategory(category);
+    };
 
     return (
         <div className={ styles.productCategoryContainer }>
@@ -32,7 +74,7 @@ function ProductCategory({ categories }: Props) {
                     <form>
                         <TextField 
                             type="text" 
-                            label="Pesquisar produto" 
+                            label="Pesquisar categoria" 
                             size="small"
                             variant="outlined"
                             InputProps={{
@@ -42,10 +84,24 @@ function ProductCategory({ categories }: Props) {
                                     </InputAdornment>
                                 )
                             }}
+                            InputLabelProps={{
+                                style: {
+                                    fontSize: 13,
+                                }
+                            }}
+                            inputProps={{
+                                style: {
+                                    fontSize: 15,
+                                    height: 14,
+                                }
+                            }}
                         />
                     </form>
                 </header>
                 
+                <div onClick={() => { handleNewCategoryClick() }} className={ styles.addNewCategory }>
+                    <span>Adicionar nova categoria</span>
+                </div>
                 {categories.map((category, key) => (
                     <div 
                         onClick={() => {
@@ -53,32 +109,35 @@ function ProductCategory({ categories }: Props) {
                         }} 
                         className={ styles.categoryCard }
                     >
-                        <span>{ category.nome }</span>
+                        <span>{ category.name }</span>
                     </div>
                 ))}
             </div>
             <div className={ styles.column }>
-                { !selectedCategory && (
+                { selectedCategory.id === -1 && !showNewForm && (
                     <div className="d-flex justify-content-center h-100 align-items-center">
                         <span>Nenhuma categoria selecionada</span>
                     </div>
                 )}
 
-                { selectedCategory && (
-                    <form className={ styles.categoryFormContainer }>
-
+                { (selectedCategory.id !== -1 || showNewForm) && (
+                    <form onSubmit={handleFormSubmit} className={ styles.categoryFormContainer }>
                         <div className={ styles.categoryForm }>
-                            <h4>Categoria #{ selectedCategory.id }</h4>
+                            <h4>
+                                { selectedCategory.id === -1 ? "Nova categoria" : `Categoria #${ selectedCategory.id }` }
+                            </h4>
 
                             <TextField 
-                                key={selectedCategory.nome}
+                                key={selectedCategory.name}
                                 name="inputName"
                                 fullWidth 
-                                defaultValue={selectedCategory.nome || ""} 
+                                defaultValue={selectedCategory.name || ""} 
                                 type="text" 
-                                variant="filled" 
+                                variant="outlined" 
                                 size="small" 
                                 label="Nome da categoria" 
+                                {...MaterialInputProps}
+                                className="mt-3"
                             />
                         </div>
 

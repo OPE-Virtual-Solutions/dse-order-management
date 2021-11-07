@@ -10,24 +10,28 @@ import {
 } from "react-icons/fa"
 import { Button } from "components/forms/Button";
 
-import { OrderContext } from "contexts/OrderContext/OrderContext";
+import { CartContext } from "contexts/CartContext/CartContext";
+
 import { currencyFormat } from "utils/currencyFormat";
 
 function OrderConclusion() {
-    const { summary, registerOrder } = useContext(OrderContext);
+    const { order, finishOrder } = useContext(CartContext);
     
-    function showPaymentMethod(paymentMethod: "money" | "debit" | "credit"): string {
-        const paymentMethods = {
-            money: "dinheiro",
-            credit: "cartão de crédito",
-            debit: "cartão de débito"
-        };
-
-        return paymentMethods[paymentMethod];
+    function showPaymentMethod(paymentMethod: string): string {
+        switch (paymentMethod) {
+            case "money":
+                return "dinheiro"
+            case "credit":
+                return "cartão de crédito"
+            case "debit":
+                return "cartão de débito"
+            default:
+                return "dinheiro"
+        }
     };
 
     function calculateChangePayment(): string {
-        const changeValue = summary.valor_pago - summary.valor_total;
+        const changeValue = order.total_payed - order.total_price;
 
         if (changeValue === 0) {
             return "--";
@@ -46,7 +50,7 @@ function OrderConclusion() {
                 <hr />
 
                 <div>
-                    { summary.atendimento_presencial ? (
+                    { order.is_local_order ? (
                         <div className={ styles.orderLocationCard }>
                             <span>Efetuado presencialmente</span>
                             <FaHome />
@@ -58,7 +62,7 @@ function OrderConclusion() {
                         </div>
                     )}
 
-                    { summary.tipo_consumo === "local" ? (
+                    { order.order_type === "local" ? (
                         <div className={ styles.orderConsumeCard }>
                             <span>Para comer</span>
                             <FaHamburger color="var(--secondary)" />
@@ -79,25 +83,25 @@ function OrderConclusion() {
                 <hr />
 
                 <div>
-                    { summary.metodo_pagamento && (
+                    { order.payment_method && (
                         <div className={ styles.orderPaymentInfoCard }>
-                            <span>Pagamento em { showPaymentMethod(summary.metodo_pagamento) }</span>
+                            <span>Pagamento em { showPaymentMethod(order.payment_method) }</span>
                             <FaMoneyBill />
                         </div>
                     )}
                     
                     <div className={ styles.orderPaymentInfoCard }>
                         <span>Valor a pagar</span>
-                        <span>R${ currencyFormat(summary.valor_total) }</span>
+                        <span>R${ currencyFormat(order.total_price) }</span>
                     </div>
 
-                    { summary.metodo_pagamento === "money" && (
+                    { order.payment_method === "money" && (
                         <div>
                             <div className={ styles.orderPaymentInfoCard }>
                                 <span>Valor pago</span>
                                 <span>R${ 
-                                    summary.valor_pago ? currencyFormat(summary.valor_pago) :
-                                    currencyFormat(summary.valor_total)
+                                    order.total_payed ? currencyFormat(order.total_payed) :
+                                    currencyFormat(order.total_price)
                                 }</span>
                             </div>
 
@@ -109,7 +113,7 @@ function OrderConclusion() {
                     )}
 
                     <Button 
-                        onClick={() => { registerOrder() }}
+                        onClick={() => { finishOrder() }}
                         className="w-100"
                         text="Efetuar pedido"
                     />

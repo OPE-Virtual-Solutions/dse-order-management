@@ -1,0 +1,22 @@
+.tableRow {
+    min-width: 0;
+    margin-bottom: 1rem;
+
+    border: 1px solid var(--divider);
+
+    cursor: pointer;
+
+    transition: background 0.3s;
+}
+
+.tableRow:hover {
+    background: #F1F1F1;
+}
+
+.tableRow > td {
+    font-size: 0.8rem;
+}
+
+.tableRow > td:last-of-type {
+    width: 1.5rem;
+}
