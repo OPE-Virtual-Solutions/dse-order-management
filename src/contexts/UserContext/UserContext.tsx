@@ -16,6 +16,7 @@ import {
 import { parseISO } from "date-fns";
 
 import { User } from "interfaces/User";
+import { UserService } from "services/user.service";
 
 export const UserContext = createContext({} as IContextValues);
 
@@ -24,6 +25,8 @@ export function UserProvider({ children }: any) {
     const USER_KEY = "@dse-User";
 
     const [loading, setLoading] = useState<boolean>(true);
+
+    const [firstAccess, setFirstAccess] = useState<boolean>(false);
 
     const [user, setUser] = useState<User>(UserInstance);
     const [authenticated, setAuthenticated] = useState<boolean>(false);
@@ -44,6 +47,7 @@ export function UserProvider({ children }: any) {
             
             setAuthenticated(true);
             setUser(_user);
+            setFirstAccess(_user.firstAccess || false);
         }
 
         setLoading(false);
@@ -65,6 +69,10 @@ export function UserProvider({ children }: any) {
 
             const _user = new User(response.data.user);
 
+            if (_user.firstAccess === true) {
+                setFirstAccess(true);
+            }
+
             localStorage.setItem(TOKEN_KEY, JSON.stringify(userToken));
             localStorage.setItem(USER_KEY, JSON.stringify(_user));
 
@@ -82,9 +90,28 @@ export function UserProvider({ children }: any) {
     async function logout() {
         api.defaults.headers.Authorization = null;
         setAuthenticated(false);
+        setFirstAccess(false);
 
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
+    }
+
+    async function firstChangePassword(password: string) {
+        const _user = user;
+        _user.setPassword(password);
+        _user.firstAccess = false;
+
+        await UserService.update(user).then((response) => {
+            if (response.status) {
+                setFirstAccess(false);
+
+                _user.password = undefined;
+
+                localStorage.setItem(USER_KEY, JSON.stringify(_user));
+            }
+        }).catch((error) => {
+            console.log(error.response);
+        })
     }
 
     if (loading) return <AuthLoading />
@@ -92,10 +119,13 @@ export function UserProvider({ children }: any) {
     return (
         <UserContext.Provider
             value={{
+                loading,
+                firstAccess,
                 user,
                 login,
                 logout,
-                authenticated
+                authenticated,
+                firstChangePassword
             }}
         >
             { children }

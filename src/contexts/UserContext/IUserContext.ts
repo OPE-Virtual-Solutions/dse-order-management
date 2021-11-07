@@ -6,13 +6,17 @@ export const UserInstance: User = new User({
     email: "",
     nome_usuario: "",
     senha: "",
-    tipo: "funcionario"
+    tipo: "funcionario",
+    primeiro_acesso: false,
 });
 
 export type IContextValues = {
     user: User;
+    firstAccess: boolean;
+    loading: boolean;
     authenticated: boolean;
     login: (credentials: ICredentials) => Promise<boolean>;
+    firstChangePassword: (password: string) => void;
     logout: () => void;
 }
 
