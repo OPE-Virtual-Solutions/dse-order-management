@@ -1,16 +1,15 @@
 import { useState, useEffect} from "react";
 
-import { 
-    TableContainer,
-} from "@material-ui/core";
-
 import { Ingredient } from "interfaces";
 import styles from "./IngredientTable.module.css";
 
 import { IngredientService } from "services/ingredient.service";
 import { Pagination } from "components/display/Pagination";
 
-import { DataGrid } from "@material-ui/data-grid";
+import { DataGrid, GridColDef } from "@material-ui/data-grid";
+import { Tooltip } from "components/display/Tooltip";
+import { Button } from "components/forms/Button";
+import { FaEdit } from "react-icons/fa";
 
 type Props = {
     ingredients: Ingredient[];
@@ -27,17 +26,46 @@ function IngredientTable({
     const [count, setCount] = useState<number>(0);
     const [ingredientList, setIngredientList] = useState<Ingredient[]>([]);
 
-    const headers = [
+    const columns: GridColDef[] = [
         {
-            field: "id", headerName: "ID", width: 90
+            field: "id",
+            headerName: "ID",
+            width: 90
         },
         {
-            field: "name", headerName: "Nome do Ingrediente", flex: 1
+            field: "name",
+            headerName: "Nome do Ingrediente",
+            flex: 1
         },
         {
-            field: "quantity", headerName: "Quantidade", flex: 1
+            field: "quantity",
+            headerName: "Quantidade",
+            flex: 1,
+        },
+        {
+            field: "action",
+            headerName: "Ação",
+            renderCell: renderActionButton,
+            width: 90,
+            headerAlign: "center",
+            align: "center",
+            filterable: false,
+            sortable: false,
         }
     ]
+
+    function renderActionButton(event: any) {
+        return (
+            <Tooltip title="Editar ingrediente" placement="right">
+                <Button 
+                    onClick={() => onIngredientSelect(event.row)}
+                    type="submit" 
+                    transparent 
+                    icon={<FaEdit />}
+                />
+            </Tooltip>
+        )
+    }
 
     async function retrieveData() {
         await IngredientService.listByPage(1).then((response) => {
@@ -60,33 +88,30 @@ function IngredientTable({
         })
     }
 
-    async function handleCellSelection(event: any) {
-        onIngredientSelect(event.row)
-    }
-
     useEffect(() => {
         retrieveData();
     }, []);
 
     return (
-        <TableContainer className={ styles.tableContainer }>
-            <DataGrid
-                autoPageSize
-                style={{ height: 400, width: "100%" }}
-                rows={ingredientList}
-                columns={headers}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                loading={loading}
-                hideFooter={true}
-                onCellClick={handleCellSelection}
-                
-            />
-            <Pagination 
-                pageCount={count}
-                onPageChange={changePage}
-            /> 
-        </TableContainer>
+        <div className={ styles.tableContainer }>
+
+            <div className={ styles.dataGridContainer }>
+                <DataGrid
+                    autoPageSize
+                    style={{ width: "99%" }}
+                    rows={ingredientList}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    loading={loading}
+                    hideFooter={true}
+                />
+                <Pagination 
+                    pageCount={count}
+                    onPageChange={changePage}
+                /> 
+            </div>
+        </div>
     )
 };
 
