@@ -1,38 +1,22 @@
 import { useState, useEffect } from "react";
 
-import tableStyles from "styles/Table.module.css";
-
-import { 
-    Table, 
-    TableBody, 
-    TableContainer, 
-    TableHead, 
-    TableRow,
-    TableCell,
-} from "@material-ui/core";
+import styles from "./UserTable.module.css";
 
 import { User } from "interfaces/User";
-import { Tooltip } from "components/display/Tooltip";
-import { Button } from "components/forms/Button";
-import { FaSlidersH } from "react-icons/fa";
 import { UserService } from "services/user.service";
 import { Skeleton } from "@material-ui/lab";
+import { DataGrid, GridColDef } from "@material-ui/data-grid";
+import { Tooltip } from "components/display/Tooltip";
+import { Button } from "components/forms/Button";
+import { FaEdit } from "react-icons/fa";
 
 function UserTable() {
     const [loading, setLoading] = useState<boolean>(true);
 
     const [users, setUsers] = useState<User[]>([]);
 
-    const headers: string[] = [
-        "ID",
-        "Nome",
-        "E-mail",
-        "Cargo",
-        "Ações"
-    ]
-
     async function retrieveData() {
-        await UserService.list().then((response) => {
+        await UserService.list("funcionario").then((response) => {
             setUsers(response);
             setLoading(false);
         });
@@ -41,6 +25,51 @@ function UserTable() {
     useEffect(() => {
         retrieveData();
     }, []);
+
+    const columns: GridColDef[] = [
+        {
+            field: "id",
+            headerName: "ID",
+            width: 90,
+        },
+        {
+            field: "name",
+            headerName: "Nome completo",
+            flex: 1,
+        },
+        {
+            field: "email",
+            headerName: "E-mail",
+            flex: 1,
+        },
+        {
+            field: "role",
+            headerName: "Cargo",
+            flex: 1
+        },
+        {
+            field: "action",
+            headerName: "Ação",
+            renderCell: renderActionButton,
+            width: 90,
+            headerAlign: "center",
+            align: "center",
+            filterable: false,
+            sortable: false,
+        }
+    ]
+
+    function renderActionButton(event: any) {
+        return (
+            <Tooltip title="Editar" placement="right">
+                <Button 
+                    type="submit" 
+                    transparent 
+                    icon={<FaEdit />}
+                />
+            </Tooltip>
+        )
+    }
 
     if (loading) {
         return (
@@ -53,46 +82,20 @@ function UserTable() {
     }
 
     return (
-        <TableContainer className={ tableStyles.tableContainer }>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        {headers.map((header, index) => (
-                            <TableCell key={index}>
-                                { header }
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody className={ tableStyles.tableBody }>
-                    {users.map((user, index) => (
-                        <TableRow key={index}>
-                            <TableCell>
-                                { user.id }
-                            </TableCell>
-                            <TableCell>
-                                { user.name }
-                            </TableCell>
-                            <TableCell>
-                                { user.email }
-                            </TableCell>
-                            <TableCell>
-                                { user.type }
-                            </TableCell>
-                            <TableCell>
-                                <Tooltip title="Editar usuário" placement="right">
-                                    <Button 
-                                        type="button"
-                                        transparent
-                                        icon={<FaSlidersH />}
-                                    />
-                                </Tooltip>
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <div className={ styles.tableContainer }>
+            <div className={ styles.dataGridContainer }>
+                <DataGrid
+                    autoPageSize
+                    style={{ width: "99%", height: 350 }}
+                    rows={users}
+                    columns={columns}
+                    pageSize={5}
+                    rowsPerPageOptions={[5]}
+                    loading={loading}
+                    hideFooter={true}
+                />
+            </div>
+        </div>
     )
 };
 

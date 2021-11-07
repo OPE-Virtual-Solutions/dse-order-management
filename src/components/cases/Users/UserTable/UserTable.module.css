@@ -1,0 +1,8 @@
+.tableContainer {
+    display: flex;
+    height: 90%;
+}
+
+.dataGridContainer {
+    flex-grow: 1;
+}
