@@ -87,10 +87,12 @@ function IngredientDashboard() {
                 </header>
 
                 <div className={ styles.ingredientContentContainer }>
-                    <IngredientTable 
-                        onIngredientSelect={onIngredientSelect}
-                        ingredients={ingredients}
-                    />
+                    {!loading && (
+                        <IngredientTable 
+                            onIngredientSelect={onIngredientSelect}
+                            ingredients={ingredients}
+                        />
+                    )}
                 </div>
             </div>
 
