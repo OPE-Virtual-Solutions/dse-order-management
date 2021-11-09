@@ -9,19 +9,12 @@ import {
 const ENDPOINT = "/pedidos/";
 
 class _OrderService {
-
-    private translateListResponse(response: OrderPT[]) {
-        return response.map((pedido: OrderPT) => {
-            return new Order(pedido);
-        });
-    }
-
     async list() {
         const response = await api.get(ENDPOINT + "?apenasAtendimento=true");
 
         let list: Order [] = [];
         if (response.status) {
-            list = this.translateListResponse(response.data);
+            list = response.data;
         };
 
         return list;
@@ -31,34 +24,22 @@ class _OrderService {
         const response = await api.get(ENDPOINT);
 
         let list: Order[] = [];
-        if (response.status) list = this.translateListResponse(response.data);
+        if (response.status) list = response.data;
 
         return list;
     }
 
-    async create(order: Order) {
-        const pedido: OrderPostPT = {
-            usuario: 1,
-            pedido: {
-                codigo_pedido: order.order_code,
-                status: "aguardando",
-                atendimento_presencial: order.is_local_order,
-                valor_total: order.total_price,
-                metodo_pagamento: order.payment_method,
-                criado_em: new Date(),
-                tipo_pedido: order.order_type || "pra_consumir"
-            }
-        };
-
-        const response = await api.post(ENDPOINT, pedido);
+    async create(order: Order, userId: number) {
+        const response = await api.post(ENDPOINT, {
+            user: userId,
+            order: order
+        });
 
         return response;
     };
 
     async update(id: number, order: Order) {
-        const pedido = new OrderPT(order);
-
-        const response = await api.patch(ENDPOINT + `${id}/`, pedido);
+        const response = await api.patch(ENDPOINT + `${id}/`, order);
     
         return response;
     };

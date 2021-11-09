@@ -7,7 +7,8 @@ import { Ingredient, IngredientPT } from "interfaces/Ingredient";
 import {
     Product,
     ProductPT,
-    ProductPostPT
+    ProductPostPT,
+    ProductPost
 } from "interfaces/Product";
 import { CategoryService } from "./category.service";
 import { IngredientService } from "./ingredient.service";
@@ -23,17 +24,11 @@ class _ProductService {
     ingredients: Ingredient[] = [];
     categories: Category[] = [];
 
-    translateListResponse(response: ProductPT[]) {
-        return response.map((produto: ProductPT) => {
-            return new Product(produto);
-        });
-    }
-
     async list(): Promise<Product[] | undefined> {
         const response = await api.get(Endpoints.product);
 
         if (response.status) {
-            const list: Product[] = this.translateListResponse(response.data.results);
+            const list: Product[] = response.data.results;
             return list;
         };
 
@@ -41,20 +36,18 @@ class _ProductService {
     };
 
     async create(product: Product, ingredients: Ingredient[]) {
-        const produto: ProductPostPT = {
-            nome_produto: product.name,
-            categoria: product.category.id ? product.category.id : 1,
-            ativo: product.active,
-            descricao: product.description,
-            preco: product.price,
-            quantidade: product.quantity
+        const _product: ProductPost = {
+            name: product.name,
+            category: product.category.id ? product.category.id : 1,
+            active: product.active,
+            description: product.description,
+            price: product.price,
+            quantity: product.quantity
         };
 
-        const ingredientes: IngredientPT[] = ingredients.map((ingredient) => new IngredientPT(ingredient));
-
         const post = {
-            ...produto,
-            ingredientes: ingredientes
+            ..._product,
+            ingredients: ingredients
         }
 
         const response = await api.post(Endpoints.product, post);
@@ -64,14 +57,13 @@ class _ProductService {
 
     async update(id: number, product: Product) {
 
-        const produto: ProductPostPT = {
-            id_produto: id,
-            nome_produto: product.name,
-            categoria: product.category.id || 1,
-            ativo: product.active,
-            descricao: product.description,
-            preco: product.price,
-            quantidade: product.quantity
+        const produto: ProductPost = {
+            name: product.name,
+            category: product.category.id ? product.category.id : 1,
+            active: product.active,
+            description: product.description,
+            price: product.price,
+            quantity: product.quantity
         }
 
         const response = await api.patch(Endpoints.product + `${id}/`, produto);
@@ -85,9 +77,9 @@ class _ProductService {
             api.get(Endpoints.category),
             api.get(Endpoints.ingredient)
         ]).then(axios.spread((products, categories, ingredients) => {
-            this.products = this.translateListResponse(products.data.results);
-            this.categories = CategoryService.translateListResponse(categories.data.results);
-            this.ingredients = IngredientService.translateListResponse(ingredients.data.results);
+            this.products = products.data.results;
+            this.categories = categories.data.results;
+            this.ingredients = ingredients.data.results;
         }));
 
         return {
