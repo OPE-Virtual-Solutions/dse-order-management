@@ -19,34 +19,20 @@ export interface ClientePT {
     telefone: string;
 }
 
-export class UserPT {
-    id_usuario: number;
-    nome_usuario: string;
+type UserConstructor = {
+    id: number;
+    fullName: string;
     email: string;
-    senha?: string;
-    tipo: "funcionario" | "cliente";
-
-    funcionario?: FuncionarioPT;
-    cliente?: ClientePT;
-
-    primeiro_acesso: boolean | undefined;
-
-    constructor(user: User) {
-
-        this.id_usuario = user.id;
-        this.nome_usuario = user.name;
-        this.email = user.email;
-        this.senha = user.password;
-        this.tipo = user.type;
-
-        this.primeiro_acesso = user.firstAccess;
-    }
+    type: "funcionario" | "cliente";
+    costumer: any;
+    employee: any;
+    firstAccess: boolean;
 }
 
 export class User {
     id: number;
 
-    name: string;
+    fullName: string;
     email: string;
 
     password?: string;
@@ -59,20 +45,34 @@ export class User {
 
     firstAccess?: boolean;
 
-    constructor(usuario: UserPT) {
-        this.id = usuario.id_usuario;
-        this.name = usuario.nome_usuario;
-        this.email = usuario.email;
-        this.type = usuario.tipo;
+    constructor({
+        id = -1,
+        fullName,
+        email,
+        type,
+        costumer,
+        employee,
+        firstAccess,
+    }: UserConstructor) {
+        this.id = id || -1;
+        this.fullName = fullName;
+        this.email = email;
+        this.type = type;
 
-        this.firstAccess = usuario.primeiro_acesso;
+        this.firstAccess = firstAccess;
         
-        switch(usuario.tipo) {
+        switch(type) {
             case "funcionario":
-                if (usuario.funcionario) this.role = usuario.funcionario.cargo;
+                if (employee) {
+                    this.role = employee.role;
+                }
+
                 break;
             case "cliente":
-                if (usuario.cliente) this.phone = usuario.cliente.telefone;
+                if (costumer) {
+                    this.phone = costumer.phone;
+                }
+
                 break;
         }
     }
