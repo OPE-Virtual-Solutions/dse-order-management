@@ -45,8 +45,10 @@ export function CartProvider({ children }: any) {
             if (response.length !== 0) {
                 const _order = { ...order };
     
-                response.map((cart, index) => {
-                    _order.total_price += roundNumber(cart.price * cart.quantity);
+                response.map((cart) => {
+                    _order.totalPrice += roundNumber(cart.price * cart.quantity);
+
+                    return cart;
                 });
 
                 setOrder(_order); 
@@ -81,14 +83,16 @@ export function CartProvider({ children }: any) {
             });
 
         } else {
+            console.log(product.price * quantity);
+
             const cartProduct = new CartProduct({
-                id_item_pedido: Math.random(),
-                pedido: null,
-                produto: new ProductPT(product),
-                quantidade: quantity,
-                preco: roundNumber(product.price * quantity),
-                usuario: user.id 
-            });
+                id: Math.random(),
+                order: null,
+                product: product,
+                quantity: quantity,
+                price: roundNumber(product.price * quantity),
+                user: user.id
+            })
 
             saveCart(cartProduct).then(() => {
                 setCart(cart => [...cart, cartProduct]);
@@ -97,7 +101,7 @@ export function CartProvider({ children }: any) {
             });
         };
 
-        _order.total_price += roundNumber(product.price * quantity);
+        _order.totalPrice += roundNumber(product.price * quantity);
         setOrder(_order);
     };
 
@@ -138,7 +142,7 @@ export function CartProvider({ children }: any) {
                 if (cart.length === 1) {
                     _order = OrderInstance;
                 } else {
-                    _order.total_price = orderInfo.total_price - (cartProduct.product.price * cartProduct.quantity);
+                    _order.totalPrice = orderInfo.totalPrice - (cartProduct.product.price * cartProduct.quantity);
                 }
     
                 return _order;
@@ -154,7 +158,7 @@ export function CartProvider({ children }: any) {
                 setOrder(orderInfo => {
                     let summary = { ...orderInfo };
 
-                    summary.total_price = orderInfo.total_price + cartItem.product.price;
+                    summary.totalPrice = orderInfo.totalPrice + cartItem.product.price;
 
                     return summary;
                 });
@@ -174,7 +178,7 @@ export function CartProvider({ children }: any) {
                 setOrder(orderInfo => {
                     let summary = { ...orderInfo };
 
-                    summary.total_price = orderInfo.total_price - cartItem.product.price;
+                    summary.totalPrice = orderInfo.totalPrice - cartItem.product.price;
 
                     return summary;
                 });
@@ -196,7 +200,7 @@ export function CartProvider({ children }: any) {
     }
 
     async function finishOrder() {
-        await OrderService.create(order).then(() => {
+        await OrderService.create(order, user.id).then(() => {
             setCart([]);
             setOrder(order => {
                 let _order = { ...order };
@@ -204,6 +208,8 @@ export function CartProvider({ children }: any) {
 
                 return _order;
             });
+        }).catch((error) => {
+            console.log(error.response);
         });
     };
 

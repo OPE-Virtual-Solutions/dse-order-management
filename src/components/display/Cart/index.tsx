@@ -88,7 +88,7 @@ function Cart({ showCardActions = true }: CartProps) {
 
                 <div>
                     <span>Total</span>
-                    <span>R${ order.total_price }</span>
+                    <span>R${ order.totalPrice }</span>
                 </div>
 
                 { location.pathname !== "/order" && (

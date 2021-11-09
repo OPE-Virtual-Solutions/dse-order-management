@@ -20,8 +20,10 @@ export type {
 }
 
 export const OrderInstance: Order = {
-    status: "",
-    is_local_order: true,
-    total_payed: 0,
-    total_price: 0,
+    status: "aguardando",
+    isLocalOrder: true,
+    totalPayed: 0,
+    totalPrice: 0,
+    id: -1,
+    createdAt: new Date()
 };
