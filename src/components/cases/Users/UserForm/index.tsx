@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { Button } from "components/forms/Button";
-import { UserPost } from "interfaces/User";
+import { User, UserPost } from "interfaces/User";
 import { useState } from "react";
 import { FaInfo } from "react-icons/fa";
 
@@ -30,14 +30,16 @@ function UserForm() {
 
         const form = event.target;
 
-        const user: UserPost = {
-            nome_usuario: form.inputName.value,
+        const user: User = {
+            fullName: form.inputName.value,
             email: form.inputEmail.value,
-            tipo: userType?.value || "funcionario",
-            senha: password,
-            cargo: userType && userType.value === "funcionario" ? role?.role : undefined,
-            telefone: userType && userType.value === "cliente" ? form.inputPhone.value : undefined
-        };
+            type: userType?.value || "funcionario",
+            password: password,
+            role: userType && userType.value === "funcionario" ? role?.role : undefined,
+            phone: userType && userType.value === "cliente" ? form.inputPhone.value : undefined,
+            id: -1,
+            setPassword: () => {}
+        }
 
         await UserService.create(user).then((response) => {
             if (response.status) window.location.reload();

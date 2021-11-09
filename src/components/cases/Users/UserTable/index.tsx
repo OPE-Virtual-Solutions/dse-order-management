@@ -33,7 +33,7 @@ function UserTable() {
             width: 90,
         },
         {
-            field: "name",
+            field: "fullName",
             headerName: "Nome completo",
             flex: 1,
         },
@@ -43,9 +43,18 @@ function UserTable() {
             flex: 1,
         },
         {
-            field: "role",
+            field: "employee",
             headerName: "Cargo",
-            flex: 1
+            flex: 1,
+            valueGetter: (params) => {
+                let result = "";
+
+                if (params.row.employee && params.row.employee.role) {
+                    result = params.row.employee.role;
+                }
+
+                return result;
+            },
         },
         {
             field: "action",
