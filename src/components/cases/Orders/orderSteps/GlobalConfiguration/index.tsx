@@ -16,7 +16,7 @@ function GlobalConfiguration({
     } = useContext(CartContext);
 
     useEffect(() => {
-        (order.order_type) ? setStepCompletion(true) : setStepCompletion(false); 
+        (order.type) ? setStepCompletion(true) : setStepCompletion(false); 
     }, []);
 
     function handleLocalChange(event: any) {
@@ -25,10 +25,10 @@ function GlobalConfiguration({
         const _order = { ...order };
 
         if (value !== "default") {
-            _order.order_type = value;
+            _order.type = value;
             setStepCompletion(true);
         } else {
-            _order.order_type = undefined;
+            _order.type = undefined;
             setStepCompletion(false);
         }
 
@@ -36,7 +36,7 @@ function GlobalConfiguration({
     };
 
     function isOptionSelected(optionSelected: string) {
-        return optionSelected === order.order_type;
+        return optionSelected === order.type;
     }
 
     return (
@@ -50,7 +50,7 @@ function GlobalConfiguration({
             <main>
                 <div className="form-check">
                     <input 
-                        checked={ order.is_local_order }
+                        checked={ order.isLocalOrder }
                         disabled 
                         className="form-check-input" 
                         type="checkbox" 
@@ -70,7 +70,7 @@ function GlobalConfiguration({
                         className="form-select form-select-md" 
                         aria-label="Default select example"
                     >
-                        <option value="default" selected={ !order.order_type }>Selecione o local de consumo</option>
+                        <option value="default" selected={ !order.orderCode }>Selecione o local de consumo</option>
                         <option value="pra_consumir" selected={isOptionSelected("local")}>No local</option>
                         <option value="pra_viagem" selected={isOptionSelected("viagem")}>Pra viagem</option>
                     </select>

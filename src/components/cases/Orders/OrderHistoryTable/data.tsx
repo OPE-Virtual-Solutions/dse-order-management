@@ -23,7 +23,7 @@ export const columns: GridColDef[] = [
         width: 90,
     },
     {
-        field: "created_at", 
+        field: "createdAt", 
         headerName: "Criado em", 
         flex: 1,
         valueFormatter: (data: GridValueFormatterParams) => {
@@ -37,7 +37,7 @@ export const columns: GridColDef[] = [
         },
     },
     {
-        field: "finished_at", 
+        field: "finishedAt", 
         headerName: "Finalizado em", 
         flex: 1,
         valueFormatter: (data: GridValueFormatterParams) => {
@@ -51,7 +51,7 @@ export const columns: GridColDef[] = [
         },
     },
     {
-        field: "total_price", 
+        field: "totalPrice", 
         headerName: "Valor total", 
         flex: 1,
         cellClassName: "text-capitalize",
@@ -60,7 +60,7 @@ export const columns: GridColDef[] = [
         }
     },
     {
-        field: "payment_method",
+        field: "paymentMethod",
         headerName: "Método de Pagamento",
         flex: 1,
         cellClassName: "text-capitalize",
@@ -69,7 +69,7 @@ export const columns: GridColDef[] = [
         }
     },
     {
-        field: "is_local_order",
+        field: "isLocalOrder",
         headerName: "Efetuado presencialmente",
         flex: 1,
         type: "boolean"

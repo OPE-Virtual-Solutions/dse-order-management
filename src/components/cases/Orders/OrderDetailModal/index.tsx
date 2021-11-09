@@ -23,9 +23,9 @@ function OrderDetailModal({ order }: Props) {
                     <div>
                         <FaCalendarAlt color="var(--subtext)"/>
                         <span>
-                            Registrado: { order.created_at && 
+                            Registrado: { order.createdAt && 
                                 format(
-                                    parseISO(order.created_at?.toString()), 
+                                    parseISO(order.createdAt.toString()), 
                                     "dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
                                     {
                                         locale: pt
@@ -37,9 +37,9 @@ function OrderDetailModal({ order }: Props) {
                     <div>
                         <FaCalendarCheck color="var(--subtext)"/>
                         <span>
-                            Finalizado: { order.finished_at ?
+                            Finalizado: { order.finishedAt ?
                                 format(
-                                    parseISO(order.finished_at?.toString()), 
+                                    parseISO(order.finishedAt?.toString()), 
                                     "dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
                                     {
                                         locale: pt
@@ -52,10 +52,10 @@ function OrderDetailModal({ order }: Props) {
                                     
                 <main>
                     <span>Pagamento efetuado via</span>
-                    <p>{ order.payment_method }</p>
+                    <p>{ order.paymentMethod }</p>
 
                     <span>Cliente efetuou pedido</span>
-                    <p>{order.is_local_order ? "Presencialmente" : "Online (delivery)"}</p>
+                    <p>{order.isLocalOrder ? "Presencialmente" : "Online (delivery)"}</p>
                     
                     <div className={styles.observationContainer}>
                         <span>Observação</span>

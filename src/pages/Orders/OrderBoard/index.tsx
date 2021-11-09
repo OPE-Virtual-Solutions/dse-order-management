@@ -71,7 +71,7 @@ function OrderBoard() {
             if (result.isConfirmed) {
                 selectedItem.status = "finalizado";
 
-                selectedItem.finished_at = new Date();
+                selectedItem.finishedAt = new Date();
 
                 await OrderService.update(selectedItem.id || 0, selectedItem).then((response) => {
                     if (response.status === 200) window.location.reload();
@@ -85,18 +85,17 @@ function OrderBoard() {
 
         const order: Order = {
             id: selectedItem.id,
-            is_local_order: selectedItem.is_local_order,
+            isLocalOrder: selectedItem.isLocalOrder,
             status: state.code,
-            total_payed: selectedItem.total_payed,
-            total_price: selectedItem.total_price,
+            totalPrice: selectedItem.totalPrice,
             address: selectedItem.address,
             costumer: selectedItem.costumer,
-            created_at: selectedItem.created_at,
+            createdAt: selectedItem.createdAt,
             employee: selectedItem.employee,
-            finished_at: selectedItem.finished_at,
-            order_code: selectedItem.order_code,
-            order_type: selectedItem.order_type,
-            payment_method: selectedItem.payment_method,
+            finishedAt: selectedItem.finishedAt,
+            orderCode: selectedItem.orderCode,
+            type: selectedItem.type,
+            paymentMethod: selectedItem.payment_method,
         };
 
         await OrderService.update(order.id || 0, order).then((response) => {

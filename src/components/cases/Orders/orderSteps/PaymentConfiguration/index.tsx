@@ -25,10 +25,10 @@ function PaymentConfiguration({
         const _order = { ...order };
 
         if (value !== "default") {
-            _order.payment_method = value;
+            _order.paymentMethod = value;
             setStepCompletion(true);
         } else {
-            _order.payment_method = undefined;
+            _order.paymentMethod = undefined;
             setStepCompletion(false);
         }
         
@@ -37,7 +37,7 @@ function PaymentConfiguration({
     };
 
     function isOptionSelected(optionValue: string): boolean {
-        return optionValue === order.payment_method;
+        return optionValue === order.paymentMethod;
     }
 
     function handlePaymentValueChange(event: any) {
@@ -47,20 +47,20 @@ function PaymentConfiguration({
 
     function changePaymentValue(value: number) {
         const _order = { ...order };
-        _order.total_payed = value;
+        _order.totalPayed = value;
 
         updateOrderInfo(_order);
     }
 
     useEffect(() => {
-        if (order.payment_method) { 
-            setPayment(order.payment_method);
+        if (order.paymentMethod) { 
+            setPayment(order.paymentMethod);
             setStepCompletion(true);
         } else {
             setStepCompletion(false);
         }
 
-        changePaymentValue(order.total_price);
+        changePaymentValue(order.totalPrice);
     }, []);
 
     return (
@@ -95,7 +95,7 @@ function PaymentConfiguration({
                     <label>Informações de pagamento em dinheiro</label>
                     <div className={ styles.moneyPaymentInfo }>
                         <span>Valor a pagar</span>
-                        <span>R${ currencyFormat(order.total_price) }</span>
+                        <span>R${ currencyFormat(order.totalPrice) }</span>
                     </div>
 
                     <label>Valor pago pelo cliente</label>
@@ -108,8 +108,8 @@ function PaymentConfiguration({
                             className="form-control" 
                             placeholder="Valor pago pelo cliente" 
                             onChange={handlePaymentValueChange}
-                            defaultValue={ order.total_price }
-                            min={ order.total_price }
+                            defaultValue={ order.totalPrice }
+                            min={ order.totalPrice }
                         />
                     </div>
                 </div>
