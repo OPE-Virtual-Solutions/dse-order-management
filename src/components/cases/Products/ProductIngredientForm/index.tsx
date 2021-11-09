@@ -13,6 +13,8 @@ import { TextField } from "@material-ui/core";
 
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 
+import { IngredientService } from "services/ingredient.service";
+
 type Props = {
     product?: Product;
     ingredientList: Ingredient[];
@@ -23,8 +25,18 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
     const [currentIngredient, setCurrentIngredient] = useState<Ingredient>();
     const [error, setError] = useState<string>("");
 
+    const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+    async function retrieveData() {
+        await IngredientService.list().then((response) => {
+            setIngredients(response);
+        });
+    }
+
     useEffect(() => {
         if (product?.ingredients) setIngredientList(product.ingredients);
+
+        retrieveData();
     }, []);
 
     function addNewIngredient() {
