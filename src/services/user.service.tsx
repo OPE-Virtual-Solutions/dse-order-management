@@ -5,6 +5,12 @@ import { User, UserPost } from "interfaces/User";
 type UserTypeParam = "funcionario" | "cliente";
 
 class _UserService {
+    formatResponse(userList: any[]) {
+        return userList.map((user) => {
+            return new User(user);
+        })
+    }
+
     async list(type: UserTypeParam | undefined = undefined) {
         const response = await api.get("/usuarios/", {
             params: {
@@ -15,7 +21,7 @@ class _UserService {
         let list: User[] = [];
         
         if (response.status) {
-            list = response.data.results;
+            list = this.formatResponse(response.data.results);
         }
 
         return list;
@@ -26,8 +32,6 @@ class _UserService {
     }
 
     async update(user: User) {
-        // const usuario = new UserPT(user);
-
         return await api.patch(`/usuarios/${user.id}/`, user)
     }
 }
