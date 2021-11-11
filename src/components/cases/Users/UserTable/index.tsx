@@ -10,7 +10,13 @@ import { Tooltip } from "components/display/Tooltip";
 import { Button } from "components/forms/Button";
 import { FaEdit } from "react-icons/fa";
 
-function UserTable() {
+type Props = {
+    onUserSelection: (user: User) => void;
+}
+
+function UserTable({
+    onUserSelection
+}: Props) {
     const [loading, setLoading] = useState<boolean>(true);
 
     const [users, setUsers] = useState<User[]>([]);
@@ -43,18 +49,9 @@ function UserTable() {
             flex: 1,
         },
         {
-            field: "employee",
+            field: "role",
             headerName: "Cargo",
             flex: 1,
-            valueGetter: (params) => {
-                let result = "";
-
-                if (params.row.employee && params.row.employee.role) {
-                    result = params.row.employee.role;
-                }
-
-                return result;
-            },
         },
         {
             field: "action",
@@ -72,6 +69,7 @@ function UserTable() {
         return (
             <Tooltip title="Editar" placement="right">
                 <Button 
+                    onClick={() => onUserSelection(event.row)}
                     type="submit" 
                     transparent 
                     icon={<FaEdit />}

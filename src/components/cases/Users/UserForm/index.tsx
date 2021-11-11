@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { TextField } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
 import { Button } from "components/forms/Button";
+
 import { User, UserPost } from "interfaces/User";
-import { useState } from "react";
+
 import { FaInfo } from "react-icons/fa";
 
 import generator from "generate-password";
@@ -19,33 +20,69 @@ import {
 import styles from "./UserForm.module.css";
 import { UserService } from "services/user.service";
 
-function UserForm() {
+type Props = {
+    user: User;
+}
+
+function UserForm({ user }: Props) {
     const [userType, setUserType] = useState<UserTypeProp | null>(UserTypes[1]);
     const [role, setRole] = useState<UserRoleProp | null>();
 
     const [password, setPassword] = useState<string>("");
 
-    async function handleFormSubmit(event: any) {
-        event.preventDefault();
+    async function createUser(form: any) {
+        const _password = user.id === -1 ? { password: password } : null;
 
-        const form = event.target;
-
-        const user: User = {
+        const _user: User = {
             fullName: form.inputName.value,
             email: form.inputEmail.value,
             type: userType?.value || "funcionario",
-            password: password,
+            ..._password,
             role: userType && userType.value === "funcionario" ? role?.role : undefined,
             phone: userType && userType.value === "cliente" ? form.inputPhone.value : undefined,
             id: -1,
             setPassword: () => {}
         }
 
-        await UserService.create(user).then((response) => {
+        await UserService.create(_user).then((response) => {
             if (response.status) window.location.reload();
         }).catch((error) => {
             console.log(error.response);
         });
+    };
+
+    async function updateUser(form: any) {
+        const _user: User = {
+            fullName: form.inputName.value,
+            email: form.inputEmail.value,
+            type: userType?.value || "funcionario",
+            role: userType && userType.value === "funcionario" ? role?.role : undefined,
+            phone: userType && userType.value === "cliente" ? form.inputPhone.value : undefined,
+            id: user.id,
+            setPassword: () => {}
+        }
+
+        await UserService.update(_user).then((response) => {
+            if (response.status) window.location.reload();
+        }).catch((error) => {
+            console.log(error.response);
+        });
+    }
+
+    async function handleFormSubmit(event: any) {
+        event.preventDefault();
+
+        const form = event.target;
+        
+        user.id === -1 ? createUser(form) : updateUser(form);
+    }
+
+    function getUserRole() {
+        return UserRoles.filter(role => role.role === user.role)[0];
+    }
+
+    function getUserType() {
+        return UserTypes.filter(type => type.value === user.type)[0];
     }
 
     useEffect(() => {
@@ -55,14 +92,22 @@ function UserForm() {
             lowercase: false,
             uppercase: true,
             excludeSimilarCharacters: true
-        }))
+        }));
+
+        if (user.id !== -1) {
+            setRole(getUserRole());
+            setUserType(getUserType());
+        }
     }, []);
 
     return (
         <form className={styles.wrapper} onSubmit={handleFormSubmit}>
             <div className={styles.container}>
                 <div className={styles.column}>
-                    <h5>Criar usuário</h5>
+                    <h5>
+                        {user.id === -1 && "Criar usuário"}
+                        {user.id !== -1 && `Editando usuário #${user.id}`}
+                    </h5>
 
                     <div className="mb-3">
                         <TextField 
@@ -72,6 +117,7 @@ function UserForm() {
                             variant="outlined" 
                             size="small" 
                             label="Nome completo"
+                            defaultValue={user.fullName}
 
                             style={{ marginRight: 10 }}
                         />
@@ -84,12 +130,14 @@ function UserForm() {
                             variant="outlined" 
                             size="small" 
                             label="E-mail"
+                            defaultValue={user.email}
 
                             style={{ marginRight: 10 }}
                         />
                     </div>
                     <div>
                         <Autocomplete 
+                            disabled={user.id !== -1}
                             fullWidth
                             options={UserTypes}
                             getOptionLabel={(option: UserTypeProp) => option.type }
@@ -138,7 +186,7 @@ function UserForm() {
                             <Autocomplete 
                                 fullWidth
                                 options={UserRoles}
-                                
+                                defaultValue={getUserRole()}
                                 getOptionLabel={(option: UserRoleProp) => option.role }
                                 onChange={(event, userRole) => {
                                     setRole(userRole)   
@@ -163,12 +211,14 @@ function UserForm() {
                                 </div>
                             )}
 
-                            <div className={styles.infoContainer}>
-                                <span>
-                                    O usuário será criado com a senha placeholder <span className="font-weight-bold">{ password }</span>.
-                                    Obrigatoriamente em seu primeiro acesso, ele terá que troca-la.
-                                </span>
-                            </div>
+                            {user.id === -1 && (
+                                <div className={styles.infoContainer}>
+                                    <span>
+                                        O usuário será criado com a senha placeholder <span className="font-weight-bold">{ password }</span>.
+                                        Obrigatoriamente em seu primeiro acesso, ele terá que troca-la.
+                                    </span>
+                                </div>
+                            )}
                         </div>
                     )}
                 </div>
