@@ -6,6 +6,12 @@ import { CartProductPost } from "interfaces/CartProduct";
 const ENDPOINT = "/itensPedidos/";
 
 class _CartService {
+    formatResponse(responseList: any[]) {
+        return responseList.map((cartItem) => {
+            return new CartProduct(cartItem);
+        })
+    }
+
     async get(userId: number) {
         const response = await api.get(ENDPOINT, {
             params: {
@@ -15,7 +21,7 @@ class _CartService {
 
         let list: CartProduct[] = [];
         if (response.status) {
-            list = response.data;
+            list = this.formatResponse(response.data);
         };
 
         return list;
