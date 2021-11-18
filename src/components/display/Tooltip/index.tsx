@@ -12,8 +12,8 @@ type Props = {
 
 const CustomTooltip = withStyles((theme) => ({
     tooltip: {
-        backgroundColor: "#FFF",
-        color: "var(--text)",
+        backgroundColor: "var(--surface)",
+        color: "var(--onSurface)",
         maxWidth: 220,
         fontSize: theme.typography.pxToRem(12),
         fontWeight: 600,

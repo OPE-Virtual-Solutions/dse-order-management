@@ -1,4 +1,4 @@
 .tabBarContainer { 
-    background: #FFF;
+    background: var(--background);
     border-bottom: 1px solid var(--divider);
 }

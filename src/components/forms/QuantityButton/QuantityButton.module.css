@@ -6,8 +6,13 @@
     width: 35%;
 }
 
+.buttonContainer span {
+    color: var(--onSecondary);
+}
+
 .buttonContainer button {
     border: 0px;
+    color: var(--onSecondary);
 
     transition: background 0.3s;
 }

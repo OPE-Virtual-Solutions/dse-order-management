@@ -36,7 +36,7 @@ function NavLink({
                     className="navLink"
                     activeStyle={{
                         backgroundColor: "var(--secondary)",
-                        color: "var(--text)"
+                        color: "var(--onSecondary)"
                     }}
                 >
                     { children }
