@@ -20,9 +20,10 @@ import { UserService } from "services/user.service";
 
 export const UserContext = createContext({} as IContextValues);
 
+export const USER_KEY = "@dse-User";
+
 export function UserProvider({ children }: any) {
     const TOKEN_KEY = "@dse-Token";
-    const USER_KEY = "@dse-User";
 
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -46,7 +47,15 @@ export function UserProvider({ children }: any) {
             api.defaults.headers.Authorization = `Token ${currentToken.token}`
             
             setAuthenticated(true);
-            setUser(_user);
+            setUser(new User({
+                id: _user.id,
+                costumer: { phone: _user.phone },
+                email: _user.email,
+                employee: { role: _user.role },
+                firstAccess: _user.firstAccess || false,
+                fullName: _user.fullName,
+                type: _user.type 
+            }));
             setFirstAccess(_user.firstAccess || false);
         }
 
@@ -112,7 +121,11 @@ export function UserProvider({ children }: any) {
         }).catch((error) => {
             console.log(error.response);
         })
-    }
+    };
+
+    async function update(user: User) {
+        return await UserService.update(user);
+    };
 
     if (loading) return <AuthLoading />
 
@@ -125,7 +138,8 @@ export function UserProvider({ children }: any) {
                 login,
                 logout,
                 authenticated,
-                firstChangePassword
+                firstChangePassword,
+                update
             }}
         >
             { children }

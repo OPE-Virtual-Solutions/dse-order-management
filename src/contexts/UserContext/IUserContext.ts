@@ -28,6 +28,7 @@ export type IContextValues = {
     login: (credentials: ICredentials) => Promise<boolean>;
     firstChangePassword: (password: string) => void;
     logout: () => void;
+    update: (user: User) => Promise<any>;
 }
 
 export type ICredentials = {
