@@ -1,20 +1,8 @@
 import { GridColDef, GridValueFormatterParams } from "@material-ui/data-grid";
 
 import { format, parseISO } from "date-fns";
+import { OrderService } from "services/order.service";
 import { currencyFormat } from "utils/currencyFormat";
-
-function formatPaymentMethod(method: string) {
-    switch (method) {
-        case "money":
-            return "dinheiro"
-        case "credit":
-            return "cartão de crédito"
-        case "debit":
-            return "cartão de débito"
-        default:
-            return "dinheiro"
-    }
-};
 
 export const columns: GridColDef[] = [
     {
@@ -65,7 +53,7 @@ export const columns: GridColDef[] = [
         flex: 1,
         cellClassName: "text-capitalize",
         valueFormatter: (data: GridValueFormatterParams) => {
-            if (data.value) return formatPaymentMethod(data.value.toString())
+            if (data.value) return OrderService.formatPaymentMethod(data.value.toString())
         }
     },
     {
@@ -78,6 +66,9 @@ export const columns: GridColDef[] = [
         field: "status",
         headerName: "Status",
         cellClassName: "text-capitalize",
-        flex: 1
+        flex: 1,
+        valueFormatter: (data: GridValueFormatterParams) => {
+            if (data.value) return OrderService.formatStatus(data.value.toString())
+        }
     }
 ]
