@@ -46,7 +46,7 @@ function Login() {
     };
 
     if (authenticated) {
-        return <Redirect to="/profile" />
+        return <Redirect to="/home" />
     }
 
     return (
