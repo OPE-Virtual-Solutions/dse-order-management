@@ -99,7 +99,17 @@ function OrderBoard() {
         };
 
         await OrderService.update(order.id || 0, order).then((response) => {
-            if (response.status === 200) console.log("~ modificado com sucesso");
+            if (response.status === 200) {
+                state.set((list: any) => {
+                    return list.map((_order: Order) => {
+                        if (_order.id === order.id) {
+                            _order.status = state.code
+                        };
+
+                        return _order;
+                    })
+                })
+            }
         });
     }
 
@@ -133,6 +143,8 @@ function OrderBoard() {
             if (result.dragOnGoing) setOnGoingOrders(result.dragOnGoing);
             if (result.dragDone) setDoneOrders(result.dragDone);
         };
+
+        console.log("~ selected order:", selectedItem);
     };
 
     async function retrieveData() {
