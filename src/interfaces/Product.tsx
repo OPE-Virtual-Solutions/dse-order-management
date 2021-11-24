@@ -40,6 +40,7 @@ export interface ProductPost {
     description: string;
     price: number;
     quantity: number;
+    ingredients?: any;
 }
 
 export class Product {
