@@ -3,11 +3,33 @@
     align-items: center;
     justify-content: center;
 
+    flex-direction: column;
+
     flex-grow: 1;
 
-    max-height: 100vh;
+    height: 100vh;
+
+    background-image: linear-gradient(rgba(255,255,255,0.8),rgba(255,255,255,0.8)), url("../../assets/home-bg.png");
+    background-size: contain;
+}
+
+.container h3 {
+    font-weight: 700;
 }
 
 .container img {
     object-fit:cover;
+}
+
+.nav {
+    display: flex;
+}
+
+.link {
+    text-decoration: underline;
+    color: var(--secondary);
+
+    background: transparent;
+    padding: 0;
+    border: 0;
 }
