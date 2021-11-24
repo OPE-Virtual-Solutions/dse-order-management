@@ -1,4 +1,5 @@
 import { useState, useEffect} from "react";
+import { useQuery } from "utils/useQuery";
 
 import { Ingredient } from "interfaces";
 import styles from "./IngredientTable.module.css";
@@ -14,12 +15,15 @@ import { FaEdit } from "react-icons/fa";
 type Props = {
     ingredients: Ingredient[];
     onIngredientSelect: (ingredient: Ingredient) => void;
+    queryString: string | null;
 }
 
 function IngredientTable({
     ingredients,
-    onIngredientSelect
+    onIngredientSelect, 
+    queryString
 }: Props) {
+    const query = useQuery();
     
     const [loading, setLoading] = useState<boolean>(true);
 
@@ -68,7 +72,10 @@ function IngredientTable({
     }
 
     async function retrieveData() {
-        await IngredientService.listByPage(1).then((response) => {
+        await IngredientService.listByPage(
+            Number(query.get("page")) || 1,
+            queryString ? queryString : ""
+        ).then((response) => {
             const { list, count } = response;
 
             setCount(count);
@@ -79,9 +86,12 @@ function IngredientTable({
     }
 
     async function changePage(event: any) {
+        const _page = event.selected + 1;
         setLoading(true);
-        await IngredientService.listByPage(event.selected + 1).then((response) => {
+
+        await IngredientService.listByPage(_page).then((response) => {
             const { list } = response;
+            query.set("page", _page)
 
             setIngredientList(list);
             setLoading(false);
@@ -91,6 +101,10 @@ function IngredientTable({
     useEffect(() => {
         retrieveData();
     }, []);
+
+    useEffect(() => {
+        retrieveData();
+    }, [queryString]);
 
     return (
         <div className={ styles.tableContainer }>
