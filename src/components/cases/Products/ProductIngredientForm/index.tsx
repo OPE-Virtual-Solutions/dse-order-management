@@ -51,6 +51,12 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
         }
     }
 
+    function removeIngredient(ingredient: Ingredient) {
+        setIngredientList(ingredientList => {
+            return ingredientList.filter(el => el.id !== ingredient.id);
+        })
+    }
+
     return (
         <div>
             <h6 className="text-uppercase">Ingredientes</h6>
@@ -60,7 +66,7 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
                         { ingrediente.name } ● <span className="fw-bold">Qtd.</span> { ingrediente.quantity }
                     </span>
 
-                    <FaTrashAlt />
+                    <FaTrashAlt onClick={() => removeIngredient(ingrediente) }/>
                 </div>
             ))}
 
