@@ -6,6 +6,7 @@ import { OrderProductInfo } from "../OrderProductInfo";
 import { format, parseISO } from "date-fns";
 import pt from "date-fns/locale/pt";
 import { FaCalendarCheck, FaCalendarAlt } from "react-icons/fa";
+import { OrderService } from "services/order.service";
 
 type Props = {
     order: Order;
@@ -52,7 +53,7 @@ function OrderDetailModal({ order }: Props) {
                                     
                 <main>
                     <span>Pagamento efetuado via</span>
-                    <p>{ order.paymentMethod }</p>
+                    <p>{ OrderService.formatPaymentMethod(order.paymentMethod || "") }</p>
 
                     <span>Cliente efetuou pedido</span>
                     <p>{order.isLocalOrder ? "Presencialmente" : "Online (delivery)"}</p>
@@ -63,6 +64,16 @@ function OrderDetailModal({ order }: Props) {
                             {order.note ? order.note : "Nenhuma observação registrada"}
                         </p>
                     </div>
+
+                    {order.status === "cancelado" && (
+                        <div className={styles.observationContainer}>
+                            <span>Motivo do cancelamento</span>
+                            <p>
+                                {order.cancelNote ? order.cancelNote : "Nenhum motivo registrado"}
+                            </p>
+                        </div>
+                    )}
+
                 </main>
 
             </div>
