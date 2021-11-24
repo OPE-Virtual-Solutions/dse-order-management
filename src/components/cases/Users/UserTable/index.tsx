@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import styles from "./UserTable.module.css";
 
@@ -10,6 +10,8 @@ import { Tooltip } from "components/display/Tooltip";
 import { Button } from "components/forms/Button";
 import { FaEdit } from "react-icons/fa";
 
+import { UserContext } from "contexts/UserContext/UserContext";
+
 type Props = {
     onUserSelection: (user: User) => void;
 }
@@ -17,13 +19,16 @@ type Props = {
 function UserTable({
     onUserSelection
 }: Props) {
+    const { user } = useContext(UserContext);
     const [loading, setLoading] = useState<boolean>(true);
 
     const [users, setUsers] = useState<User[]>([]);
 
     async function retrieveData() {
         await UserService.list("funcionario").then((response) => {
-            setUsers(response);
+            const filteredList = response.filter(_user => _user.id !== user.id);
+
+            setUsers(filteredList);
             setLoading(false);
         });
     };
