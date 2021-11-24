@@ -19,10 +19,11 @@ class _IngredientService {
         return list;
     };
 
-    async listByPage(pageNumber: number) {
+    async listByPage(pageNumber: number, name: string = "") {
         const response = await api.get(ENDPOINT, {
             params: {
-                page: pageNumber
+                page: pageNumber,
+                name: name
             }
         });
 

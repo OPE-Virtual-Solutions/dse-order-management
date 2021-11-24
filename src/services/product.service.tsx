@@ -63,7 +63,8 @@ class _ProductService {
             active: product.active,
             description: product.description,
             price: product.price,
-            quantity: product.quantity
+            quantity: product.quantity,
+            ingredients: product.ingredients
         }
 
         const response = await api.patch(Endpoints.product + `${id}/`, produto);
