@@ -98,6 +98,7 @@ function OrderDragCard({
         }).then(async(result) => {
             if (result.isConfirmed) {
                 order.status = "cancelado";
+                order.cancelNote = result.value;
 
                 await OrderService.update(order.id || 0, order).then(() => {
                     window.location.reload();
