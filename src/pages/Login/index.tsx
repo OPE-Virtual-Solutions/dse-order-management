@@ -39,7 +39,7 @@ function Login() {
         }
 
         login(credentials).then((response) => {
-            response ? history.push("/profile") : setShowSnack(true);
+            response ? history.push("/home") : setShowSnack(true);
         }).finally(() => {
             setAuthenticating(false);
         });

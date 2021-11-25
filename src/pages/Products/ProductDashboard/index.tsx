@@ -32,6 +32,7 @@ import { ProductCategory } from "../ProductCategory";
 import { ProductManageTable } from "components/cases/Products/ProductManageTable";
 import { MaterialInputProps } from "components/forms/MaterialInput";
 import { ProductService } from "services/product.service";
+import { ProductManage } from "components/cases/Products/ProductManage";
 
 function ProductDashboard() {
     document.title = "DSE - Gerenciamento de Produtos"
@@ -71,6 +72,28 @@ function ProductDashboard() {
 
             setLoading(false);
         });
+    }
+
+    function handleProductSelect(product: Product) {
+        setSelectedProduct(product);
+        setOpenModal(true);
+    }
+
+    function renderProducts() {
+        const filteredProducts = products.filter(product => product.category.name === categories[selectedCategory].name);
+        // setFiltered(filteredProducts);
+        
+        if (filteredProducts.length === 0) {
+            return <span>Nenhum produto encontrado</span>
+        } else {
+            // setHideHeader(false);
+            return (
+                <ProductManage
+                    onProductSelect={handleProductSelect} 
+                    productList={filteredProducts} 
+                />
+            )
+        }
     }
 
     useEffect(() => {
@@ -132,13 +155,7 @@ function ProductDashboard() {
                             <Skeleton height={50} />
                         ))}
 
-                        {!loading && (
-                            <ProductManageTable 
-                                products={products}
-                                categories={categories}
-                                selectedCategory={ categories[selectedCategory].name }
-                            />
-                        )}
+                        {!loading && renderProducts()}
                     </div>
                 </div>
                 

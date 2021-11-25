@@ -111,13 +111,14 @@ function IngredientTable({
 
             <div className={ styles.dataGridContainer }>
                 <DataGrid
-                    autoPageSize
+                    autoHeight
                     style={{ width: "99%" }}
                     rows={ingredientList}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     loading={loading}
+                    
                     hideFooter={true}
                 />
                 <Pagination 

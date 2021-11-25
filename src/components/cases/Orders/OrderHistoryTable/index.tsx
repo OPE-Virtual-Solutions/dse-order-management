@@ -45,7 +45,8 @@ function OrderHistoryTable() {
         <TableContainer className={ tableStyles.tableContainer }>
             <DataGrid
                 autoPageSize
-                style={{ height: 400, width: "100%" }}
+                autoHeight
+                style={{ width: "100%" }}
                 rows={orders}
                 columns={columns}
                 pageSize={5}

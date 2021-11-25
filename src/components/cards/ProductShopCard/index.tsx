@@ -32,6 +32,7 @@ function ProductShopCard({ product }: Props) {
             setSnackMessage("Insira a quantidade desejável do produto")
         } else {
             addToCart(product, productCartQuantity);
+            product.quantity -= productCartQuantity;
             setSnackMessage(`${ product.name } adicionado ao carrinho`)
         }
 

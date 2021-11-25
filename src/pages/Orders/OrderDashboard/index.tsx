@@ -23,6 +23,7 @@ import {
     Category 
 } from "interfaces";
 import { ProductService } from "services/product.service";
+import { FiX } from "react-icons/fi";
 
 function OrderDashboard() {
     document.title = "DSE - Pedidos"
@@ -36,12 +37,14 @@ function OrderDashboard() {
     const [products, setProducts] = useState<Product[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
 
+    const [search, setSearch] = useState<string>("");
+
     function handleListType() {
         setIsGridList(!isGridList);
     }
 
     async function retrieveData() {
-        await ProductService.getProductRelatedInfo().then((response) => {
+        await ProductService.getProductRelatedInfo(true).then((response) => {
             setProducts(response.products);
             setCategories(response.categories);
 
@@ -49,9 +52,34 @@ function OrderDashboard() {
         })
     }
 
+    async function retrieveSearchData() {
+        await ProductService.list(search).then((response) => {
+            setProducts(response);
+
+            setLoading(false);
+        })
+    }
+
+    function submitSearch(event: any) {
+        event.preventDefault();
+        setSearch(event.target.inputSearch.value);
+    }
+
+    function clearSearch() {
+        setSearch("");
+    }
+
+    // useEffect(() => {
+    //     retrieveData();
+    // }, [])
+
     useEffect(() => {
-        retrieveData();
-    }, [])
+        if (search !== "") {
+            retrieveSearchData();
+        } else {
+            retrieveData();
+        }
+    }, [search])
 
     return (
         <Dashboard showCart={true}>
@@ -61,31 +89,34 @@ function OrderDashboard() {
                     <div>
                         <h5>Atendimento ao Cliente</h5>
                         
-                        <TextField 
-                            type="text" 
-                            className="me-1" 
-                            label="Pesquisar produto" 
-                            size="small"
-                            variant="outlined"
-                            InputLabelProps={{
-                                style: {
-                                    fontSize: 13,
-                                }
-                            }}
-                            inputProps={{
-                                style: {
-                                    fontSize: 15,
-                                    height: 14,
-                                }
-                            }}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <FaSearch color="var(--divider)" />
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
+                        <div className="d-flex align-items-center">
+                            {search !== "" && <small className="me-3">{products.length} resultado(s) encontrado(s)</small>}
+                            <form onSubmit={submitSearch} className="d-flex">
+                                <input 
+                                    id="inputSearch"
+                                    name="inputSearch"
+                                    type="text"
+                                    placeholder="Pesquisar produto"
+                                    className="form-control"
+                                />
+
+
+                                <Button 
+                                    type="submit"
+                                    transparent
+                                    icon={<FaSearch size={14} />}
+                                />
+
+                                {search !== "" && (
+                                    <Button 
+                                        onClick={() => clearSearch()}
+                                        transparent 
+                                        icon={<FiX size={14} />} 
+                                        text="Limpar"
+                                    />
+                                )}
+                            </form>
+                        </div>
                     </div>
 
                     <TabBar 

@@ -94,8 +94,11 @@ export function CartProvider({ children }: any) {
                 user: user.id
             })
 
-            saveCart(cartProduct).then(() => {
-                setCart(cart => [...cart, cartProduct]);
+            saveCart(cartProduct).then((response) => {
+                if (response.status) {
+                    cartProduct.id = response.data.id;
+                    setCart(cart => [...cart, cartProduct]);
+                }
             }).catch((err) => {
                 console.log("~ error:", err.response)
             });

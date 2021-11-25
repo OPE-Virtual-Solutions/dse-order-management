@@ -15,7 +15,7 @@ import { IngredientModal } from "components/cases/Ingredients/IngredientModal";
 
 import styles from "./styles.module.css";
 import { IngredientInstance } from "interfaces/Ingredient";
-import { MaterialInputProps } from "components/forms/MaterialInput";
+
 import { FiX } from "react-icons/fi";
 
 function IngredientDashboard() {
@@ -92,7 +92,7 @@ function IngredientDashboard() {
                             outline 
                             icon={<FaPlus size={14} />} 
                             text="Adicionar" 
-                            className="me-1 align-self-stretch" 
+                            className="ms-1 align-self-stretch" 
                         />
                     </div>
                 </header>

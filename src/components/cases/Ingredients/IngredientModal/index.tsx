@@ -1,4 +1,7 @@
-import { TextField } from "@material-ui/core";
+import { useState } from "react";
+
+import { Snackbar, TextField } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 import { Button } from "components/forms/Button";
 
@@ -12,10 +15,13 @@ type Props = {
 }
 
 function IngredientModal({ ingredient }: Props) {
+    const [error, setError] = useState<boolean>(false);
 
     async function create(_ingredient: Ingredient) {
         await IngredientService.create(_ingredient).then((response) => {
             if (response.status === 201) window.location.reload();
+        }).catch((error) => {
+            if (error.response.status === 409) setError(true);
         })
     }
 
@@ -62,9 +68,13 @@ function IngredientModal({ ingredient }: Props) {
             </div>
 
             <footer>
-                <Button type="submit" className="me-2" text="Salvar" />
-                <Button outline text="Cancelar" />
+                <Button style={{ backgroundColor: "#BD5B2D", color:"#FFF"}} type="submit" className="me-2" text="Salvar" />
+                <Button outline style={{ borderColor: "#F6753B", borderWidth: 1, borderStyle: "solid" }} text="Cancelar" />
             </footer>
+
+            <Snackbar open={error} autoHideDuration={4000} onClose={() => setError(false)}>
+                <Alert severity="error">Esse produto já existe.</Alert>
+            </Snackbar>
         </form>
     )
 };

@@ -64,7 +64,7 @@ function OrderDragCard({
         return (
             <div className={ styles.orderProductCartContainer }>
                 <p>
-                    { cartProduct.product.name } ● <span>Qtd.</span> { cartProduct.quantity } 
+                    { cartProduct.product.name } ● <span>Qtd. em estoque</span> { cartProduct.quantity } 
                 </p>
 
                 <div>
