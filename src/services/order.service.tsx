@@ -24,7 +24,7 @@ class _OrderService {
         const response = await api.get(ENDPOINT);
 
         let list: Order[] = [];
-        if (response.status) list = response.data;
+        if (response.status) list = response.data.results;
 
         return list;
     }

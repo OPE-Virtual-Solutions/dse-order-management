@@ -2,16 +2,12 @@ import { api } from "api";
 import axios from "axios";
 
 import { Category } from "interfaces/Category";
-import { Ingredient, IngredientPT } from "interfaces/Ingredient";
+import { Ingredient } from "interfaces/Ingredient";
 
 import {
     Product,
-    ProductPT,
-    ProductPostPT,
     ProductPost
 } from "interfaces/Product";
-import { CategoryService } from "./category.service";
-import { IngredientService } from "./ingredient.service";
 
 enum Endpoints {
     product = "/produtos/",
@@ -24,15 +20,20 @@ class _ProductService {
     ingredients: Ingredient[] = [];
     categories: Category[] = [];
 
-    async list(): Promise<Product[] | undefined> {
-        const response = await api.get(Endpoints.product);
+    async list(name: string = ""): Promise<Product[]> {
+        const response = await api.get(Endpoints.product, {
+            params: {
+                name: name
+            }
+        });
 
+        let list: Product[] = [];
         if (response.status) {
-            const list: Product[] = response.data.results;
-            return list;
+            list = response.data;
+            
         };
 
-        return undefined;
+        return list;
     };
 
     async create(product: Product, ingredients: Ingredient[]) {
@@ -72,13 +73,13 @@ class _ProductService {
         return response;
     };
 
-    async getProductRelatedInfo() {
+    async getProductRelatedInfo(onlyActive: boolean = false, name: string = "") {
         await axios.all([
-            api.get(Endpoints.product),
+            api.get(Endpoints.product + `${onlyActive ? "?active=true" : "" } ${name !== "" ? `?name=${name}` : ""}`),
             api.get(Endpoints.category),
             api.get(Endpoints.ingredient)
         ]).then(axios.spread((products, categories, ingredients) => {
-            this.products = products.data.results;
+            this.products = products.data;
             this.categories = categories.data.results;
             this.ingredients = ingredients.data.results;
         }));

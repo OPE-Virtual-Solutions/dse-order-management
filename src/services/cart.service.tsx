@@ -35,7 +35,7 @@ class _CartService {
             user: cartProduct.user
         }
 
-        await api.post(ENDPOINT, cart);
+        return await api.post(ENDPOINT, cart);
     };
 
     async remove(cartProduct: CartProduct) {
