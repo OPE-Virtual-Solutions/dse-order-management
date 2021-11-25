@@ -8,34 +8,45 @@ import { Skeleton } from "@material-ui/lab";
 import { DataGrid, GridColDef } from "@material-ui/data-grid";
 import { Tooltip } from "components/display/Tooltip";
 import { Button } from "components/forms/Button";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 import { UserContext } from "contexts/UserContext/UserContext";
+import { Pagination } from "components/display/Pagination";
 
 type Props = {
     onUserSelection: (user: User) => void;
+    search: string | undefined;
 }
 
 function UserTable({
-    onUserSelection
+    onUserSelection,
+    search
 }: Props) {
     const { user } = useContext(UserContext);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const [count, setCount] = useState<number>(0);
+
     const [users, setUsers] = useState<User[]>([]);
 
     async function retrieveData() {
-        await UserService.list("funcionario").then((response) => {
-            const filteredList = response.filter(_user => _user.id !== user.id);
+        await UserService.listByPage(
+            "funcionario",
+            1,
+            search
+        ).then((response) => {
+            const { list, count } = response;
 
-            setUsers(filteredList);
+            setCount(count);
+            setUsers(list);
+
             setLoading(false);
         });
     };
 
     useEffect(() => {
         retrieveData();
-    }, []);
+    }, [search]);
 
     const columns: GridColDef[] = [
         {
@@ -59,6 +70,12 @@ function UserTable({
             flex: 1,
         },
         {
+            field: "active",
+            headerName: "Usuário ativo",
+            flex: 1,
+            type: "boolean"
+        },
+        {
             field: "action",
             headerName: "Ação",
             renderCell: renderActionButton,
@@ -72,15 +89,39 @@ function UserTable({
 
     function renderActionButton(event: any) {
         return (
-            <Tooltip title="Editar" placement="right">
-                <Button 
-                    onClick={() => onUserSelection(event.row)}
-                    type="submit" 
-                    transparent 
-                    icon={<FaEdit />}
-                />
-            </Tooltip>
+            <div className="d-flex align-items-center">
+                <Tooltip title="Editar" placement="right">
+                    <Button 
+                        disabled={ event.row.id === user.id }
+                        onClick={() => onUserSelection(event.row)}
+                        type="submit" 
+                        transparent 
+                        icon={<FaEdit />}
+                    />
+                </Tooltip>
+                <Tooltip title="Desativar usuário" placement="right">
+                    <Button 
+                        disabled={ event.row.id === user.id }
+                        onClick={() => onUserSelection(event.row)}
+                        type="submit" 
+                        transparent 
+                        icon={<FaTrash />}
+                    />
+                </Tooltip>
+            </div>
         )
+    }
+
+    async function changePage(event: any) {
+        const _page = event.selected + 1;
+        setLoading(true);
+
+        await UserService.listByPage("funcionario", _page, search).then((response) => {
+            const { list } = response;
+
+            setUsers(list);
+            setLoading(false);
+        })
     }
 
     if (loading) {
@@ -98,13 +139,18 @@ function UserTable({
             <div className={ styles.dataGridContainer }>
                 <DataGrid
                     autoPageSize
-                    style={{ width: "99%", height: 350 }}
+                    autoHeight
+                    style={{ width: "99%" }}
                     rows={users}
                     columns={columns}
                     pageSize={5}
                     rowsPerPageOptions={[5]}
                     loading={loading}
                     hideFooter={true}
+                />
+                <Pagination 
+                    pageCount={count}
+                    onPageChange={changePage}
                 />
             </div>
         </div>

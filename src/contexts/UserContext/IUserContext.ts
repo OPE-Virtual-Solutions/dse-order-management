@@ -18,6 +18,7 @@ export const UserInstance: User = new User({
     firstAccess: true,
     costumer: null,
     employee: null,
+    active: false,
 })
 
 export type IContextValues = {

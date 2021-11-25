@@ -41,6 +41,7 @@ function UserForm({ user }: Props) {
             role: userType && userType.value === "funcionario" ? role?.role : undefined,
             phone: userType && userType.value === "cliente" ? form.inputPhone.value : undefined,
             id: -1,
+            active: true,
             setPassword: () => {}
         }
 
@@ -59,6 +60,7 @@ function UserForm({ user }: Props) {
             role: userType && userType.value === "funcionario" ? role?.role : undefined,
             phone: userType && userType.value === "cliente" ? form.inputPhone.value : undefined,
             id: user.id,
+            active: true,
             setPassword: () => {}
         }
 

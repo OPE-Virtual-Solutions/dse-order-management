@@ -27,6 +27,7 @@ type UserConstructor = {
     costumer: any;
     employee: any;
     firstAccess: boolean;
+    active: boolean;
 }
 
 export class User {
@@ -44,6 +45,7 @@ export class User {
     phone?: string;
 
     firstAccess?: boolean;
+    active: boolean;
 
     constructor({
         id = -1,
@@ -53,6 +55,7 @@ export class User {
         costumer,
         employee,
         firstAccess,
+        active,
     }: UserConstructor) {
         this.id = id || -1;
         this.fullName = fullName;
@@ -60,7 +63,8 @@ export class User {
         this.type = type;
 
         this.firstAccess = firstAccess;
-        
+        this.active = active;
+
         switch(type) {
             case "funcionario":
                 if (employee) {
