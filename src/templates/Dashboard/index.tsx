@@ -1,9 +1,12 @@
-import { ReactNode } from "react";
+import { ReactNode, useContext, useEffect } from "react";
 
 import styles from "./styles.module.css";
 
 import { SideMenu } from "components/navigation/SideMenu";
 import { Cart, CartProps } from "components/display/Cart";
+import { UserContext } from "contexts/UserContext/UserContext";
+import { Dialog } from "@material-ui/core";
+import { UserPasswordModal } from "components/cases/Users/UserPasswordModal";
 
 type Props = {
     children: ReactNode;
@@ -13,6 +16,8 @@ type Props = {
 }
 
 function Dashboard({ children, className = "", showCart = false, cartProps }: Props) {
+    const { firstAccess } = useContext(UserContext);
+
     return (
         <div className={ `${className} ${styles.dashboardContainer}` }>
             <SideMenu />
@@ -25,6 +30,12 @@ function Dashboard({ children, className = "", showCart = false, cartProps }: Pr
                 <div className={styles.cartContainer}>
                     <Cart {...cartProps} />
                 </div>
+            )}
+
+            {firstAccess && (
+                <Dialog maxWidth="sm" open={firstAccess} onClose={() => {}}>
+                    <UserPasswordModal />
+                </Dialog>
             )}
         </div>
     )

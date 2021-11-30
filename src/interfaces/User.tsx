@@ -3,6 +3,9 @@ export interface UserPost {
     email: string;
     senha: string;
     tipo: "funcionario" | "cliente";
+
+    cargo?: string;
+    telefone?: string;
 }
 
 export interface FuncionarioPT {
@@ -16,21 +19,21 @@ export interface ClientePT {
     telefone: string;
 }
 
-export interface UserPT {
-    id_usuario: number;
-    nome_usuario: string;
+type UserConstructor = {
+    id: number;
+    fullName: string;
     email: string;
-    senha: string;
-    tipo: "funcionario" | "cliente";
-
-    funcionario?: FuncionarioPT;
-    cliente?: ClientePT;
+    type: "funcionario" | "cliente";
+    costumer: any;
+    employee: any;
+    firstAccess: boolean;
+    active: boolean;
 }
 
 export class User {
     id: number;
 
-    name: string;
+    fullName: string;
     email: string;
 
     password?: string;
@@ -41,23 +44,44 @@ export class User {
 
     phone?: string;
 
-    constructor(usuario: UserPT) {
-        this.id = usuario.id_usuario;
-        this.name = usuario.nome_usuario;
-        this.email = usuario.email;
-        this.type = usuario.tipo;
-        
-        switch(usuario.tipo) {
+    firstAccess?: boolean;
+    active: boolean;
+
+    constructor({
+        id = -1,
+        fullName,
+        email,
+        type,
+        costumer,
+        employee,
+        firstAccess,
+        active,
+    }: UserConstructor) {
+        this.id = id || -1;
+        this.fullName = fullName;
+        this.email = email;
+        this.type = type;
+
+        this.firstAccess = firstAccess;
+        this.active = active;
+
+        switch(type) {
             case "funcionario":
-                if (usuario.funcionario) this.role = usuario.funcionario.cargo;
+                if (employee) {
+                    this.role = employee.role;
+                }
+
                 break;
             case "cliente":
-                if (usuario.cliente) this.phone = usuario.cliente.telefone;
+                if (costumer) {
+                    this.phone = costumer.phone;
+                }
+
                 break;
         }
     }
 
-    setPassword(password: string) {
+    public setPassword(password: string) {
         this.password = password;
     }
 }

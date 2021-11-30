@@ -18,7 +18,7 @@
 .ingredientContentContainer {
     position: relative;
     
-    flex-grow: 1;
+    height: 90vh;
 
     padding: 5rem;
 

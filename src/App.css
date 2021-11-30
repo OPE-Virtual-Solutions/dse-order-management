@@ -1,13 +1,63 @@
 :root {
-    --primary: #FFE28B;
-    --secondary: #FFBF00;
+    --primary: #F6753B;
+    --primaryDark: #fd5d12;
+    --secondary: #BD5B2D;
+    --secondaryDark: #db5415;
+
+    --background: #FFF;
+    --surface: #FFF;
+    --error: #070714;
+
+    --onPrimary: #FFF;
+    --onSecondary: #FFF;
+    --onBackground: #1b1b1b;
+    --onSurface: #1b1b1b;
+    --onError: #FFF;
+    
     --subtext: #656565;
     --text: #1B1B1B;
     --divider: #D3D3D3;
 }
 
+.lightTheme {
+    --primary: #F6753B;
+    --primaryDark: #fd5d12;
+    --secondary: #BD5B2D;
+    --secondaryDark: #db5415;
+
+    --background: #FFF;
+    --surface: #FFF;
+    --error: #070714;
+
+    --onPrimary: #FFF;
+    --onSecondary: #FFF;
+    --onBackground: #1b1b1b;
+    --onSurface: #1b1b1b;
+    --onError: #FFF;
+}
+
+.darkTheme {
+    --primary: #ee8757;
+    --primaryDark: #F6753B;
+    --secondary: #b4623c;
+    --secondaryDark: #BD5B2D;
+
+    --background: #151515;
+    --surface: #1E1E1E;
+    --error: #FFBF00;
+
+    --onPrimary: #FFF;
+    --onSecondary: #FFF;
+    --onBackground: #FFF;
+    --onSurface: #FFF;
+    --onError: #1b1b1b;
+
+    --divider: rgb(255, 255, 255, 0.15);
+}
+
 * {
     font-family: "Inter";
+    /* color: var(--onBackground); */
 }
 
 .btn-solid {
@@ -17,6 +67,7 @@
     padding: 0rem 1.2rem;
 
     background: var(--primary);
+    color: var(--onPrimary);
     font-weight: 500;
 
     min-height: 50px;
@@ -26,6 +77,7 @@
 
 .btn-solid:hover {
     background: var(--secondary);
+    color: var(--onSecondary);
 }
 
 .navLink {

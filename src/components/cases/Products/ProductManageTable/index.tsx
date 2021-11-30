@@ -32,6 +32,8 @@ function ProductManageTable({
 }: Props) {
     const [selectedProduct, setSelectedProduct] = useState<Product>(EmptyProduct);
 
+    const [hideHeader, setHideHeader] = useState<boolean>(false);
+
     const [openEditModal, setOpenEditModal] = useState<boolean>(false);
 
     const headers: string[] = [
@@ -50,29 +52,42 @@ function ProductManageTable({
     function closeEditModal() {
         setOpenEditModal(false);
     }
+
+    function renderProducts() {
+        const filteredProducts = products.filter(product => product.category.name === selectedCategory);
+        // setFiltered(filteredProducts);
+        
+        if (filteredProducts.length === 0) {
+            // setHideHeader(true);
+            return <span>Nenhum produto encontrado</span>
+        } else {
+            // setHideHeader(false);
+            return filteredProducts.map((product, index) => (
+                <ProductTableRow
+                    onProductSelect={openModal} 
+                    key={index} 
+                    product={product} 
+                />
+            ))
+        }
+    }
     
     return (
         <TableContainer className={ styles.tableContainer }>
             <Table>
-                <TableHead>
-                    <TableRow>
-                        {headers.map((header, index) => (
-                            <TableCell key={ index }>
-                                { header }
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
+                {!hideHeader && (
+                    <TableHead>
+                        <TableRow>
+                            {headers.map((header, index) => (
+                                <TableCell key={ index }>
+                                    { header }
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                )}
                 <TableBody className={ styles.tableBody }>
-                    { products.map((product, index) => 
-                        product.category.name === selectedCategory && (
-                            <ProductTableRow
-                                onProductSelect={openModal} 
-                                key={index} 
-                                product={product} 
-                            />
-                        )
-                    )}
+                    { renderProducts() }
                 </TableBody>
             </Table>
 

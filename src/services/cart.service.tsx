@@ -6,10 +6,10 @@ import { CartProductPost } from "interfaces/CartProduct";
 const ENDPOINT = "/itensPedidos/";
 
 class _CartService {
-    translateListResponse(response: CartProductPT[]) {
-        return response.map((carrinho: CartProductPT) => {
-            return new CartProduct(carrinho);
-        });
+    formatResponse(responseList: any[]) {
+        return responseList.map((cartItem) => {
+            return new CartProduct(cartItem);
+        })
     }
 
     async get(userId: number) {
@@ -21,21 +21,21 @@ class _CartService {
 
         let list: CartProduct[] = [];
         if (response.status) {
-            list = this.translateListResponse(response.data);
+            list = this.formatResponse(response.data);
         };
 
         return list;
     };
 
     async create(cartProduct: CartProduct) {
-        const item: CartProductPost = {
-            pedido: cartProduct.order,
-            produto: cartProduct.product.id || 0,
-            quantidade: cartProduct.quantity,
-            usuario: cartProduct.user
+        const cart: CartProductPost = {
+            order: cartProduct.order,
+            product: cartProduct.product.id,
+            quantity: cartProduct.quantity,
+            user: cartProduct.user
         }
 
-        await api.post(ENDPOINT, item);
+        return await api.post(ENDPOINT, cart);
     };
 
     async remove(cartProduct: CartProduct) {

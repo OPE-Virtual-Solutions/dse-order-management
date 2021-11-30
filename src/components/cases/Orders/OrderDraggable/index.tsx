@@ -21,7 +21,7 @@ type Props = {
 const getListContainerStyle = () => ({
     flex: 1,
     
-    background: "white",
+    background: "var(--background)",
     padding: 8,
     borderColor: "var(--divider)",
     borderWidth: 1,

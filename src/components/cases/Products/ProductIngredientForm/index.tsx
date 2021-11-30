@@ -13,6 +13,8 @@ import { TextField } from "@material-ui/core";
 
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 
+import { IngredientService } from "services/ingredient.service";
+
 type Props = {
     product?: Product;
     ingredientList: Ingredient[];
@@ -23,8 +25,18 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
     const [currentIngredient, setCurrentIngredient] = useState<Ingredient>();
     const [error, setError] = useState<string>("");
 
+    const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+
+    async function retrieveData() {
+        await IngredientService.list().then((response) => {
+            setIngredients(response);
+        });
+    }
+
     useEffect(() => {
         if (product?.ingredients) setIngredientList(product.ingredients);
+
+        retrieveData();
     }, []);
 
     function addNewIngredient() {
@@ -39,6 +51,12 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
         }
     }
 
+    function removeIngredient(ingredient: Ingredient) {
+        setIngredientList(ingredientList => {
+            return ingredientList.filter(el => el.id !== ingredient.id);
+        })
+    }
+
     return (
         <div>
             <h6 className="text-uppercase">Ingredientes</h6>
@@ -48,7 +66,7 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
                         { ingrediente.name } ● <span className="fw-bold">Qtd.</span> { ingrediente.quantity }
                     </span>
 
-                    <FaTrashAlt />
+                    <FaTrashAlt onClick={() => removeIngredient(ingrediente) }/>
                 </div>
             ))}
 

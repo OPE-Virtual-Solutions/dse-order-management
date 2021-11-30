@@ -56,7 +56,7 @@ function Routes() {
             <PrivateRoute 
                 component={ Profile }
                 requiredRoles={[]}
-                path="/profile"
+                path="/home"
                 bypassRole
             />
             <Route component={ Login } path="/" exact/>

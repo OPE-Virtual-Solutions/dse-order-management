@@ -8,37 +8,28 @@ import {
 const ENDPOINT = "/ingredientes/";
 
 class _IngredientService {
-    translateListResponse(response: IngredientPT[]) {
-        if (response) {
-            return response.map((ingrediente: IngredientPT) => {
-                return new Ingredient(ingrediente);
-            });
-        } else {
-            return [];
-        }
-    }
-
     async list() {
         const response = await api.get(ENDPOINT);
 
         let list: Ingredient[] = [];
         if (response.status) {
-            list = this.translateListResponse(response.data.results);
+            list = response.data.results;
         };
 
         return list;
     };
 
-    async listByPage(pageNumber: number) {
+    async listByPage(pageNumber: number, name: string = "") {
         const response = await api.get(ENDPOINT, {
             params: {
-                page: pageNumber
+                page: pageNumber,
+                name: name
             }
         });
 
         let list: Ingredient[] = [];
         if (response.status) {
-            list = this.translateListResponse(response.data.results);
+            list = response.data.results;
         };
 
         let count: number = 0;
@@ -48,17 +39,13 @@ class _IngredientService {
     }
     
     async create(ingredient: Ingredient) {
-        const ingrediente = new IngredientPT(ingredient);
-
-        const response = await api.post(ENDPOINT, ingrediente);
+        const response = await api.post(ENDPOINT, ingredient);
         
         return response;
     };
 
     async update(id: number, ingredient: Ingredient) {
-        const ingrediente = new IngredientPT(ingredient);
-
-        const response = await api.patch(ENDPOINT + `${id}/`, ingrediente);
+        const response = await api.patch(ENDPOINT + `${id}/`, ingredient);
     
         return response;
     };

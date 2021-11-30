@@ -11,12 +11,14 @@ type Props = {
     onSum: MouseEventHandler<HTMLButtonElement>;
     onSubtract: MouseEventHandler<HTMLButtonElement>;
     quantity: number;
+    maxQuantity?: number;
 }
 
 function QuantityButton({
     onSum, 
     onSubtract,
-    quantity
+    quantity,
+    maxQuantity
 }: Props) {
     return (
         <div className={ styles.buttonContainer }>

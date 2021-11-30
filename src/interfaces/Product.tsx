@@ -1,4 +1,5 @@
-import { Category, CategoryPT } from "interfaces";
+import { Category, CategoryPT, Ingredient } from "interfaces";
+
 import { IngredientService } from "services/ingredient.service";
 
 
@@ -21,7 +22,7 @@ export interface ProductPostPT {
     quantidade?: number;
 }
 
-export class Product {
+type ProductConstructor = {
     id?: number; 
     name: string;
     price: number;
@@ -30,20 +31,50 @@ export class Product {
     active: boolean;
     category: Category;
     ingredients?: any;
+}
 
-    constructor(produto: ProductPT) {
-        this.id = produto.id_produto;
-        this.name = produto.nome_produto;
-        this.price = produto.preco;
-        this.description = produto.descricao;
-        this.quantity = produto.quantidade || 0;
-        this.active = produto.ativo;
+export interface ProductPost {
+    name: string;
+    category: number;
+    active: boolean,
+    description: string;
+    price: number;
+    quantity: number;
+    ingredients?: any;
+}
+
+export class Product {
+    id: number; 
+    name: string;
+    price: number;
+    description: string;
+    quantity: number;
+    active: boolean;
+    category: Category;
+    ingredients: Ingredient[];
+
+    constructor({
+        id = -1,
+        name,
+        price,
+        description,
+        quantity,
+        active,
+        category,
+        ingredients
+    }: ProductConstructor) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.quantity = quantity;
+        this.active = active;
         this.category = {
-            id: produto.categoria.id_categoria,
-            name: produto.categoria.nome_categoria,
-            active: produto.categoria.ativo,
+            id: category.id,
+            name: category.name,
+            active: category.active,
         };
-        this.ingredients = IngredientService.translateListResponse(produto.ingredientes);
+        this.ingredients = ingredients;
     };
 };
 
@@ -58,7 +89,8 @@ export const EmptyProduct: Product = {
         active: false
     },
     quantity: 0,
-    active: false
+    active: false,
+    ingredients: [],
 }
 
 export class ProductPT {

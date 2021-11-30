@@ -27,6 +27,8 @@ function ProductModal({ categories, product }: Props) {
     async function createProduct(productObj: Product) {
         await ProductService.create(productObj, ingredientList).then((response) => {
             if (response.status === 200) window.location.reload();
+        }).catch((error) => {
+            console.log(error.response);
         });
     }
 
@@ -39,14 +41,15 @@ function ProductModal({ categories, product }: Props) {
     async function handleSubmit(event: any) {
         event.preventDefault();
 
-        const _product: Product = {
+        const _product = new Product({
             name: event.target.inputNome.value,
             price: event.target.inputPreco.value,
             category: category.id === -1 ? product.category : category,
             description: event.target.inputDescricao.value,
             quantity: event.target.inputQuantidade.value,
-            active: true
-        }
+            active: true,
+            ingredients: ingredientList,
+        })
 
         product.id ? updateProduct(_product) : createProduct(_product);
     }

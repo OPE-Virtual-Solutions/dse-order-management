@@ -7,7 +7,8 @@ import {
     FaTrello,
     FaUsers,
     FaWpforms,
-    FaUserAlt
+    FaUserAlt,
+    FaHome
 } from "react-icons/fa";
 
 type NavRoute = {
@@ -23,10 +24,10 @@ const iconSize = 16;
 const navlinkRoutes: NavRoute[] = [
     {
         id: 1,
-        title: "Meu usuário",
-        path: "/profile",
+        title: "Página Inicial",
+        path: "/home",
         roles: ["admin", "atendente", "estoquista"],
-        icon: <FaUserAlt size={iconSize} />
+        icon: <FaHome size={iconSize} />
     },
     {
         id: 2,

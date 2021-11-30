@@ -1,19 +1,35 @@
 
 import { User } from "interfaces/User"
 
+// export const UserInstance: User = new User({
+//     id_usuario: -1,
+//     email: "",
+//     nome_usuario: "",
+//     senha: "",
+//     tipo: "funcionario",
+//     primeiro_acesso: false,
+// });
+
 export const UserInstance: User = new User({
-    id_usuario: -1,
+    id: -1,
     email: "",
-    nome_usuario: "",
-    senha: "",
-    tipo: "funcionario"
-});
+    fullName: "",
+    type: "funcionario",
+    firstAccess: true,
+    costumer: null,
+    employee: null,
+    active: false,
+})
 
 export type IContextValues = {
     user: User;
+    firstAccess: boolean;
+    loading: boolean;
     authenticated: boolean;
     login: (credentials: ICredentials) => Promise<boolean>;
+    firstChangePassword: (password: string) => void;
     logout: () => void;
+    update: (user: User) => Promise<any>;
 }
 
 export type ICredentials = {

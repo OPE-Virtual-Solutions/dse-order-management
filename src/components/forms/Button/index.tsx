@@ -1,6 +1,6 @@
-import { ReactNode, MouseEventHandler } from "react";
+import { CSSProperties, ReactNode, MouseEventHandler } from "react";
 
-import styles from "./styles.module.css";
+import styles from "./Button.module.css";
 
 type Props = {
     text?: string;
@@ -12,6 +12,7 @@ type Props = {
     onClick?: MouseEventHandler<HTMLButtonElement>;
     children?: ReactNode;
     disabled?: boolean;
+    style?: CSSProperties;
 }
 
 function Button({
@@ -23,7 +24,8 @@ function Button({
     className = "",
     onClick = () => {},
     children,
-    disabled = false
+    disabled = false,
+    style
 }: Props) {
     function getButtonStyle() {
         return (outline ? styles.buttonOutline : transparent ? styles.buttonTransparent : styles.button);
@@ -34,6 +36,7 @@ function Button({
             disabled={disabled}
             onClick={onClick}
             type={type} 
+            style={style}
             className={`${ getButtonStyle() } ${ className }`}
         >
             { children ? ( children ) : (

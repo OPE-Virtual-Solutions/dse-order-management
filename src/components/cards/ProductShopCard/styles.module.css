@@ -5,6 +5,8 @@
     max-width: 50%;
 
     border: 1px solid var(--divider);
+    background: var(--surface);
+
     border-radius: 5px;
 }
 

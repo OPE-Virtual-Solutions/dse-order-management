@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useQuery } from "utils/useQuery";
 
 import { Dialog, InputAdornment, TextField } from "@material-ui/core";
 import { Button } from "components/forms/Button";
@@ -14,7 +15,8 @@ import { IngredientModal } from "components/cases/Ingredients/IngredientModal";
 
 import styles from "./styles.module.css";
 import { IngredientInstance } from "interfaces/Ingredient";
-import { MaterialInputProps } from "components/forms/MaterialInput";
+
+import { FiX } from "react-icons/fi";
 
 function IngredientDashboard() {
     document.title = "DSE - Gerenciamento de Ingredientes"
@@ -22,15 +24,9 @@ function IngredientDashboard() {
     const [selectedIngredient, setSelectedIngredient] = useState<Ingredient>(IngredientInstance);
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
-    const [loading, setLoading] = useState<boolean>(true);
     const [openModal, setOpenModal] = useState<boolean>(false);
 
-    async function retrieveAllData() {
-        await IngredientService.list().then((response) => {
-            setIngredients(response);
-            setLoading(false);
-        });
-    };
+    const [search, setSearch] = useState<string>("");
 
     function handleModalOpen(modalType: "edit" | "create") {
         if (modalType === "create") {
@@ -49,9 +45,15 @@ function IngredientDashboard() {
         setOpenModal(false);
     }
 
-    useEffect(() => {
-        retrieveAllData();
-    }, []);
+    function submitSearch(event: any) {
+        event.preventDefault();
+
+        setSearch(event.target.inputSearch.value);
+    }
+
+    function clearSearch() {
+        setSearch("");
+    }
 
     return (
         <Dashboard>
@@ -59,35 +61,45 @@ function IngredientDashboard() {
                 <header>
                     <h5>Ingredientes</h5>
 
-                    <div>
-                        <TextField 
-                            type="text" 
-                            className="me-1" 
-                            label="Pesquisar ingrediente" 
-                            size="small"
-                            variant="outlined"
-                            {...MaterialInputProps}
-                            InputProps={{
-                                endAdornment: (
-                                    <InputAdornment position="end">
-                                        <FaSearch color="var(--divider)" />
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
+                    <div className="d-flex align-items-center">
+                        <form onSubmit={submitSearch} className="d-flex me-3">
+                            <input 
+                                type="text"
+                                id="inputSearch"
+                                name="inputSearch" 
+                                placeholder="Pesquisar ingrediente"
+                                className="form-control"
+                            />
+
+                            <Button   
+                                type="submit"
+                                transparent 
+                                icon={<FaSearch size={14} />} 
+                            />
+
+                            {search !== "" && (
+                                <Button 
+                                    onClick={() => clearSearch()}
+                                    transparent 
+                                    icon={<FiX size={14} />} 
+                                    text="Limpar"
+                                />
+                            )}
+                        </form>
 
                         <Button 
                             onClick={() => { handleModalOpen("create") }} 
                             outline 
                             icon={<FaPlus size={14} />} 
                             text="Adicionar" 
-                            className="me-1" 
+                            className="ms-1 align-self-stretch" 
                         />
                     </div>
                 </header>
 
-                <div className={ styles.ingredientContentContainer }>
+                <div className={ styles.ingredientContentContainer }>                    
                     <IngredientTable 
+                        queryString={search}
                         onIngredientSelect={onIngredientSelect}
                         ingredients={ingredients}
                     />

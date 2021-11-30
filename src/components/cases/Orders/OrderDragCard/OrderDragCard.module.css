@@ -1,5 +1,5 @@
 .orderCard {
-    background: #FFF;
+    background: var(--surface);
 
     border: 1px solid var(--divider);
     border-radius: 5px;

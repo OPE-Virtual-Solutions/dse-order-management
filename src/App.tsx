@@ -8,12 +8,13 @@ import { Routes } from './routes';
 import { UserProvider } from 'contexts/UserContext/UserContext';
 import { CartProvider } from 'contexts/CartContext/CartContext';
 
+
 function App() {
   return (
     <ThemeProvider theme={materialTheme}>
       <UserProvider>
         <CartProvider>
-          <div className="App">
+          <div className="App lightTheme">
             <Routes />
           </div>
         </CartProvider>

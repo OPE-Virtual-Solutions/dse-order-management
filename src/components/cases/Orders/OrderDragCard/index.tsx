@@ -64,7 +64,7 @@ function OrderDragCard({
         return (
             <div className={ styles.orderProductCartContainer }>
                 <p>
-                    { cartProduct.product.name } ● <span>Qtd.</span> { cartProduct.quantity } 
+                    { cartProduct.product.name } ● <span>Qtd. em estoque</span> { cartProduct.quantity } 
                 </p>
 
                 <div>
@@ -98,6 +98,7 @@ function OrderDragCard({
         }).then(async(result) => {
             if (result.isConfirmed) {
                 order.status = "cancelado";
+                order.cancelNote = result.value;
 
                 await OrderService.update(order.id || 0, order).then(() => {
                     window.location.reload();
@@ -153,8 +154,8 @@ function OrderDragCard({
                 <div>
                     <h6>Pedido <span>#{ order.id }</span></h6>
 
-                    { order.created_at && (
-                        <p>registrado { formatRelative( parseISO(order.created_at.toString()), new Date(), { locale: pt }) }</p>
+                    { order.createdAt && (
+                        <p>registrado { formatRelative( parseISO(order.createdAt.toString()), new Date(), { locale: pt }) }</p>
                     )}
                 </div>
                 
@@ -181,12 +182,12 @@ function OrderDragCard({
                     <div>
                         <div className={ styles.typeBadge }>
                             <span className={ styles.priceText }>
-                                { order.order_type === "pra_viagem" && "Pra viagem" }
-                                { order.order_type === "pra_consumir" && "Pra consumo"}
+                                { order.type === "pra_viagem" && "Pra viagem" }
+                                { order.type === "pra_consumir" && "Pra consumo"}
                             </span>
                         </div>
 
-                        {order.is_local_order && (
+                        {order.isLocalOrder && (
                             <Tooltip 
                                 title="Pedido efetuado presencialmente"
                                 placement="right"
@@ -198,19 +199,19 @@ function OrderDragCard({
                         )}
 
                         <Tooltip 
-                            title={`Pagamento em ${getCurrentPaymentMethod(order.payment_method || "")}`}
+                            title={`Pagamento em ${getCurrentPaymentMethod(order.paymentMethod || "")}`}
                             placement="right"
                         >
                             <div className={ styles.badge }>
-                                {order.payment_method === "money" && <FaMoneyBill size={11} />}
-                                {order.payment_method === "credit" && <FaCreditCard size={11} />}
-                                {order.payment_method === "debit" && <FaBarcode size={11} />}
+                                {order.paymentMethod === "money" && <FaMoneyBill size={11} />}
+                                {order.paymentMethod === "credit" && <FaCreditCard size={11} />}
+                                {order.paymentMethod === "debit" && <FaBarcode size={11} />}
                             
                             </div>
                         </Tooltip>
                     </div>
 
-                    <span className={ styles.priceText}>R${ order.total_price }</span>
+                    <span className={ styles.priceText}>R${ order.totalPrice }</span>
                 </div>
                 
                 {order.note && (

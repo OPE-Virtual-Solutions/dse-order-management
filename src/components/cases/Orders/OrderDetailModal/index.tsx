@@ -6,6 +6,7 @@ import { OrderProductInfo } from "../OrderProductInfo";
 import { format, parseISO } from "date-fns";
 import pt from "date-fns/locale/pt";
 import { FaCalendarCheck, FaCalendarAlt } from "react-icons/fa";
+import { OrderService } from "services/order.service";
 
 type Props = {
     order: Order;
@@ -23,9 +24,9 @@ function OrderDetailModal({ order }: Props) {
                     <div>
                         <FaCalendarAlt color="var(--subtext)"/>
                         <span>
-                            Registrado: { order.created_at && 
+                            Registrado: { order.createdAt && 
                                 format(
-                                    parseISO(order.created_at?.toString()), 
+                                    parseISO(order.createdAt.toString()), 
                                     "dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
                                     {
                                         locale: pt
@@ -37,9 +38,9 @@ function OrderDetailModal({ order }: Props) {
                     <div>
                         <FaCalendarCheck color="var(--subtext)"/>
                         <span>
-                            Finalizado: { order.finished_at ?
+                            Finalizado: { order.finishedAt ?
                                 format(
-                                    parseISO(order.finished_at?.toString()), 
+                                    parseISO(order.finishedAt?.toString()), 
                                     "dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
                                     {
                                         locale: pt
@@ -52,10 +53,10 @@ function OrderDetailModal({ order }: Props) {
                                     
                 <main>
                     <span>Pagamento efetuado via</span>
-                    <p>{ order.payment_method }</p>
+                    <p>{ OrderService.formatPaymentMethod(order.paymentMethod || "") }</p>
 
                     <span>Cliente efetuou pedido</span>
-                    <p>{order.is_local_order ? "Presencialmente" : "Online (delivery)"}</p>
+                    <p>{order.isLocalOrder ? "Presencialmente" : "Online (delivery)"}</p>
                     
                     <div className={styles.observationContainer}>
                         <span>Observação</span>
@@ -63,6 +64,16 @@ function OrderDetailModal({ order }: Props) {
                             {order.note ? order.note : "Nenhuma observação registrada"}
                         </p>
                     </div>
+
+                    {order.status === "cancelado" && (
+                        <div className={styles.observationContainer}>
+                            <span>Motivo do cancelamento</span>
+                            <p>
+                                {order.cancelNote ? order.cancelNote : "Nenhum motivo registrado"}
+                            </p>
+                        </div>
+                    )}
+
                 </main>
 
             </div>

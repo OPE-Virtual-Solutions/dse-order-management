@@ -31,7 +31,7 @@ function OrderConclusion() {
     };
 
     function calculateChangePayment(): string {
-        const changeValue = order.total_payed - order.total_price;
+        const changeValue = order.totalPayed ? order.totalPayed - order.totalPrice : 0;
 
         if (changeValue === 0) {
             return "--";
@@ -50,7 +50,7 @@ function OrderConclusion() {
                 <hr />
 
                 <div>
-                    { order.is_local_order ? (
+                    { order.isLocalOrder ? (
                         <div className={ styles.orderLocationCard }>
                             <span>Efetuado presencialmente</span>
                             <FaHome />
@@ -62,7 +62,7 @@ function OrderConclusion() {
                         </div>
                     )}
 
-                    { order.order_type === "local" ? (
+                    { order.type === "local" ? (
                         <div className={ styles.orderConsumeCard }>
                             <span>Para comer</span>
                             <FaHamburger color="var(--secondary)" />
@@ -83,25 +83,25 @@ function OrderConclusion() {
                 <hr />
 
                 <div>
-                    { order.payment_method && (
+                    { order.paymentMethod && (
                         <div className={ styles.orderPaymentInfoCard }>
-                            <span>Pagamento em { showPaymentMethod(order.payment_method) }</span>
+                            <span>Pagamento em { showPaymentMethod(order.paymentMethod) }</span>
                             <FaMoneyBill />
                         </div>
                     )}
                     
                     <div className={ styles.orderPaymentInfoCard }>
                         <span>Valor a pagar</span>
-                        <span>R${ currencyFormat(order.total_price) }</span>
+                        <span>R${ currencyFormat(order.totalPrice) }</span>
                     </div>
 
-                    { order.payment_method === "money" && (
+                    { order.paymentMethod === "money" && (
                         <div>
                             <div className={ styles.orderPaymentInfoCard }>
                                 <span>Valor pago</span>
                                 <span>R${ 
-                                    order.total_payed ? currencyFormat(order.total_payed) :
-                                    currencyFormat(order.total_price)
+                                    order.totalPayed ? currencyFormat(order.totalPayed) :
+                                    currencyFormat(order.totalPrice)
                                 }</span>
                             </div>
 

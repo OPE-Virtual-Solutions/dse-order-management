@@ -1,20 +1,8 @@
 import { GridColDef, GridValueFormatterParams } from "@material-ui/data-grid";
 
 import { format, parseISO } from "date-fns";
+import { OrderService } from "services/order.service";
 import { currencyFormat } from "utils/currencyFormat";
-
-function formatPaymentMethod(method: string) {
-    switch (method) {
-        case "money":
-            return "dinheiro"
-        case "credit":
-            return "cartão de crédito"
-        case "debit":
-            return "cartão de débito"
-        default:
-            return "dinheiro"
-    }
-};
 
 export const columns: GridColDef[] = [
     {
@@ -23,7 +11,7 @@ export const columns: GridColDef[] = [
         width: 90,
     },
     {
-        field: "created_at", 
+        field: "createdAt", 
         headerName: "Criado em", 
         flex: 1,
         valueFormatter: (data: GridValueFormatterParams) => {
@@ -37,7 +25,7 @@ export const columns: GridColDef[] = [
         },
     },
     {
-        field: "finished_at", 
+        field: "finishedAt", 
         headerName: "Finalizado em", 
         flex: 1,
         valueFormatter: (data: GridValueFormatterParams) => {
@@ -51,7 +39,7 @@ export const columns: GridColDef[] = [
         },
     },
     {
-        field: "total_price", 
+        field: "totalPrice", 
         headerName: "Valor total", 
         flex: 1,
         cellClassName: "text-capitalize",
@@ -60,16 +48,16 @@ export const columns: GridColDef[] = [
         }
     },
     {
-        field: "payment_method",
+        field: "paymentMethod",
         headerName: "Método de Pagamento",
         flex: 1,
         cellClassName: "text-capitalize",
         valueFormatter: (data: GridValueFormatterParams) => {
-            if (data.value) return formatPaymentMethod(data.value.toString())
+            if (data.value) return OrderService.formatPaymentMethod(data.value.toString())
         }
     },
     {
-        field: "is_local_order",
+        field: "isLocalOrder",
         headerName: "Efetuado presencialmente",
         flex: 1,
         type: "boolean"
@@ -78,6 +66,9 @@ export const columns: GridColDef[] = [
         field: "status",
         headerName: "Status",
         cellClassName: "text-capitalize",
-        flex: 1
+        flex: 1,
+        valueFormatter: (data: GridValueFormatterParams) => {
+            if (data.value) return OrderService.formatStatus(data.value.toString())
+        }
     }
 ]
