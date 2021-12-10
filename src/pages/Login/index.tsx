@@ -9,7 +9,9 @@ import styles from "./styles.module.css";
 import TextField from '@material-ui/core/TextField';
 
 import { UserContext } from "contexts/UserContext/UserContext";
-import { Snackbar } from "@material-ui/core";
+
+import { Button } from "components/forms/Button";
+import { Snackbar } from "components/display/Snackbar";
 
 type ILoginProps = {
     username: string;
@@ -73,19 +75,23 @@ function Login() {
                         <label htmlFor="flexCheckbox">Lembrar-me</label>
                     </div>
 
-                    <button disabled={ authenticating } type="submit" className="btn-solid">
-                        Entrar
-                    </button>
+                    <Button 
+                        text="Entrar"
+                        type="submit"
+                        disabled={authenticating}
+                    />
                 </div>
             </form>
 
+            <Snackbar 
+                open={authenticating}
+                loadingSnackbar={true}
+                onClose={() => { setShowSnack(false) }}
+            />
+
             <Snackbar
                 open={ showSnack }
-                autoHideDuration={3000}
                 onClose={() => { setShowSnack(false) }}
-                ContentProps={{
-                    'aria-describedby': 'message-id',
-                }}
                 message={<span id="message-id">E-mail ou senha inválidos</span>}
             />
         </div>
