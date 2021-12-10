@@ -17,6 +17,7 @@ import {
 } from "interfaces";
 
 import { CartContext } from "contexts/CartContext/CartContext";
+import { currencyFormat } from "utils/currencyFormat";
 
 type Props = {
     orderItem: CartProduct;
@@ -55,7 +56,7 @@ function CartCard({ orderItem, showCardActions }: Props) {
         <div className={ styles.cardContainer }>
             <main>
                 <h6>{ orderItem.product.name }</h6>
-                <span>R${ orderItem.product.price } x { orderItem.quantity }</span>
+                <span>R${ currencyFormat(orderItem.product.price) } x { orderItem.quantity }</span>
 
                 <p>
                     { orderItem.product.ingredients.length !== 0 ? (

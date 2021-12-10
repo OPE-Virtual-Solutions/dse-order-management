@@ -19,6 +19,7 @@ import styles from "./Cart.module.css";
 import { FiShoppingBag } from "react-icons/fi";
 
 import { CartContext } from "contexts/CartContext/CartContext";
+import { currencyFormat } from "utils/currencyFormat";
 
 export type CartProps = {
     showCardActions?: boolean;
@@ -77,18 +78,18 @@ function Cart({ showCardActions = true }: CartProps) {
             
             <footer>
                 <h6>Resumo do pedido</h6>
-                <div>
+                {/* <div>
                     <span>Subtotal</span>
                     <span>R$--</span>
                 </div>
                 <div>
                     <span>Taxa</span>
                     <span>R$--</span>
-                </div>
+                </div> */}
 
                 <div>
                     <span>Total</span>
-                    <span>R${ order.totalPrice }</span>
+                    <span>R${ currencyFormat(order.totalPrice) }</span>
                 </div>
 
                 { location.pathname !== "/order" && (
