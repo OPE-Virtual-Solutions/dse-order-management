@@ -11,13 +11,12 @@ class _CategoryService {
     async list() {
         const response = await api.get(ENDPOINT);
 
+        let list = [];
         if (response.status) {
-            const list = response.data.results;
-
-            return list;
+            list = response.data;
         }
 
-        return undefined;
+        return list;
     };
 
     async create(category: Category) {
