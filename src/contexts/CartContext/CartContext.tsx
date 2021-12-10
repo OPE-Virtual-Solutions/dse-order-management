@@ -23,6 +23,7 @@ import { OrderService } from "services/order.service";
 
 import { UserContext } from "contexts/UserContext/UserContext";
 import { CartService } from "services/cart.service";
+import { Snackbar } from "components/display/Snackbar";
 
 export const CartContext = createContext({} as IOrderContextValues);
 
@@ -31,6 +32,8 @@ export function CartProvider({ children }: any) {
 
     const [order, setOrder] = useState<Order>(OrderInstance);
     const [cart, setCart] = useState<CartProduct[]>([]);
+
+    const [sending, setSending] = useState<boolean>(false);
 
     useEffect(() => {
         if (authenticated) getCart();
@@ -72,7 +75,7 @@ export function CartProvider({ children }: any) {
         const _order = { ...order };
 
         if (cartIndex !== -1) {
-            const _cart = { ...cart };
+            const _cart = [ ...cart ];
             
             _cart[cartIndex].addQuantity();
 
@@ -83,8 +86,6 @@ export function CartProvider({ children }: any) {
             });
 
         } else {
-            console.log(product.price * quantity);
-
             const cartProduct = new CartProduct({
                 id: Math.random(),
                 order: null,
@@ -203,6 +204,8 @@ export function CartProvider({ children }: any) {
     }
 
     async function finishOrder() {
+        setSending(true);
+
         await OrderService.create(order, user.id).then(() => {
             setCart([]);
             setOrder(order => {
@@ -213,6 +216,8 @@ export function CartProvider({ children }: any) {
             });
         }).catch((error) => {
             console.log(error.response);
+        }).finally(() => {
+            setSending(false);
         });
     };
 
@@ -226,10 +231,17 @@ export function CartProvider({ children }: any) {
                 sumItemQuantity,
                 subtractItemQuantity,
                 updateOrderInfo,
-                finishOrder
+                finishOrder,
+                sending
             }}
         >
             { children }
+
+            <Snackbar 
+                open={sending}
+                onClose={() => {}}
+                loadingSnackbar={true}
+            />
         </CartContext.Provider>
     )
 };
