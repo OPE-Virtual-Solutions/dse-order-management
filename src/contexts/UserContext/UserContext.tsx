@@ -55,7 +55,7 @@ export function UserProvider({ children }: any) {
                 firstAccess: _user.firstAccess || false,
                 fullName: _user.fullName,
                 type: _user.type,
-                active: false,
+                active: _user.active,
             }));
             setFirstAccess(_user.firstAccess || false);
         }
