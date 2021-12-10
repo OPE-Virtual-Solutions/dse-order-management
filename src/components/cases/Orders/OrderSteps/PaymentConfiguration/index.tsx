@@ -110,6 +110,7 @@ function PaymentConfiguration({
                             onChange={handlePaymentValueChange}
                             defaultValue={ order.totalPrice }
                             min={ order.totalPrice }
+                            step="0.01"
                         />
                     </div>
                 </div>
