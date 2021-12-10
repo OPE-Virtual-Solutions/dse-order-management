@@ -25,11 +25,16 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
     const [currentIngredient, setCurrentIngredient] = useState<Ingredient>();
     const [error, setError] = useState<string>("");
 
+    const [loading, setLoading] = useState<boolean>(true);
+
     const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 
     async function retrieveData() {
-        await IngredientService.list().then((response) => {
+        setLoading(true);
+        await IngredientService.list(false).then((response) => {
+            console.log("~ response:", response)
             setIngredients(response);
+            setLoading(false);
         });
     }
 
@@ -74,6 +79,7 @@ function ProductIngredientForm({ product, ingredientList, setIngredientList }: P
 
             <div className={ styles.ingredientAddContainer }>
                 <Autocomplete 
+                    disabled={loading}
                     fullWidth
                     onChange={(event, ingredient) => {
                         if (ingredient) setCurrentIngredient(ingredient);                 
