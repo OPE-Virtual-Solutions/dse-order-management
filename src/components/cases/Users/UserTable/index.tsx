@@ -8,10 +8,14 @@ import { Skeleton } from "@material-ui/lab";
 import { DataGrid, GridColDef } from "@material-ui/data-grid";
 import { Tooltip } from "components/display/Tooltip";
 import { Button } from "components/forms/Button";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaCheck, FaEdit, FaTrash } from "react-icons/fa";
 
 import { UserContext } from "contexts/UserContext/UserContext";
 import { Pagination } from "components/display/Pagination";
+
+import SweetAlert from 'sweetalert2';
+import { Snackbar } from "@material-ui/core";
+import { Alert } from "@material-ui/lab";
 
 type Props = {
     onUserSelection: (user: User) => void;
@@ -28,6 +32,9 @@ function UserTable({
     const [count, setCount] = useState<number>(0);
 
     const [users, setUsers] = useState<User[]>([]);
+
+    const [sucessSnack, setSuccessSnack] = useState<boolean>(false);
+    const [snackMessage, setSnackMessage] = useState<string>("");
 
     async function retrieveData() {
         await UserService.listByPage(
@@ -87,6 +94,59 @@ function UserTable({
         }
     ]
 
+    async function handleUserActivation(user: User, active: boolean) {
+        user.active = active;
+
+        await UserService.update(user).then((response) => {
+            setSnackMessage(
+                active ? "Usuário reativado com sucesso!" : "Usuário desativado com sucesso!"
+            );
+            setSuccessSnack(true);
+
+            setUsers(_users => {
+                return _users.map((_user) => {
+                    if (_user.id === user.id) _user.active = active;
+
+                    return _user;
+                })
+            })
+        }) ;
+    }
+
+    async function onUserActivate(user: User) {
+        SweetAlert.fire({
+            icon: "warning",
+            title: "Aviso",
+            text: `Você está prestes a reativar o usuário ${user.email} - ${user.fullName}. Seu acesso será reabilitado e ele poderá acessar o sistema novamente com base no seu cargo. Deseja continuar?`,
+            confirmButtonText: "<span style='color: var(--onPrimary)'>Continuar</span>",
+            confirmButtonColor: "var(--primary)",
+            showCancelButton: true,
+            cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
+            cancelButtonColor: "transparent",
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                handleUserActivation(user, true);
+            }
+        });
+    }
+
+    async function onUserDeactivate(user: User) {
+        SweetAlert.fire({
+            icon: "warning",
+            title: "Aviso",
+            text: `Você está prestes a desativar o usuário ${user.email} - ${user.fullName}. O usuário terá seu acesso ao sistema revogado, impossibilitando-o de efetuar login. Deseja continuar?`,
+            confirmButtonText: "<span style='color: var(--onPrimary)'>Continuar</span>",
+            confirmButtonColor: "var(--primary)",
+            showCancelButton: true,
+            cancelButtonText: "<span style='color: #1b1b1b'>Cancelar</span>",
+            cancelButtonColor: "transparent",
+        }).then(async(result) => {
+            if (result.isConfirmed) {
+                handleUserActivation(user, false);
+            }
+        });
+    }
+
     function renderActionButton(event: any) {
         return (
             <div className="d-flex align-items-center">
@@ -99,15 +159,28 @@ function UserTable({
                         icon={<FaEdit />}
                     />
                 </Tooltip>
-                <Tooltip title="Desativar usuário" placement="right">
-                    <Button 
-                        disabled={ event.row.id === user.id }
-                        onClick={() => onUserSelection(event.row)}
-                        type="submit" 
-                        transparent 
-                        icon={<FaTrash />}
-                    />
-                </Tooltip>
+
+                {event.row.active ? (
+                    <Tooltip title="Desativar usuário" placement="right">
+                        <Button 
+                            disabled={ event.row.id === user.id }
+                            onClick={() => onUserDeactivate(event.row)}
+                            type="submit" 
+                            transparent 
+                            icon={<FaTrash />}
+                        />
+                    </Tooltip>
+                ) : (
+                    <Tooltip title="Reativar usuário" placement="right">
+                        <Button 
+                            disabled={ event.row.id === user.id }
+                            onClick={() => onUserActivate(event.row)}
+                            type="submit" 
+                            transparent 
+                            icon={<FaCheck />}
+                        />
+                    </Tooltip>
+                )}
             </div>
         )
     }
@@ -153,6 +226,10 @@ function UserTable({
                     onPageChange={changePage}
                 />
             </div>
+
+            <Snackbar open={sucessSnack} autoHideDuration={4000} onClose={() => setSuccessSnack(false)}>
+                <Alert severity="success">{snackMessage}</Alert>
+            </Snackbar>
         </div>
     )
 };
