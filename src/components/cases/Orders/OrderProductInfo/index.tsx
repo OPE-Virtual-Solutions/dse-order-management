@@ -14,14 +14,14 @@ function OrderProductInfo({ cartProduct }: Props) {
             <p>
                 { product.name } ● <span>Qtd.</span> { cartProduct.quantity } 
             </p>
-
+{/* 
             <div>
                 {product.ingredients.length !== 0 && (
                     <span>
                         Ver ingredientes
                     </span>
                 )}
-            </div>
+            </div> */}
         </div>
     )
 };

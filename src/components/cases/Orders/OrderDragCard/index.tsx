@@ -17,6 +17,7 @@ import { CartProduct, EmptyProduct, Order, ProductPT } from "interfaces";
 
 import Alert from 'sweetalert2';
 import { OrderService } from "services/order.service";
+import { currencyFormat } from "utils/currencyFormat";
 
 type Props = {
     provided: DraggableProvided;
@@ -64,7 +65,7 @@ function OrderDragCard({
         return (
             <div className={ styles.orderProductCartContainer }>
                 <p>
-                    { cartProduct.product.name } ● <span>Qtd. em estoque</span> { cartProduct.quantity } 
+                    { cartProduct.product.name } ● <span>Qtd.</span> { cartProduct.quantity } 
                 </p>
 
                 <div>
@@ -99,6 +100,7 @@ function OrderDragCard({
             if (result.isConfirmed) {
                 order.status = "cancelado";
                 order.cancelNote = result.value;
+                order.finishedAt = new Date();
 
                 await OrderService.update(order.id || 0, order).then(() => {
                     window.location.reload();
@@ -211,7 +213,7 @@ function OrderDragCard({
                         </Tooltip>
                     </div>
 
-                    <span className={ styles.priceText}>R${ order.totalPrice }</span>
+                    <span className={ styles.priceText}>R${ currencyFormat(order.totalPrice) }</span>
                 </div>
                 
                 {order.note && (

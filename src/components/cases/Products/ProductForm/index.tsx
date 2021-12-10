@@ -38,6 +38,9 @@ function ProductForm({ product, categories, setCategory }: Props) {
                     type="number" 
                     variant="outlined" 
                     size="small" 
+                    inputProps={{
+                        "step": 0.01
+                    }}
                     label="Preço"
                     defaultValue={ product.price }
                     InputProps={{

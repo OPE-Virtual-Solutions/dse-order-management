@@ -13,6 +13,7 @@ interface IOrderContextValues {
     subtractItemQuantity: (cartProduct: CartProduct) => void;
     updateOrderInfo: (orderInfo: Order) => void;
     finishOrder: () => void;
+    sending: boolean;
 }
 
 export type {

@@ -13,6 +13,7 @@ import styles from "./styles.module.css";
 import { Product } from "interfaces";
 
 import { CartContext } from "contexts/CartContext/CartContext";
+import { currencyFormat } from "utils/currencyFormat";
 
 type Props = {
     product: Product;
@@ -46,7 +47,7 @@ function ProductShopCard({ product }: Props) {
 
                 <div className={ styles.productInfoContainer }>
                     <h5>{ product.name }</h5>
-                    <span>R${ product.price }</span>
+                    <span>R${ currencyFormat(product.price) }</span>
 
                     <p>
                         { product.ingredients.length !== 0 ? (

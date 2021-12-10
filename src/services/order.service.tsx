@@ -29,6 +29,22 @@ class _OrderService {
         return list;
     }
 
+    async listByPage(pageNumber: number) {
+        const response = await api.get(ENDPOINT, {
+            params: {
+                page: pageNumber
+            }
+        });
+
+        let list: Order[] = [];
+        if (response.status) list = response.data.results;
+
+        let count: number = 0;
+        if (pageNumber === 1) count = response.data.count;
+
+        return { list, count };
+    }
+
     async create(order: Order, userId: number) {
         const response = await api.post(ENDPOINT, {
             user: userId,
