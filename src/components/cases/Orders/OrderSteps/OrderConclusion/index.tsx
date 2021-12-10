@@ -15,7 +15,7 @@ import { CartContext } from "contexts/CartContext/CartContext";
 import { currencyFormat } from "utils/currencyFormat";
 
 function OrderConclusion() {
-    const { order, finishOrder } = useContext(CartContext);
+    const { order, finishOrder, sending } = useContext(CartContext);
     
     function showPaymentMethod(paymentMethod: string): string {
         switch (paymentMethod) {
@@ -113,6 +113,7 @@ function OrderConclusion() {
                     )}
 
                     <Button 
+                        disabled={sending}
                         onClick={() => { finishOrder() }}
                         className="w-100"
                         text="Efetuar pedido"
