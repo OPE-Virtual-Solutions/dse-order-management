@@ -70,7 +70,11 @@ export function CartProvider({ children }: any) {
         return -1;
     }
 
-    function addToCart(product: Product, quantity: number) {
+    async function addToCart(product: Product, quantity: number) {
+        setSending(true);
+
+        let status: boolean = true;
+
         const cartIndex = getProductIndex(product);
         const _order = { ...order };
 
@@ -81,9 +85,18 @@ export function CartProvider({ children }: any) {
 
             saveCart(_cart[cartIndex]).then(() => {
                 setCart(_cart);
+
+                _order.totalPrice += roundNumber(product.price * quantity);
+                setOrder(_order);
+
+                status = true;
             }).catch((err) => {
                 console.log("~ error:", err)
-            });
+
+                status = false;
+            }).finally(() => {
+                setSending(false);
+            });;
 
         } else {
             const cartProduct = new CartProduct({
@@ -99,14 +112,22 @@ export function CartProvider({ children }: any) {
                 if (response.status) {
                     cartProduct.id = response.data.id;
                     setCart(cart => [...cart, cartProduct]);
+
+                    _order.totalPrice += roundNumber(product.price * quantity);
+                    setOrder(_order);
+
+                    status = true;
                 }
             }).catch((err) => {
                 console.log("~ error:", err.response)
+
+                status = false;
+            }).finally(() => {
+                setSending(false);
             });
         };
 
-        _order.totalPrice += roundNumber(product.price * quantity);
-        setOrder(_order);
+        return status;
     };
 
     async function saveCart(cartProduct: CartProduct) {
