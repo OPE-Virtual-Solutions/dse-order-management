@@ -8,12 +8,17 @@ import {
 const ENDPOINT = "/ingredientes/";
 
 class _IngredientService {
-    async list() {
-        const response = await api.get(ENDPOINT);
+    async list(paginated: boolean = false) {
+        const response = await api.get(ENDPOINT, { 
+            params: {
+                paginated: paginated
+            }
+        });
 
         let list: Ingredient[] = [];
         if (response.status) {
-            list = response.data.results;
+
+            paginated ? list = response.data.results : list = response.data;
         };
 
         return list;
