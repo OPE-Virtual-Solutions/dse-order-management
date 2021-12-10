@@ -19,7 +19,7 @@ function IngredientModal({ ingredient }: Props) {
 
     async function create(_ingredient: Ingredient) {
         await IngredientService.create(_ingredient).then((response) => {
-            if (response.status === 201) window.location.reload();
+            if (response.status === 200) window.location.reload();
         }).catch((error) => {
             if (error.response.status === 409) setError(true);
         })
