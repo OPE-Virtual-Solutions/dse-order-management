@@ -80,7 +80,7 @@ class _ProductService {
             api.get(Endpoints.ingredient)
         ]).then(axios.spread((products, categories, ingredients) => {
             this.products = products.data;
-            this.categories = categories.data.results;
+            this.categories = categories.data;
             this.ingredients = ingredients.data.results;
         }));
 

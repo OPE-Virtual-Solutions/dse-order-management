@@ -67,8 +67,8 @@ function ProductDashboard() {
 
     async function retrieveAllData() {
         await ProductService.getProductRelatedInfo().then((response) => {
-            setProducts(response.products);
-            setCategories(response.categories);
+            setProducts(response.products || []);
+            setCategories(response.categories || []);
 
             setLoading(false);
         });
@@ -80,19 +80,23 @@ function ProductDashboard() {
     }
 
     function renderProducts() {
-        const filteredProducts = products.filter(product => product.category.name === categories[selectedCategory].name);
-        // setFiltered(filteredProducts);
-        
-        if (filteredProducts.length === 0) {
-            return <span>Nenhum produto encontrado</span>
+        if (categories.length !== 0) {
+            const filteredProducts = products.filter(product => product.category.name === categories[selectedCategory].name);
+            // setFiltered(filteredProducts);
+            
+            if (filteredProducts.length === 0) {
+                return <span>Nenhum produto encontrado</span>
+            } else {
+                // setHideHeader(false);
+                return (
+                    <ProductManage
+                        onProductSelect={handleProductSelect} 
+                        productList={filteredProducts} 
+                    />
+                )
+            }
         } else {
-            // setHideHeader(false);
-            return (
-                <ProductManage
-                    onProductSelect={handleProductSelect} 
-                    productList={filteredProducts} 
-                />
-            )
+            return <span>Nenhuma categoria registrada ou ativa. Contate o administrador do sistema.</span>
         }
     }
 
@@ -144,7 +148,7 @@ function ProductDashboard() {
                     <TabBar 
                         selectedTab={ selectedCategory }
                         setSelectedTab={ setSelectedCategory }
-                        labelList={categories.map((category) => category.name )}
+                        labelList={categories.length !== 0 ? categories.map((category) => category.name ) : ["Nenhuma categoria encontrada"]}
                         loading={loading}
                     />
                 </header>
