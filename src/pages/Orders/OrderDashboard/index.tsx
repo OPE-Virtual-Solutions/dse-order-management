@@ -45,8 +45,8 @@ function OrderDashboard() {
 
     async function retrieveData() {
         await ProductService.getProductRelatedInfo(true).then((response) => {
-            setProducts(response.products);
-            setCategories(response.categories);
+            setProducts(response.products || []);
+            setCategories(response.categories || []);
 
             setLoading(false);
         })
@@ -67,6 +67,40 @@ function OrderDashboard() {
 
     function clearSearch() {
         setSearch("");
+    }
+
+    function renderProducts() {
+        if (categories.length !== 0) {
+            const filteredProducts = products.filter(product => product.category.name === categories[selectedCategory].name);
+            // setFiltered(filteredProducts);
+            
+            if (filteredProducts.length === 0) {
+                return <span>Nenhum produto encontrado</span>
+            } else {
+                // setHideHeader(false);
+
+                return isGridList ? filteredProducts.map((product,index) => (
+                    <ProductShopCard 
+                        key={index}
+                        product={product}
+                    />
+                )) : (
+                    <OrderTable 
+                        headers={["Imagem", "nome", "preço", "descrição", "quantidade", "ação"]}
+                        products={filteredProducts}
+                        selectedCategory={ categories[selectedCategory].name }
+                    />
+                )
+                // return (
+                //     <ProductShopCard
+                //         product={handleProductSelect} 
+                //         productList={filteredProducts} 
+                //     />
+                // )
+            }
+        } else {
+            return <span>Nenhuma categoria registrada ou ativa. Contate o administrador do sistema.</span>
+        }
     }
 
     // useEffect(() => {
@@ -122,39 +156,19 @@ function OrderDashboard() {
                     <TabBar 
                         selectedTab={selectedCategory}
                         setSelectedTab={setSelectedCategory}
-                        labelList={categories.map((category) => category.name )}
+                        labelList={categories.length !== 0 ? categories.map((category) => category.name ) : ["Nenhuma categoria encontrada"]}
                         loading={loading}
                     />
                 </header>
 
                 <main>
-                    {isGridList && (
-                        <div className={styles.productListContainer}>
-                            {loading && [...Array(4)].map(() => (
-                                <Skeleton height={50} />
-                            ))}
+                    <div className={isGridList ? styles.productListContainer : undefined}>
+                        {loading && [...Array(4)].map(() => (
+                            <Skeleton height={50} />
+                        ))}
 
-                            {!loading && products.length > 0 && products.map((produto, index) => 
-                                produto.category.name === categories[selectedCategory].name && <ProductShopCard key={index} product={produto} />
-                            )}
-                        </div>
-                    )}
-
-                    {!isGridList && (
-                        <div>
-                            {loading && [...Array(4)].map(() => (
-                                <Skeleton height={50} />
-                            ))}
-
-                            {!loading && (
-                                <OrderTable 
-                                    headers={["Imagem", "nome", "preço", "descrição", "quantidade", "ação"]}
-                                    products={products}
-                                    selectedCategory={ categories[selectedCategory].name }
-                                />
-                            )}
-                        </div>
-                    )}
+                        {!loading && renderProducts()}
+                    </div>
                     
                     <div className={styles.gridButton}>
                         <Tooltip 
